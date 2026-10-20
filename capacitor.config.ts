@@ -8,6 +8,11 @@ const config: CapacitorConfig = {
   webDir: 'dist',
   server: {
     androidScheme: 'https',
+    // Solo desarrollo: permite llamar al backend local por HTTP (10.0.2.2 desde el emulador).
+    cleartext: process.env.CAP_DEV === '1',
+  },
+  android: {
+    allowMixedContent: process.env.CAP_DEV === '1',
   },
 };
 

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">HealthLab</string>
+    <string name="title_activity_main">HealthLab</string>
+    <string name="package_name">com.jorgeandres992.HealthLabMobile</string>
+    <string name="custom_url_scheme">com.jorgeandres992.HealthLabMobile</string>
+</resources>
