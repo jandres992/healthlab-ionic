@@ -1,0 +1,63 @@
+# HealthLab — Cliente web y móvil (Ionic + Vue + Capacitor)
+
+Una sola base de código para la PWA de escritorio (puesto del bacteriólogo), la PWA móvil y las
+apps Android/iOS (§16.16 del documento de requerimientos).
+
+## Principios
+
+- **El backend manda.** La interfaz muestra una acción solo si viene en `acciones[]` del login o
+  de `/usr/me/` (`usePermisos().puede('ordenes.finalizar')`, `<Permitido accion="…">`). No hay
+  listas de permisos por rol en el cliente (RF-44.1).
+- **Contrato primero.** Los tipos de `src/api/generated/` se generan desde el esquema OpenAPI del
+  backend con `npm run api:types`; no se escriben tipos de entidades a mano.
+- **Las vistas no llaman a Axios.** Pasan por `src/api/endpoints/*`, que usan el cliente de
+  `src/api/http.ts` (JWT, renovación ante 401, errores `{estado, mensaje, errores}`,
+  `Idempotency-Key`).
+- **Sin reglas clínicas en el cliente.** Banderas, estados y cierres los calcula el backend.
+
+## Desarrollo
+
+```bash
+npm install
+npm run dev            # http://localhost:5173 (o --port 8100)
+npm run typecheck      # vue-tsc
+npm run test:unit      # vitest
+npm run build          # dist/ (lo envuelve Capacitor)
+npm run api:types      # regenerar tipos desde ../HealthLab
+```
+
+`VITE_API_URL` se define en `.env.development` / `.env.production`. En un teléfono físico usa la
+IP del PC en la red local.
+
+### Android / iOS
+
+```bash
+npx cap add android    # una vez
+npm run build && npx cap sync && npx cap open android
+```
+
+## Estructura
+
+```
+src/
+├── api/
+│   ├── generated/      schema.yaml + schema.d.ts (generados, no editar)
+│   ├── http.ts         cliente Axios con interceptores
+│   ├── tipos.ts        alias de los tipos generados + RespuestaLogin
+│   └── endpoints/      auth, catalogos, pacientes, ordenes, muestras, resultados, notificaciones
+├── stores/auth.ts      sesión, roles y acciones (Pinia); tokens en almacenamiento seguro
+├── router/             rutas con carga diferida y guards por acción
+├── composables/        usePermisos, useMensajes, useListaPaginada
+├── components/         Permitido, EstadoLista, EstadoBadge
+├── services/           almacenamientoSeguro (Keychain/Keystore o Preferences)
+└── views/              auth, inicio, pacientes, ordenes, muestras, resultados, notificaciones
+```
+
+## Estado
+
+| Fase | Contenido | Estado |
+|---|---|---|
+| 3 | Cliente generado, http, sesión segura, login, perfil, guards, pestañas, listados | ✔ |
+| 4 | Crear paciente, crear orden, registrar muestra con escáner, offline (toma y admisión) | pendiente |
+| 5 | Bandeja de validación, resultados, críticos, informes | pendiente |
+| 6 | Calidad, auditoría, administración web | pendiente |

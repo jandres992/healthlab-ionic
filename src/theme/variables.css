@@ -1,0 +1,56 @@
+/* Paleta HealthLab (misma identidad que la app Expo: azul #135ae0) */
+:root {
+  --ion-color-primary: #135ae0;
+  --ion-color-primary-rgb: 19, 90, 224;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #114fc5;
+  --ion-color-primary-tint: #2b6be3;
+
+  --ion-color-secondary: #005fb8;
+  --ion-color-secondary-rgb: 0, 95, 184;
+  --ion-color-secondary-contrast: #ffffff;
+  --ion-color-secondary-contrast-rgb: 255, 255, 255;
+  --ion-color-secondary-shade: #0054a2;
+  --ion-color-secondary-tint: #1a6fbf;
+
+  --ion-color-success: #1b7f3b;
+  --ion-color-success-rgb: 27, 127, 59;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #187034;
+  --ion-color-success-tint: #328c4f;
+
+  --ion-color-warning: #c77700;
+  --ion-color-warning-rgb: 199, 119, 0;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #af6900;
+  --ion-color-warning-tint: #cd851a;
+
+  --ion-color-danger: #b3261e;
+  --ion-color-danger-rgb: 179, 38, 30;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #9e211a;
+  --ion-color-danger-tint: #bb3c35;
+
+  --ion-color-medium: #7f8ba2;
+  --ion-color-medium-rgb: 127, 139, 162;
+  --ion-color-medium-contrast: #ffffff;
+  --ion-color-medium-contrast-rgb: 255, 255, 255;
+  --ion-color-medium-shade: #707a8f;
+  --ion-color-medium-tint: #8c97ab;
+
+  --ion-color-light: #eef3ff;
+  --ion-color-light-rgb: 238, 243, 255;
+  --ion-color-light-contrast: #000000;
+  --ion-color-light-contrast-rgb: 0, 0, 0;
+  --ion-color-light-shade: #d1d6e0;
+  --ion-color-light-tint: #f0f4ff;
+
+  /* Estados clínicos (se usan en badges) */
+  --hl-critico: #b3261e;
+  --hl-anormal: #c77700;
+  --hl-normal: #1b7f3b;
+}
