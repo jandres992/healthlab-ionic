@@ -186,11 +186,391 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v1/cci/:
+    get:
+      operationId: cci_list
+      parameters:
+      - in: query
+        name: fecha__gte
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: fecha__lte
+        schema:
+          type: string
+          format: date-time
+      - name: limit
+        required: false
+        in: query
+        description: Número de resultados a devolver por página.
+        schema:
+          type: integer
+      - in: query
+        name: lote_control
+        schema:
+          type: integer
+      - in: query
+        name: lote_control__equipo
+        schema:
+          type: integer
+      - in: query
+        name: lote_control__nombre_parametro
+        schema:
+          type: string
+      - name: offset
+        required: false
+        in: query
+        description: El índice inicial a partir del cual devolver los resultados.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Qué campo usar para ordenar los resultados.
+        schema:
+          type: string
+      - in: query
+        name: resultado
+        schema:
+          type: string
+          enum:
+          - aceptada
+          - advertencia
+          - rechazada
+        description: |-
+          * `aceptada` - Aceptada
+          * `advertencia` - Advertencia
+          * `rechazada` - Rechazada
+      - name: search
+        required: false
+        in: query
+        description: Un término de búsqueda.
+        schema:
+          type: string
+      tags:
+      - cci
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCorridaCCIList'
+          description: ''
+    post:
+      operationId: cci_create
+      tags:
+      - cci
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CorridaRegistrarRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CorridaRegistrarRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CorridaRegistrarRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CorridaCCI'
+          description: ''
+  /api/v1/cci/{id}/:
+    get:
+      operationId: cci_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este corrida cci.
+        required: true
+      tags:
+      - cci
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CorridaCCI'
+          description: ''
+  /api/v1/cci/{id}/accion-correctiva/:
+    post:
+      operationId: cci_accion_correctiva_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este corrida cci.
+        required: true
+      tags:
+      - cci
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccionCorrectivaRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AccionCorrectivaRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AccionCorrectivaRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CorridaCCI'
+          description: ''
+  /api/v1/cci/estado/:
+    get:
+      operationId: cci_estado_retrieve
+      description: Estado del CCI del día, modo vigente y propuesta de endurecimiento
+        (RF-50.1.1).
+      parameters:
+      - in: query
+        name: equipo
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: nombre_parametro
+        schema:
+          type: string
+        required: true
+      tags:
+      - cci
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstadoCCI'
+          description: ''
+  /api/v1/cci/politica/:
+    post:
+      operationId: cci_politica_create
+      tags:
+      - cci
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PoliticaDefinirRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PoliticaDefinirRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PoliticaDefinirRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoliticaCCI'
+          description: ''
+  /api/v1/cci/politicas/:
+    get:
+      operationId: cci_politicas_list
+      parameters:
+      - in: query
+        name: fecha__gte
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: fecha__lte
+        schema:
+          type: string
+          format: date-time
+      - name: limit
+        required: false
+        in: query
+        description: Número de resultados a devolver por página.
+        schema:
+          type: integer
+      - in: query
+        name: lote_control
+        schema:
+          type: integer
+      - in: query
+        name: lote_control__equipo
+        schema:
+          type: integer
+      - in: query
+        name: lote_control__nombre_parametro
+        schema:
+          type: string
+      - name: offset
+        required: false
+        in: query
+        description: El índice inicial a partir del cual devolver los resultados.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Qué campo usar para ordenar los resultados.
+        schema:
+          type: string
+      - in: query
+        name: resultado
+        schema:
+          type: string
+          enum:
+          - aceptada
+          - advertencia
+          - rechazada
+        description: |-
+          * `aceptada` - Aceptada
+          * `advertencia` - Advertencia
+          * `rechazada` - Rechazada
+      - name: search
+        required: false
+        in: query
+        description: Un término de búsqueda.
+        schema:
+          type: string
+      tags:
+      - cci
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPoliticaCCIList'
+          description: ''
+  /api/v1/criticos/:
+    get:
+      operationId: criticos_list
+      description: Valores críticos pendientes de acuse y registro del acuse (RF-54).
+      parameters:
+      - in: query
+        name: examen_solicitado__orden
+        schema:
+          type: string
+          format: uuid
+      - name: limit
+        required: false
+        in: query
+        description: Número de resultados a devolver por página.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: El índice inicial a partir del cual devolver los resultados.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Qué campo usar para ordenar los resultados.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Un término de búsqueda.
+        schema:
+          type: string
+      tags:
+      - criticos
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultadoAnalitoList'
+          description: ''
+  /api/v1/criticos/{id}/acusar/:
+    post:
+      operationId: criticos_acusar_create
+      description: Valores críticos pendientes de acuse y registro del acuse (RF-54).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: Un Cadena UUID que identifique este resultado analito.
+        required: true
+      tags:
+      - criticos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcuseRegistrarRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AcuseRegistrarRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AcuseRegistrarRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcuseValorCritico'
+          description: ''
+  /api/v1/criticos/{id}/acuse/:
+    get:
+      operationId: criticos_acuse_retrieve
+      description: Valores críticos pendientes de acuse y registro del acuse (RF-54).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: Un Cadena UUID que identifique este resultado analito.
+        required: true
+      tags:
+      - criticos
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcuseValorCritico'
+          description: ''
   /api/v1/equipos/:
     get:
       operationId: equipos_list
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
       parameters:
       - name: limit
         required: false
@@ -229,8 +609,7 @@ paths:
           description: ''
     post:
       operationId: equipos_create
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
       tags:
       - equipos
       requestBody:
@@ -257,8 +636,7 @@ paths:
   /api/v1/equipos/{id}/:
     get:
       operationId: equipos_retrieve
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
       parameters:
       - in: path
         name: id
@@ -280,8 +658,7 @@ paths:
           description: ''
     put:
       operationId: equipos_update
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
       parameters:
       - in: path
         name: id
@@ -315,8 +692,7 @@ paths:
           description: ''
     patch:
       operationId: equipos_partial_update
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
       parameters:
       - in: path
         name: id
@@ -349,8 +725,7 @@ paths:
           description: ''
     delete:
       operationId: equipos_destroy
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
       parameters:
       - in: path
         name: id
@@ -366,11 +741,235 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v1/equipos/{id}/calibracion/:
+    post:
+      operationId: equipos_calibracion_create
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este Configuración de
+          Equipo.
+        required: true
+      tags:
+      - equipos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CalibracionEquipoRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CalibracionEquipoRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CalibracionEquipoRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalibracionEquipo'
+          description: ''
+  /api/v1/equipos/{id}/calibraciones/:
+    get:
+      operationId: equipos_calibraciones_list
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este Configuración de
+          Equipo.
+        required: true
+      - name: limit
+        required: false
+        in: query
+        description: Número de resultados a devolver por página.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: El índice inicial a partir del cual devolver los resultados.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Qué campo usar para ordenar los resultados.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Un término de búsqueda.
+        schema:
+          type: string
+      tags:
+      - equipos
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCalibracionEquipoList'
+          description: ''
+  /api/v1/equipos/{id}/cambiar-estado/:
+    post:
+      operationId: equipos_cambiar_estado_create
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este Configuración de
+          Equipo.
+        required: true
+      tags:
+      - equipos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CambioEstadoEquipoRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CambioEstadoEquipoRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CambioEstadoEquipoRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/v1/equipos/{id}/latido/:
+    post:
+      operationId: equipos_latido_create
+      description: Latido del Bridge (RF-68). Se autentica igual que la ingesta de
+        lecturas.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este Configuración de
+          Equipo.
+        required: true
+      tags:
+      - equipos
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/v1/equipos/{id}/mantenimiento/:
+    post:
+      operationId: equipos_mantenimiento_create
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este Configuración de
+          Equipo.
+        required: true
+      tags:
+      - equipos
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MantenimientoEquipoRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MantenimientoEquipoRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MantenimientoEquipoRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MantenimientoEquipo'
+          description: ''
+  /api/v1/equipos/{id}/mantenimientos/:
+    get:
+      operationId: equipos_mantenimientos_list
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este Configuración de
+          Equipo.
+        required: true
+      - name: limit
+        required: false
+        in: query
+        description: Número de resultados a devolver por página.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: El índice inicial a partir del cual devolver los resultados.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Qué campo usar para ordenar los resultados.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Un término de búsqueda.
+        schema:
+          type: string
+      tags:
+      - equipos
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedMantenimientoEquipoList'
+          description: ''
   /api/v1/equipos/{id}/regenerar-token/:
     post:
       operationId: equipos_regenerar_token_create
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
       parameters:
       - in: path
         name: id
@@ -919,6 +1518,100 @@ paths:
       responses:
         '204':
           description: No response body
+  /api/v1/eventos-muestra/:
+    get:
+      operationId: eventos_muestra_list
+      description: 'Cadena de custodia: solo lectura; los eventos se crean con las
+        acciones de muestras.'
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Número de resultados a devolver por página.
+        schema:
+          type: integer
+      - in: query
+        name: muestra
+        schema:
+          type: string
+          format: uuid
+      - name: offset
+        required: false
+        in: query
+        description: El índice inicial a partir del cual devolver los resultados.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Qué campo usar para ordenar los resultados.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Un término de búsqueda.
+        schema:
+          type: string
+      - in: query
+        name: tipo
+        schema:
+          type: string
+          enum:
+          - alicuota
+          - almacenamiento
+          - analisis
+          - descarte
+          - nota
+          - recepcion
+          - rechazo
+          - toma
+          - transporte
+        description: |-
+          * `toma` - Toma
+          * `transporte` - Transporte
+          * `recepcion` - Recepción en laboratorio
+          * `alicuota` - Alícuota
+          * `almacenamiento` - Almacenamiento
+          * `analisis` - Análisis
+          * `rechazo` - Rechazo
+          * `descarte` - Descarte
+          * `nota` - Nota
+      tags:
+      - eventos-muestra
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEventoMuestraList'
+          description: ''
+  /api/v1/eventos-muestra/{id}/:
+    get:
+      operationId: eventos_muestra_retrieve
+      description: 'Cadena de custodia: solo lectura; los eventos se crean con las
+        acciones de muestras.'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: Un Cadena UUID que identifique este evento muestra.
+        required: true
+      tags:
+      - eventos-muestra
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventoMuestra'
+          description: ''
   /api/v1/examenes-solicitados/:
     get:
       operationId: examenes_solicitados_list
@@ -1081,10 +1774,28 @@ paths:
         required: true
       tags:
       - examenes-solicitados
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AprobarRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AprobarRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AprobarRequest'
       security:
       - jwtAuth: []
       responses:
         '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '409':
           content:
             application/json:
               schema:
@@ -1333,11 +2044,270 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+  /api/v1/lotes-control/:
+    get:
+      operationId: lotes_control_list
+      parameters:
+      - in: query
+        name: activo
+        schema:
+          type: boolean
+      - in: query
+        name: equipo
+        schema:
+          type: integer
+      - name: limit
+        required: false
+        in: query
+        description: Número de resultados a devolver por página.
+        schema:
+          type: integer
+      - in: query
+        name: nivel
+        schema:
+          type: integer
+      - in: query
+        name: nombre_parametro
+        schema:
+          type: string
+      - name: offset
+        required: false
+        in: query
+        description: El índice inicial a partir del cual devolver los resultados.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Qué campo usar para ordenar los resultados.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Un término de búsqueda.
+        schema:
+          type: string
+      tags:
+      - lotes-control
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLoteControlList'
+          description: ''
+    post:
+      operationId: lotes_control_create
+      tags:
+      - lotes-control
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoteControlRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LoteControlRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LoteControlRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoteControl'
+          description: ''
+  /api/v1/lotes-control/{id}/:
+    get:
+      operationId: lotes_control_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este lote control.
+        required: true
+      tags:
+      - lotes-control
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoteControl'
+          description: ''
+    patch:
+      operationId: lotes_control_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este lote control.
+        required: true
+      tags:
+      - lotes-control
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedLoteControlRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedLoteControlRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedLoteControlRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoteControl'
+          description: ''
+  /api/v1/lotes-reactivo/:
+    get:
+      operationId: lotes_reactivo_list
+      parameters:
+      - in: query
+        name: activo
+        schema:
+          type: boolean
+      - in: query
+        name: equipo
+        schema:
+          type: integer
+      - name: limit
+        required: false
+        in: query
+        description: Número de resultados a devolver por página.
+        schema:
+          type: integer
+      - in: query
+        name: nombre_parametro
+        schema:
+          type: string
+      - name: offset
+        required: false
+        in: query
+        description: El índice inicial a partir del cual devolver los resultados.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Qué campo usar para ordenar los resultados.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Un término de búsqueda.
+        schema:
+          type: string
+      tags:
+      - lotes-reactivo
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLoteReactivoList'
+          description: ''
+    post:
+      operationId: lotes_reactivo_create
+      tags:
+      - lotes-reactivo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoteReactivoRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LoteReactivoRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LoteReactivoRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoteReactivo'
+          description: ''
+  /api/v1/lotes-reactivo/{id}/:
+    get:
+      operationId: lotes_reactivo_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este lote reactivo.
+        required: true
+      tags:
+      - lotes-reactivo
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoteReactivo'
+          description: ''
+    patch:
+      operationId: lotes_reactivo_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este lote reactivo.
+        required: true
+      tags:
+      - lotes-reactivo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedLoteReactivoRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedLoteReactivoRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedLoteReactivoRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoteReactivo'
+          description: ''
   /api/v1/muestras/:
     get:
       operationId: muestras_list
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
       parameters:
       - in: query
         name: condicion_muestra
@@ -1405,8 +2375,7 @@ paths:
           description: ''
     post:
       operationId: muestras_create
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
       tags:
       - muestras
       requestBody:
@@ -1433,8 +2402,7 @@ paths:
   /api/v1/muestras/{id}/:
     get:
       operationId: muestras_retrieve
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
       parameters:
       - in: path
         name: id
@@ -1454,11 +2422,191 @@ paths:
               schema:
                 $ref: '#/components/schemas/MuestraFisica'
           description: ''
+  /api/v1/muestras/{id}/alicuota/:
+    post:
+      operationId: muestras_alicuota_create
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: Un Cadena UUID que identifique este muestra fisica.
+        required: true
+      tags:
+      - muestras
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlicuotaRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AlicuotaRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AlicuotaRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MuestraFisica'
+          description: ''
+  /api/v1/muestras/{id}/custodia/:
+    get:
+      operationId: muestras_custodia_list
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
+      parameters:
+      - in: query
+        name: condicion_muestra
+        schema:
+          type: string
+          enum:
+          - Coagulada
+          - Contaminada
+          - Hemolizada
+          - Icterica
+          - Insuficiente
+          - Lipemica
+          - Normal
+        description: |-
+          * `Normal` - Normal
+          * `Hemolizada` - Hemolizada
+          * `Lipemica` - Lipémica
+          * `Icterica` - Ictérica
+          * `Insuficiente` - Volumen insuficiente
+          * `Coagulada` - Coagulada
+          * `Contaminada` - Contaminada
+      - in: query
+        name: estado_muestra__nombre
+        schema:
+          type: string
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: Un Cadena UUID que identifique este muestra fisica.
+        required: true
+      - name: limit
+        required: false
+        in: query
+        description: Número de resultados a devolver por página.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: El índice inicial a partir del cual devolver los resultados.
+        schema:
+          type: integer
+      - in: query
+        name: orden
+        schema:
+          type: string
+          format: uuid
+      - name: ordering
+        required: false
+        in: query
+        description: Qué campo usar para ordenar los resultados.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Un término de búsqueda.
+        schema:
+          type: string
+      tags:
+      - muestras
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEventoMuestraList'
+          description: ''
+  /api/v1/muestras/{id}/descartar/:
+    post:
+      operationId: muestras_descartar_create
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: Un Cadena UUID que identifique este muestra fisica.
+        required: true
+      tags:
+      - muestras
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccionCorrectivaRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AccionCorrectivaRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AccionCorrectivaRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /api/v1/muestras/{id}/evento/:
+    post:
+      operationId: muestras_evento_create
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: Un Cadena UUID que identifique este muestra fisica.
+        required: true
+      tags:
+      - muestras
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventoAnotarRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EventoAnotarRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EventoAnotarRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventoMuestra'
+          description: ''
   /api/v1/muestras/{id}/rechazar/:
     post:
       operationId: muestras_rechazar_create
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
       parameters:
       - in: path
         name: id
@@ -1494,8 +2642,7 @@ paths:
   /api/v1/muestras/{id}/recibir-laboratorio/:
     post:
       operationId: muestras_recibir_laboratorio_create
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
       parameters:
       - in: path
         name: id
@@ -1519,8 +2666,7 @@ paths:
   /api/v1/muestras/buscar/:
     get:
       operationId: muestras_buscar_retrieve
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
       parameters:
       - in: query
         name: codigo_barras
@@ -2233,8 +3379,8 @@ paths:
           description: ''
     put:
       operationId: parametros_update
-      description: 'Rangos de referencia: los define el Bacteriólogo (RF-13.2); con
-        historial (RF-53).'
+      description: 'RF-53: un cambio de rango crea una versión nueva; la anterior
+        queda cerrada e intacta.'
       parameters:
       - in: path
         name: id
@@ -2966,11 +4112,391 @@ paths:
       responses:
         '204':
           description: No response body
+  /lab/api/v1/cci/:
+    get:
+      operationId: lab_api_v1_cci_list
+      parameters:
+      - in: query
+        name: fecha__gte
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: fecha__lte
+        schema:
+          type: string
+          format: date-time
+      - name: limit
+        required: false
+        in: query
+        description: Número de resultados a devolver por página.
+        schema:
+          type: integer
+      - in: query
+        name: lote_control
+        schema:
+          type: integer
+      - in: query
+        name: lote_control__equipo
+        schema:
+          type: integer
+      - in: query
+        name: lote_control__nombre_parametro
+        schema:
+          type: string
+      - name: offset
+        required: false
+        in: query
+        description: El índice inicial a partir del cual devolver los resultados.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Qué campo usar para ordenar los resultados.
+        schema:
+          type: string
+      - in: query
+        name: resultado
+        schema:
+          type: string
+          enum:
+          - aceptada
+          - advertencia
+          - rechazada
+        description: |-
+          * `aceptada` - Aceptada
+          * `advertencia` - Advertencia
+          * `rechazada` - Rechazada
+      - name: search
+        required: false
+        in: query
+        description: Un término de búsqueda.
+        schema:
+          type: string
+      tags:
+      - lab
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCorridaCCIList'
+          description: ''
+    post:
+      operationId: lab_api_v1_cci_create
+      tags:
+      - lab
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CorridaRegistrarRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CorridaRegistrarRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CorridaRegistrarRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CorridaCCI'
+          description: ''
+  /lab/api/v1/cci/{id}/:
+    get:
+      operationId: lab_api_v1_cci_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este corrida cci.
+        required: true
+      tags:
+      - lab
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CorridaCCI'
+          description: ''
+  /lab/api/v1/cci/{id}/accion-correctiva/:
+    post:
+      operationId: lab_api_v1_cci_accion_correctiva_create
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este corrida cci.
+        required: true
+      tags:
+      - lab
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccionCorrectivaRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AccionCorrectivaRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AccionCorrectivaRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CorridaCCI'
+          description: ''
+  /lab/api/v1/cci/estado/:
+    get:
+      operationId: lab_api_v1_cci_estado_retrieve
+      description: Estado del CCI del día, modo vigente y propuesta de endurecimiento
+        (RF-50.1.1).
+      parameters:
+      - in: query
+        name: equipo
+        schema:
+          type: integer
+        required: true
+      - in: query
+        name: nombre_parametro
+        schema:
+          type: string
+        required: true
+      tags:
+      - lab
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EstadoCCI'
+          description: ''
+  /lab/api/v1/cci/politica/:
+    post:
+      operationId: lab_api_v1_cci_politica_create
+      tags:
+      - lab
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PoliticaDefinirRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PoliticaDefinirRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PoliticaDefinirRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoliticaCCI'
+          description: ''
+  /lab/api/v1/cci/politicas/:
+    get:
+      operationId: lab_api_v1_cci_politicas_list
+      parameters:
+      - in: query
+        name: fecha__gte
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: fecha__lte
+        schema:
+          type: string
+          format: date-time
+      - name: limit
+        required: false
+        in: query
+        description: Número de resultados a devolver por página.
+        schema:
+          type: integer
+      - in: query
+        name: lote_control
+        schema:
+          type: integer
+      - in: query
+        name: lote_control__equipo
+        schema:
+          type: integer
+      - in: query
+        name: lote_control__nombre_parametro
+        schema:
+          type: string
+      - name: offset
+        required: false
+        in: query
+        description: El índice inicial a partir del cual devolver los resultados.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Qué campo usar para ordenar los resultados.
+        schema:
+          type: string
+      - in: query
+        name: resultado
+        schema:
+          type: string
+          enum:
+          - aceptada
+          - advertencia
+          - rechazada
+        description: |-
+          * `aceptada` - Aceptada
+          * `advertencia` - Advertencia
+          * `rechazada` - Rechazada
+      - name: search
+        required: false
+        in: query
+        description: Un término de búsqueda.
+        schema:
+          type: string
+      tags:
+      - lab
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedPoliticaCCIList'
+          description: ''
+  /lab/api/v1/criticos/:
+    get:
+      operationId: lab_api_v1_criticos_list
+      description: Valores críticos pendientes de acuse y registro del acuse (RF-54).
+      parameters:
+      - in: query
+        name: examen_solicitado__orden
+        schema:
+          type: string
+          format: uuid
+      - name: limit
+        required: false
+        in: query
+        description: Número de resultados a devolver por página.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: El índice inicial a partir del cual devolver los resultados.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Qué campo usar para ordenar los resultados.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Un término de búsqueda.
+        schema:
+          type: string
+      tags:
+      - lab
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedResultadoAnalitoList'
+          description: ''
+  /lab/api/v1/criticos/{id}/acusar/:
+    post:
+      operationId: lab_api_v1_criticos_acusar_create
+      description: Valores críticos pendientes de acuse y registro del acuse (RF-54).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: Un Cadena UUID que identifique este resultado analito.
+        required: true
+      tags:
+      - lab
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AcuseRegistrarRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AcuseRegistrarRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AcuseRegistrarRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcuseValorCritico'
+          description: ''
+  /lab/api/v1/criticos/{id}/acuse/:
+    get:
+      operationId: lab_api_v1_criticos_acuse_retrieve
+      description: Valores críticos pendientes de acuse y registro del acuse (RF-54).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: Un Cadena UUID que identifique este resultado analito.
+        required: true
+      tags:
+      - lab
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcuseValorCritico'
+          description: ''
   /lab/api/v1/equipos/:
     get:
       operationId: lab_api_v1_equipos_list
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
       parameters:
       - name: limit
         required: false
@@ -3009,8 +4535,7 @@ paths:
           description: ''
     post:
       operationId: lab_api_v1_equipos_create
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
       tags:
       - lab
       requestBody:
@@ -3037,8 +4562,7 @@ paths:
   /lab/api/v1/equipos/{id}/:
     get:
       operationId: lab_api_v1_equipos_retrieve
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
       parameters:
       - in: path
         name: id
@@ -3060,8 +4584,7 @@ paths:
           description: ''
     put:
       operationId: lab_api_v1_equipos_update
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
       parameters:
       - in: path
         name: id
@@ -3095,8 +4618,7 @@ paths:
           description: ''
     patch:
       operationId: lab_api_v1_equipos_partial_update
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
       parameters:
       - in: path
         name: id
@@ -3129,8 +4651,7 @@ paths:
           description: ''
     delete:
       operationId: lab_api_v1_equipos_destroy
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
       parameters:
       - in: path
         name: id
@@ -3146,11 +4667,235 @@ paths:
       responses:
         '204':
           description: No response body
+  /lab/api/v1/equipos/{id}/calibracion/:
+    post:
+      operationId: lab_api_v1_equipos_calibracion_create
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este Configuración de
+          Equipo.
+        required: true
+      tags:
+      - lab
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CalibracionEquipoRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CalibracionEquipoRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CalibracionEquipoRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CalibracionEquipo'
+          description: ''
+  /lab/api/v1/equipos/{id}/calibraciones/:
+    get:
+      operationId: lab_api_v1_equipos_calibraciones_list
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este Configuración de
+          Equipo.
+        required: true
+      - name: limit
+        required: false
+        in: query
+        description: Número de resultados a devolver por página.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: El índice inicial a partir del cual devolver los resultados.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Qué campo usar para ordenar los resultados.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Un término de búsqueda.
+        schema:
+          type: string
+      tags:
+      - lab
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCalibracionEquipoList'
+          description: ''
+  /lab/api/v1/equipos/{id}/cambiar-estado/:
+    post:
+      operationId: lab_api_v1_equipos_cambiar_estado_create
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este Configuración de
+          Equipo.
+        required: true
+      tags:
+      - lab
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CambioEstadoEquipoRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CambioEstadoEquipoRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CambioEstadoEquipoRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /lab/api/v1/equipos/{id}/latido/:
+    post:
+      operationId: lab_api_v1_equipos_latido_create
+      description: Latido del Bridge (RF-68). Se autentica igual que la ingesta de
+        lecturas.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este Configuración de
+          Equipo.
+        required: true
+      tags:
+      - lab
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /lab/api/v1/equipos/{id}/mantenimiento/:
+    post:
+      operationId: lab_api_v1_equipos_mantenimiento_create
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este Configuración de
+          Equipo.
+        required: true
+      tags:
+      - lab
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MantenimientoEquipoRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/MantenimientoEquipoRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/MantenimientoEquipoRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MantenimientoEquipo'
+          description: ''
+  /lab/api/v1/equipos/{id}/mantenimientos/:
+    get:
+      operationId: lab_api_v1_equipos_mantenimientos_list
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este Configuración de
+          Equipo.
+        required: true
+      - name: limit
+        required: false
+        in: query
+        description: Número de resultados a devolver por página.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: El índice inicial a partir del cual devolver los resultados.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Qué campo usar para ordenar los resultados.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Un término de búsqueda.
+        schema:
+          type: string
+      tags:
+      - lab
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedMantenimientoEquipoList'
+          description: ''
   /lab/api/v1/equipos/{id}/regenerar-token/:
     post:
       operationId: lab_api_v1_equipos_regenerar_token_create
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones que se añaden al ConfiguracionEquipoViewSet.
       parameters:
       - in: path
         name: id
@@ -3699,6 +5444,100 @@ paths:
       responses:
         '204':
           description: No response body
+  /lab/api/v1/eventos-muestra/:
+    get:
+      operationId: lab_api_v1_eventos_muestra_list
+      description: 'Cadena de custodia: solo lectura; los eventos se crean con las
+        acciones de muestras.'
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: Número de resultados a devolver por página.
+        schema:
+          type: integer
+      - in: query
+        name: muestra
+        schema:
+          type: string
+          format: uuid
+      - name: offset
+        required: false
+        in: query
+        description: El índice inicial a partir del cual devolver los resultados.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Qué campo usar para ordenar los resultados.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Un término de búsqueda.
+        schema:
+          type: string
+      - in: query
+        name: tipo
+        schema:
+          type: string
+          enum:
+          - alicuota
+          - almacenamiento
+          - analisis
+          - descarte
+          - nota
+          - recepcion
+          - rechazo
+          - toma
+          - transporte
+        description: |-
+          * `toma` - Toma
+          * `transporte` - Transporte
+          * `recepcion` - Recepción en laboratorio
+          * `alicuota` - Alícuota
+          * `almacenamiento` - Almacenamiento
+          * `analisis` - Análisis
+          * `rechazo` - Rechazo
+          * `descarte` - Descarte
+          * `nota` - Nota
+      tags:
+      - lab
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEventoMuestraList'
+          description: ''
+  /lab/api/v1/eventos-muestra/{id}/:
+    get:
+      operationId: lab_api_v1_eventos_muestra_retrieve
+      description: 'Cadena de custodia: solo lectura; los eventos se crean con las
+        acciones de muestras.'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: Un Cadena UUID que identifique este evento muestra.
+        required: true
+      tags:
+      - lab
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventoMuestra'
+          description: ''
   /lab/api/v1/examenes-solicitados/:
     get:
       operationId: lab_api_v1_examenes_solicitados_list
@@ -3861,10 +5700,28 @@ paths:
         required: true
       tags:
       - lab
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AprobarRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AprobarRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AprobarRequest'
       security:
       - jwtAuth: []
       responses:
         '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+        '409':
           content:
             application/json:
               schema:
@@ -4113,11 +5970,270 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+  /lab/api/v1/lotes-control/:
+    get:
+      operationId: lab_api_v1_lotes_control_list
+      parameters:
+      - in: query
+        name: activo
+        schema:
+          type: boolean
+      - in: query
+        name: equipo
+        schema:
+          type: integer
+      - name: limit
+        required: false
+        in: query
+        description: Número de resultados a devolver por página.
+        schema:
+          type: integer
+      - in: query
+        name: nivel
+        schema:
+          type: integer
+      - in: query
+        name: nombre_parametro
+        schema:
+          type: string
+      - name: offset
+        required: false
+        in: query
+        description: El índice inicial a partir del cual devolver los resultados.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Qué campo usar para ordenar los resultados.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Un término de búsqueda.
+        schema:
+          type: string
+      tags:
+      - lab
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLoteControlList'
+          description: ''
+    post:
+      operationId: lab_api_v1_lotes_control_create
+      tags:
+      - lab
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoteControlRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LoteControlRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LoteControlRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoteControl'
+          description: ''
+  /lab/api/v1/lotes-control/{id}/:
+    get:
+      operationId: lab_api_v1_lotes_control_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este lote control.
+        required: true
+      tags:
+      - lab
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoteControl'
+          description: ''
+    patch:
+      operationId: lab_api_v1_lotes_control_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este lote control.
+        required: true
+      tags:
+      - lab
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedLoteControlRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedLoteControlRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedLoteControlRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoteControl'
+          description: ''
+  /lab/api/v1/lotes-reactivo/:
+    get:
+      operationId: lab_api_v1_lotes_reactivo_list
+      parameters:
+      - in: query
+        name: activo
+        schema:
+          type: boolean
+      - in: query
+        name: equipo
+        schema:
+          type: integer
+      - name: limit
+        required: false
+        in: query
+        description: Número de resultados a devolver por página.
+        schema:
+          type: integer
+      - in: query
+        name: nombre_parametro
+        schema:
+          type: string
+      - name: offset
+        required: false
+        in: query
+        description: El índice inicial a partir del cual devolver los resultados.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Qué campo usar para ordenar los resultados.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Un término de búsqueda.
+        schema:
+          type: string
+      tags:
+      - lab
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedLoteReactivoList'
+          description: ''
+    post:
+      operationId: lab_api_v1_lotes_reactivo_create
+      tags:
+      - lab
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoteReactivoRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/LoteReactivoRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/LoteReactivoRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoteReactivo'
+          description: ''
+  /lab/api/v1/lotes-reactivo/{id}/:
+    get:
+      operationId: lab_api_v1_lotes_reactivo_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este lote reactivo.
+        required: true
+      tags:
+      - lab
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoteReactivo'
+          description: ''
+    patch:
+      operationId: lab_api_v1_lotes_reactivo_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este lote reactivo.
+        required: true
+      tags:
+      - lab
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedLoteReactivoRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedLoteReactivoRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedLoteReactivoRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoteReactivo'
+          description: ''
   /lab/api/v1/muestras/:
     get:
       operationId: lab_api_v1_muestras_list
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
       parameters:
       - in: query
         name: condicion_muestra
@@ -4185,8 +6301,7 @@ paths:
           description: ''
     post:
       operationId: lab_api_v1_muestras_create
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
       tags:
       - lab
       requestBody:
@@ -4213,8 +6328,7 @@ paths:
   /lab/api/v1/muestras/{id}/:
     get:
       operationId: lab_api_v1_muestras_retrieve
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
       parameters:
       - in: path
         name: id
@@ -4234,11 +6348,191 @@ paths:
               schema:
                 $ref: '#/components/schemas/MuestraFisica'
           description: ''
+  /lab/api/v1/muestras/{id}/alicuota/:
+    post:
+      operationId: lab_api_v1_muestras_alicuota_create
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: Un Cadena UUID que identifique este muestra fisica.
+        required: true
+      tags:
+      - lab
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AlicuotaRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AlicuotaRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AlicuotaRequest'
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MuestraFisica'
+          description: ''
+  /lab/api/v1/muestras/{id}/custodia/:
+    get:
+      operationId: lab_api_v1_muestras_custodia_list
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
+      parameters:
+      - in: query
+        name: condicion_muestra
+        schema:
+          type: string
+          enum:
+          - Coagulada
+          - Contaminada
+          - Hemolizada
+          - Icterica
+          - Insuficiente
+          - Lipemica
+          - Normal
+        description: |-
+          * `Normal` - Normal
+          * `Hemolizada` - Hemolizada
+          * `Lipemica` - Lipémica
+          * `Icterica` - Ictérica
+          * `Insuficiente` - Volumen insuficiente
+          * `Coagulada` - Coagulada
+          * `Contaminada` - Contaminada
+      - in: query
+        name: estado_muestra__nombre
+        schema:
+          type: string
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: Un Cadena UUID que identifique este muestra fisica.
+        required: true
+      - name: limit
+        required: false
+        in: query
+        description: Número de resultados a devolver por página.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: El índice inicial a partir del cual devolver los resultados.
+        schema:
+          type: integer
+      - in: query
+        name: orden
+        schema:
+          type: string
+          format: uuid
+      - name: ordering
+        required: false
+        in: query
+        description: Qué campo usar para ordenar los resultados.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Un término de búsqueda.
+        schema:
+          type: string
+      tags:
+      - lab
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedEventoMuestraList'
+          description: ''
+  /lab/api/v1/muestras/{id}/descartar/:
+    post:
+      operationId: lab_api_v1_muestras_descartar_create
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: Un Cadena UUID que identifique este muestra fisica.
+        required: true
+      tags:
+      - lab
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccionCorrectivaRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/AccionCorrectivaRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/AccionCorrectivaRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: {}
+          description: ''
+  /lab/api/v1/muestras/{id}/evento/:
+    post:
+      operationId: lab_api_v1_muestras_evento_create
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: Un Cadena UUID que identifique este muestra fisica.
+        required: true
+      tags:
+      - lab
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventoAnotarRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/EventoAnotarRequest'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/EventoAnotarRequest'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventoMuestra'
+          description: ''
   /lab/api/v1/muestras/{id}/rechazar/:
     post:
       operationId: lab_api_v1_muestras_rechazar_create
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
       parameters:
       - in: path
         name: id
@@ -4274,8 +6568,7 @@ paths:
   /lab/api/v1/muestras/{id}/recibir-laboratorio/:
     post:
       operationId: lab_api_v1_muestras_recibir_laboratorio_create
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
       parameters:
       - in: path
         name: id
@@ -4299,8 +6592,7 @@ paths:
   /lab/api/v1/muestras/buscar/:
     get:
       operationId: lab_api_v1_muestras_buscar_retrieve
-      description: Envoltura estándar en create/retrieve/update; los errores los maneja
-        el handler global.
+      description: Acciones de custodia que se añaden al MuestraFisicaViewSet.
       parameters:
       - in: query
         name: codigo_barras
@@ -5013,8 +7305,8 @@ paths:
           description: ''
     put:
       operationId: lab_api_v1_parametros_update
-      description: 'Rangos de referencia: los define el Bacteriólogo (RF-13.2); con
-        historial (RF-53).'
+      description: 'RF-53: un cambio de rango crea una versión nueva; la anterior
+        queda cerrada e intacta.'
       parameters:
       - in: path
         name: id
@@ -7055,6 +9347,199 @@ paths:
           description: No response body
 components:
   schemas:
+    AccionCorrectivaRequest:
+      type: object
+      properties:
+        accion_correctiva:
+          type: string
+          minLength: 1
+      required:
+      - accion_correctiva
+    AcuseRegistrarRequest:
+      type: object
+      properties:
+        comunicado_a:
+          type: string
+          minLength: 1
+          maxLength: 150
+        medio:
+          $ref: '#/components/schemas/MedioEnum'
+        read_back:
+          type: boolean
+        fecha_declarada:
+          type: string
+          format: date-time
+          nullable: true
+        observacion:
+          type: string
+      required:
+      - comunicado_a
+      - medio
+      - read_back
+    AcuseValorCritico:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        resultado:
+          type: string
+          format: uuid
+          readOnly: true
+        comunicado_a:
+          type: string
+          readOnly: true
+          description: Nombre del médico o enfermera que recibió el valor.
+        medio:
+          allOf:
+          - $ref: '#/components/schemas/MedioEnum'
+          readOnly: true
+        read_back:
+          type: boolean
+          readOnly: true
+          description: El receptor repitió el valor (confirmación).
+        fecha_comunicacion:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Hora del servidor al registrar el acuse.
+        fecha_declarada:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: Hora en que se hizo la llamada, si fue antes.
+        registrado_por:
+          type: integer
+          readOnly: true
+        registrado_por_username:
+          type: string
+          title: Nombre de usuario
+          description: 'Requerido. 150 carácteres como máximo. Únicamente letras,
+            dígitos y @/./+/-/_ '
+          readOnly: true
+        observacion:
+          type: string
+          readOnly: true
+        escalado:
+          type: boolean
+          readOnly: true
+        fecha_escalado:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+      required:
+      - comunicado_a
+      - escalado
+      - fecha_comunicacion
+      - fecha_declarada
+      - fecha_escalado
+      - id
+      - medio
+      - observacion
+      - read_back
+      - registrado_por
+      - registrado_por_username
+      - resultado
+    AlicuotaRequest:
+      type: object
+      properties:
+        tipo_muestra:
+          type: string
+          minLength: 1
+          maxLength: 50
+        codigo_barras:
+          type: string
+          maxLength: 50
+        ubicacion:
+          type: string
+          maxLength: 120
+    AprobarRequest:
+      type: object
+      properties:
+        justificacion_cci:
+          type: string
+          nullable: true
+    CalibracionEquipo:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        equipo:
+          type: integer
+          readOnly: true
+        fecha:
+          type: string
+          format: date
+        vigente_hasta:
+          type: string
+          format: date
+        resultado:
+          $ref: '#/components/schemas/CalibracionEquipoResultadoEnum'
+        realizada_por:
+          type: string
+          description: Técnico o empresa que calibró.
+          maxLength: 120
+        certificado:
+          type: string
+          nullable: true
+          maxLength: 120
+        observacion:
+          type: string
+          nullable: true
+        registrada_por:
+          type: integer
+          readOnly: true
+          nullable: true
+        creada:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - creada
+      - equipo
+      - fecha
+      - id
+      - realizada_por
+      - registrada_por
+      - vigente_hasta
+    CalibracionEquipoRequest:
+      type: object
+      properties:
+        fecha:
+          type: string
+          format: date
+        vigente_hasta:
+          type: string
+          format: date
+        resultado:
+          $ref: '#/components/schemas/CalibracionEquipoResultadoEnum'
+        realizada_por:
+          type: string
+          minLength: 1
+          description: Técnico o empresa que calibró.
+          maxLength: 120
+        certificado:
+          type: string
+          nullable: true
+          maxLength: 120
+        observacion:
+          type: string
+          nullable: true
+      required:
+      - fecha
+      - realizada_por
+      - vigente_hasta
+    CalibracionEquipoResultadoEnum:
+      enum:
+      - conforme
+      - no_conforme
+      type: string
+      description: |-
+        * `conforme` - Conforme
+        * `no_conforme` - No conforme
     CambioContrasenaRequest:
       type: object
       properties:
@@ -7069,6 +9554,15 @@ components:
       required:
       - password_actual
       - password_nueva
+    CambioEstadoEquipoRequest:
+      type: object
+      properties:
+        estado:
+          $ref: '#/components/schemas/EstadoEquipoEnum'
+        motivo:
+          type: string
+      required:
+      - estado
     CatalogoCups:
       type: object
       properties:
@@ -7191,11 +9685,28 @@ components:
         endpoint_destino:
           type: string
           maxLength: 200
+        estado:
+          allOf:
+          - $ref: '#/components/schemas/EstadoEquipoEnum'
+          readOnly: true
+        calibracion_vigente_hasta:
+          type: string
+          format: date
+          readOnly: true
+          nullable: true
+        ultimo_latido:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
       required:
+      - calibracion_vigente_hasta
       - codigo_equipo
+      - estado
       - id
       - nombre
       - puerto
+      - ultimo_latido
     ConfiguracionEquipoRequest:
       type: object
       description: 'El token nunca se devuelve: solo lo entrega `regenerar-token`
@@ -7235,6 +9746,120 @@ components:
       - codigo_equipo
       - nombre
       - puerto
+    CorridaCCI:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        lote_control:
+          type: integer
+          readOnly: true
+        lote_descripcion:
+          type: string
+          readOnly: true
+        nombre_parametro:
+          type: string
+          readOnly: true
+        nivel:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          description: 1 = normal, 2 = patológico, 3 = alto
+          readOnly: true
+        equipo:
+          type: integer
+          readOnly: true
+        valor:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,4})?$
+          readOnly: true
+        z_score:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,5}(?:\.\d{0,3})?$
+          readOnly: true
+        resultado:
+          allOf:
+          - $ref: '#/components/schemas/CorridaCCIResultadoEnum'
+          readOnly: true
+        reglas_violadas:
+          readOnly: true
+        fecha:
+          type: string
+          format: date-time
+          readOnly: true
+        registrada_por:
+          type: integer
+          readOnly: true
+          nullable: true
+        registrada_por_username:
+          type: string
+          title: Nombre de usuario
+          description: 'Requerido. 150 carácteres como máximo. Únicamente letras,
+            dígitos y @/./+/-/_ '
+          readOnly: true
+        lectura:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: true
+        accion_correctiva:
+          type: string
+          readOnly: true
+          nullable: true
+          description: Documentada por el bacteriólogo; libera un rechazo.
+        accion_correctiva_por:
+          type: integer
+          readOnly: true
+          nullable: true
+        fecha_accion_correctiva:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+      required:
+      - accion_correctiva
+      - accion_correctiva_por
+      - equipo
+      - fecha
+      - fecha_accion_correctiva
+      - id
+      - lectura
+      - lote_control
+      - lote_descripcion
+      - nivel
+      - nombre_parametro
+      - registrada_por
+      - registrada_por_username
+      - reglas_violadas
+      - resultado
+      - valor
+      - z_score
+    CorridaCCIResultadoEnum:
+      enum:
+      - aceptada
+      - advertencia
+      - rechazada
+      type: string
+      description: |-
+        * `aceptada` - Aceptada
+        * `advertencia` - Advertencia
+        * `rechazada` - Rechazada
+    CorridaRegistrarRequest:
+      type: object
+      properties:
+        lote_control:
+          type: integer
+        valor:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,4})?$
+      required:
+      - lote_control
+      - valor
     Departamento:
       type: object
       properties:
@@ -7314,6 +9939,36 @@ components:
       - user_agent
       - usuario
       - usuario_username
+    EstadoCCI:
+      type: object
+      properties:
+        equipo:
+          type: integer
+        nombre_parametro:
+          type: string
+        estado:
+          type: string
+        modo:
+          type: string
+        propuesta:
+          type: object
+          additionalProperties: {}
+      required:
+      - equipo
+      - estado
+      - modo
+      - nombre_parametro
+      - propuesta
+    EstadoEquipoEnum:
+      enum:
+      - operativo
+      - mantenimiento
+      - fuera_servicio
+      type: string
+      description: |-
+        * `operativo` - Operativo
+        * `mantenimiento` - En mantenimiento
+        * `fuera_servicio` - Fuera de servicio
     EstadoExamen:
       type: object
       properties:
@@ -7405,6 +10060,134 @@ components:
           maxLength: 200
       required:
       - nombre
+    EventoAnotarRequest:
+      type: object
+      properties:
+        tipo:
+          $ref: '#/components/schemas/EventoAnotarTipoEnum'
+        ubicacion:
+          type: string
+          maxLength: 120
+        observacion:
+          type: string
+        temperatura:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,4}(?:\.\d{0,1})?$
+          nullable: true
+      required:
+      - tipo
+    EventoAnotarTipoEnum:
+      enum:
+      - transporte
+      - almacenamiento
+      - analisis
+      - nota
+      type: string
+      description: |-
+        * `transporte` - transporte
+        * `almacenamiento` - almacenamiento
+        * `analisis` - analisis
+        * `nota` - nota
+    EventoMuestra:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        muestra:
+          type: string
+          format: uuid
+          readOnly: true
+        muestra_codigo:
+          type: string
+          readOnly: true
+        tipo:
+          allOf:
+          - $ref: '#/components/schemas/EventoMuestraTipoEnum'
+          readOnly: true
+        fecha:
+          type: string
+          format: date-time
+          readOnly: true
+          description: Hora del servidor (RN-27).
+        fecha_declarada_dispositivo:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+        usuario:
+          type: integer
+          readOnly: true
+          nullable: true
+        usuario_username:
+          type: string
+          title: Nombre de usuario
+          description: 'Requerido. 150 carácteres como máximo. Únicamente letras,
+            dígitos y @/./+/-/_ '
+          readOnly: true
+        rol:
+          type: string
+          readOnly: true
+        ubicacion:
+          type: string
+          readOnly: true
+        temperatura:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,4}(?:\.\d{0,1})?$
+          readOnly: true
+          nullable: true
+        observacion:
+          type: string
+          readOnly: true
+        muestra_relacionada:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: true
+          description: Alícuota creada o muestra madre, según el evento.
+        muestra_relacionada_codigo:
+          type: string
+          readOnly: true
+      required:
+      - fecha
+      - fecha_declarada_dispositivo
+      - id
+      - muestra
+      - muestra_codigo
+      - muestra_relacionada
+      - muestra_relacionada_codigo
+      - observacion
+      - rol
+      - temperatura
+      - tipo
+      - ubicacion
+      - usuario
+      - usuario_username
+    EventoMuestraTipoEnum:
+      enum:
+      - toma
+      - transporte
+      - recepcion
+      - alicuota
+      - almacenamiento
+      - analisis
+      - rechazo
+      - descarte
+      - nota
+      type: string
+      description: |-
+        * `toma` - Toma
+        * `transporte` - Transporte
+        * `recepcion` - Recepción en laboratorio
+        * `alicuota` - Alícuota
+        * `almacenamiento` - Almacenamiento
+        * `analisis` - Análisis
+        * `rechazo` - Rechazo
+        * `descarte` - Descarte
+        * `nota` - Nota
     ExamenAgregarRequest:
       type: object
       description: Agregar un examen a una orden abierta.
@@ -7485,6 +10268,13 @@ components:
           format: date-time
           readOnly: true
           nullable: true
+        estado_cci_validacion:
+          type: string
+          readOnly: true
+        justificacion_cci:
+          type: string
+          readOnly: true
+          nullable: true
         motivo_rechazo:
           type: string
           readOnly: true
@@ -7512,12 +10302,14 @@ components:
       - cups_codigo
       - cups_descripcion
       - es_final
+      - estado_cci_validacion
       - estado_examen
       - estado_examen_nombre
       - fecha_anulacion
       - fecha_rechazo
       - fecha_validacion
       - id
+      - justificacion_cci
       - motivo_anulacion
       - motivo_rechazo
       - muestra
@@ -7710,6 +10502,290 @@ components:
       properties:
         refresh:
           type: string
+    LoteControl:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        equipo:
+          type: integer
+        equipo_codigo:
+          type: string
+          readOnly: true
+        nombre_parametro:
+          type: string
+          maxLength: 100
+        nivel:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          description: 1 = normal, 2 = patológico, 3 = alto
+        lote:
+          type: string
+          maxLength: 60
+        fecha_vencimiento:
+          type: string
+          format: date
+        media_objetivo:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,4})?$
+        desviacion_objetivo:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,4})?$
+        unidades:
+          type: string
+          nullable: true
+          maxLength: 20
+        activo:
+          type: boolean
+        registrado_por:
+          type: integer
+          readOnly: true
+          nullable: true
+        creado:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - creado
+      - desviacion_objetivo
+      - equipo
+      - equipo_codigo
+      - fecha_vencimiento
+      - id
+      - lote
+      - media_objetivo
+      - nombre_parametro
+      - registrado_por
+    LoteControlRequest:
+      type: object
+      properties:
+        equipo:
+          type: integer
+        nombre_parametro:
+          type: string
+          minLength: 1
+          maxLength: 100
+        nivel:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          description: 1 = normal, 2 = patológico, 3 = alto
+        lote:
+          type: string
+          minLength: 1
+          maxLength: 60
+        fecha_vencimiento:
+          type: string
+          format: date
+        media_objetivo:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,4})?$
+        desviacion_objetivo:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,4})?$
+        unidades:
+          type: string
+          nullable: true
+          maxLength: 20
+        activo:
+          type: boolean
+      required:
+      - desviacion_objetivo
+      - equipo
+      - fecha_vencimiento
+      - lote
+      - media_objetivo
+      - nombre_parametro
+    LoteReactivo:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        equipo:
+          type: integer
+          nullable: true
+        equipo_codigo:
+          type: string
+          readOnly: true
+        nombre_parametro:
+          type: string
+          description: Vacío = aplica a todos los analitos del equipo.
+          maxLength: 100
+        nombre:
+          type: string
+          maxLength: 120
+        lote:
+          type: string
+          maxLength: 60
+        fecha_vencimiento:
+          type: string
+          format: date
+        fecha_apertura:
+          type: string
+          format: date
+          nullable: true
+        activo:
+          type: boolean
+        vencido:
+          type: boolean
+          readOnly: true
+        registrado_por:
+          type: integer
+          readOnly: true
+          nullable: true
+        creado:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - creado
+      - equipo_codigo
+      - fecha_vencimiento
+      - id
+      - lote
+      - nombre
+      - registrado_por
+      - vencido
+    LoteReactivoRequest:
+      type: object
+      properties:
+        equipo:
+          type: integer
+          nullable: true
+        nombre_parametro:
+          type: string
+          description: Vacío = aplica a todos los analitos del equipo.
+          maxLength: 100
+        nombre:
+          type: string
+          minLength: 1
+          maxLength: 120
+        lote:
+          type: string
+          minLength: 1
+          maxLength: 60
+        fecha_vencimiento:
+          type: string
+          format: date
+        fecha_apertura:
+          type: string
+          format: date
+          nullable: true
+        activo:
+          type: boolean
+      required:
+      - fecha_vencimiento
+      - lote
+      - nombre
+    MantenimientoEquipo:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        equipo:
+          type: integer
+          readOnly: true
+        tipo:
+          $ref: '#/components/schemas/MantenimientoEquipoTipoEnum'
+        fecha:
+          type: string
+          format: date
+        descripcion:
+          type: string
+        realizado_por:
+          type: string
+          maxLength: 120
+        proximo:
+          type: string
+          format: date
+          nullable: true
+          description: Fecha del próximo mantenimiento preventivo.
+        registrado_por:
+          type: integer
+          readOnly: true
+          nullable: true
+        creado:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - creado
+      - descripcion
+      - equipo
+      - fecha
+      - id
+      - realizado_por
+      - registrado_por
+      - tipo
+    MantenimientoEquipoRequest:
+      type: object
+      properties:
+        tipo:
+          $ref: '#/components/schemas/MantenimientoEquipoTipoEnum'
+        fecha:
+          type: string
+          format: date
+        descripcion:
+          type: string
+          minLength: 1
+        realizado_por:
+          type: string
+          minLength: 1
+          maxLength: 120
+        proximo:
+          type: string
+          format: date
+          nullable: true
+          description: Fecha del próximo mantenimiento preventivo.
+        nuevo_estado:
+          allOf:
+          - $ref: '#/components/schemas/EstadoEquipoEnum'
+          writeOnly: true
+      required:
+      - descripcion
+      - fecha
+      - realizado_por
+      - tipo
+    MantenimientoEquipoTipoEnum:
+      enum:
+      - preventivo
+      - correctivo
+      type: string
+      description: |-
+        * `preventivo` - Preventivo
+        * `correctivo` - Correctivo
+    MedioEnum:
+      enum:
+      - telefono
+      - presencial
+      - sistema
+      - otro
+      type: string
+      description: |-
+        * `telefono` - Teléfono
+        * `presencial` - Presencial
+        * `sistema` - Sistema
+        * `otro` - Otro
+    ModoEnum:
+      enum:
+      - informativo
+      - advertencia
+      - bloqueante
+      type: string
+      description: |-
+        * `informativo` - Informativo
+        * `advertencia` - Advertencia
+        * `bloqueante` - Bloqueante
     MotivoRequest:
       type: object
       properties:
@@ -7736,6 +10812,15 @@ components:
           format: date-time
         condicion_muestra:
           $ref: '#/components/schemas/CondicionMuestraEnum'
+        fecha_declarada_dispositivo:
+          type: string
+          format: date-time
+          nullable: true
+        ubicacion:
+          type: string
+          maxLength: 120
+        observacion:
+          type: string
         examenes:
           type: array
           items:
@@ -7816,6 +10901,22 @@ components:
           type: integer
           readOnly: true
           nullable: true
+        muestra_madre:
+          type: string
+          format: uuid
+          readOnly: true
+          nullable: true
+          description: Muestra de la que se obtuvo esta alícuota.
+        ubicacion_actual:
+          type: string
+          readOnly: true
+        fecha_declarada_dispositivo:
+          type: string
+          format: date-time
+          readOnly: true
+          nullable: true
+          description: Hora de toma declarada por el dispositivo (operación offline,
+            RN-27).
         examenes:
           type: array
           items:
@@ -7831,17 +10932,20 @@ components:
       - estado_muestra
       - estado_muestra_nombre
       - examenes
+      - fecha_declarada_dispositivo
       - fecha_recepcion
       - fecha_rechazo
       - fecha_recoleccion
       - id
       - motivo_rechazo
+      - muestra_madre
       - orden
       - orden_numero
       - paciente_nombre
       - rechazada_por
       - recibida_por
       - tipo_muestra
+      - ubicacion_actual
       - usuario_recolecta
       - usuario_recolecta_username
       - version
@@ -8248,6 +11352,29 @@ components:
       - primer_nombre
       - sexo_biologico
       - tipo_documento
+    PaginatedCalibracionEquipoList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CalibracionEquipo'
     PaginatedCatalogoCupsList:
       type: object
       required:
@@ -8294,6 +11421,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/ConfiguracionEquipo'
+    PaginatedCorridaCCIList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/CorridaCCI'
     PaginatedDepartamentoList:
       type: object
       required:
@@ -8409,6 +11559,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EstadoOrden'
+    PaginatedEventoMuestraList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/EventoMuestra'
     PaginatedExamenSolicitadoList:
       type: object
       required:
@@ -8478,6 +11651,75 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/LecturaEquipoSerial'
+    PaginatedLoteControlList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoteControl'
+    PaginatedLoteReactivoList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/LoteReactivo'
+    PaginatedMantenimientoEquipoList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/MantenimientoEquipo'
     PaginatedMuestraFisicaList:
       type: object
       required:
@@ -8639,6 +11881,29 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Permiso'
+    PaginatedPoliticaCCIList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/PoliticaCCI'
     PaginatedResultadoAnalitoList:
       type: object
       required:
@@ -8886,8 +12151,34 @@ components:
           minimum: 0
           format: int64
           nullable: true
+        metodo:
+          type: string
+          nullable: true
+          description: Método analítico (aparece en el informe, RF-63).
+          maxLength: 100
+        codigo_loinc:
+          type: string
+          nullable: true
+          maxLength: 20
+        unidad_ucum:
+          type: string
+          nullable: true
+          maxLength: 30
         activo:
           type: boolean
+        vigente_desde:
+          type: string
+          format: date
+          readOnly: true
+        vigente_hasta:
+          type: string
+          format: date
+          readOnly: true
+          nullable: true
+        version_anterior:
+          type: integer
+          readOnly: true
+          nullable: true
         version:
           type: integer
           readOnly: true
@@ -8897,6 +12188,9 @@ components:
       - id
       - nombre_parametro
       - version
+      - version_anterior
+      - vigente_desde
+      - vigente_hasta
     ParametroExamenRequest:
       type: object
       properties:
@@ -8955,6 +12249,19 @@ components:
           minimum: 0
           format: int64
           nullable: true
+        metodo:
+          type: string
+          nullable: true
+          description: Método analítico (aparece en el informe, RF-63).
+          maxLength: 100
+        codigo_loinc:
+          type: string
+          nullable: true
+          maxLength: 20
+        unidad_ucum:
+          type: string
+          nullable: true
+          maxLength: 30
         activo:
           type: boolean
       required:
@@ -9055,6 +12362,69 @@ components:
           type: string
           nullable: true
           maxLength: 200
+    PatchedLoteControlRequest:
+      type: object
+      properties:
+        equipo:
+          type: integer
+        nombre_parametro:
+          type: string
+          minLength: 1
+          maxLength: 100
+        nivel:
+          type: integer
+          maximum: 9223372036854775807
+          minimum: 0
+          format: int64
+          description: 1 = normal, 2 = patológico, 3 = alto
+        lote:
+          type: string
+          minLength: 1
+          maxLength: 60
+        fecha_vencimiento:
+          type: string
+          format: date
+        media_objetivo:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,4})?$
+        desviacion_objetivo:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,8}(?:\.\d{0,4})?$
+        unidades:
+          type: string
+          nullable: true
+          maxLength: 20
+        activo:
+          type: boolean
+    PatchedLoteReactivoRequest:
+      type: object
+      properties:
+        equipo:
+          type: integer
+          nullable: true
+        nombre_parametro:
+          type: string
+          description: Vacío = aplica a todos los analitos del equipo.
+          maxLength: 100
+        nombre:
+          type: string
+          minLength: 1
+          maxLength: 120
+        lote:
+          type: string
+          minLength: 1
+          maxLength: 60
+        fecha_vencimiento:
+          type: string
+          format: date
+        fecha_apertura:
+          type: string
+          format: date
+          nullable: true
+        activo:
+          type: boolean
     PatchedMunicipioRequest:
       type: object
       properties:
@@ -9202,6 +12572,19 @@ components:
           minimum: 0
           format: int64
           nullable: true
+        metodo:
+          type: string
+          nullable: true
+          description: Método analítico (aparece en el informe, RF-63).
+          maxLength: 100
+        codigo_loinc:
+          type: string
+          nullable: true
+          maxLength: 20
+        unidad_ucum:
+          type: string
+          nullable: true
+          maxLength: 30
         activo:
           type: boolean
     PatchedPerfilPropioRequest:
@@ -9529,6 +12912,52 @@ components:
       required:
       - permiso
       - tipo_usuario
+    PoliticaCCI:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        equipo:
+          type: integer
+        equipo_codigo:
+          type: string
+          readOnly: true
+        nombre_parametro:
+          type: string
+          maxLength: 100
+        modo:
+          $ref: '#/components/schemas/ModoEnum'
+        actualizada_por:
+          type: integer
+          readOnly: true
+          nullable: true
+        actualizada:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - actualizada
+      - actualizada_por
+      - equipo
+      - equipo_codigo
+      - id
+      - nombre_parametro
+    PoliticaDefinirRequest:
+      type: object
+      properties:
+        equipo:
+          type: integer
+        nombre_parametro:
+          type: string
+          minLength: 1
+          maxLength: 100
+        modo:
+          $ref: '#/components/schemas/ModoEnum'
+      required:
+      - equipo
+      - modo
+      - nombre_parametro
     ProtocoloEnum:
       enum:
       - HL7
@@ -9643,6 +13072,28 @@ components:
           type: integer
           readOnly: true
           nullable: true
+        metodo_aplicado:
+          type: string
+          readOnly: true
+          nullable: true
+        equipo:
+          type: integer
+          readOnly: true
+          nullable: true
+        lote_reactivo:
+          type: integer
+          readOnly: true
+          nullable: true
+        lote_control:
+          type: integer
+          readOnly: true
+          nullable: true
+        critico_escalado:
+          type: boolean
+          readOnly: true
+        tiene_acuse:
+          type: boolean
+          readOnly: true
         comentario_bacteriologo:
           type: string
           readOnly: true
@@ -9660,6 +13111,8 @@ components:
           readOnly: true
       required:
       - comentario_bacteriologo
+      - critico_escalado
+      - equipo
       - es_anormal
       - es_critico
       - examen_estado
@@ -9667,6 +13120,9 @@ components:
       - fecha_procesamiento
       - id
       - lectura_serial
+      - lote_control
+      - lote_reactivo
+      - metodo_aplicado
       - muestra
       - orden
       - parametro
@@ -9676,6 +13132,7 @@ components:
       - rango_min_aplicado
       - rango_texto_aplicado
       - registrado_por
+      - tiene_acuse
       - unidades
       - unidades_aplicadas
       - valor_numerico
@@ -9695,6 +13152,9 @@ components:
           maxLength: 100
         comentario_bacteriologo:
           type: string
+          nullable: true
+        equipo:
+          type: integer
           nullable: true
       required:
       - examen_solicitado

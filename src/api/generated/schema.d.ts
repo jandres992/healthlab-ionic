@@ -42,6 +42,154 @@ export interface paths {
         patch: operations["catalogo_cups_partial_update"];
         trace?: never;
     };
+    "/api/v1/cci/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["cci_list"];
+        put?: never;
+        post: operations["cci_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cci/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["cci_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cci/{id}/accion-correctiva/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["cci_accion_correctiva_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cci/estado/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Estado del CCI del día, modo vigente y propuesta de endurecimiento (RF-50.1.1). */
+        get: operations["cci_estado_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cci/politica/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["cci_politica_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/cci/politicas/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["cci_politicas_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/criticos/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Valores críticos pendientes de acuse y registro del acuse (RF-54). */
+        get: operations["criticos_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/criticos/{id}/acusar/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Valores críticos pendientes de acuse y registro del acuse (RF-54). */
+        post: operations["criticos_acusar_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/criticos/{id}/acuse/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Valores críticos pendientes de acuse y registro del acuse (RF-54). */
+        get: operations["criticos_acuse_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/equipos/": {
         parameters: {
             query?: never;
@@ -49,10 +197,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
         get: operations["equipos_list"];
         put?: never;
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
         post: operations["equipos_create"];
         delete?: never;
         options?: never;
@@ -67,17 +215,119 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
         get: operations["equipos_retrieve"];
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
         put: operations["equipos_update"];
         post?: never;
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
         delete: operations["equipos_destroy"];
         options?: never;
         head?: never;
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
         patch: operations["equipos_partial_update"];
+        trace?: never;
+    };
+    "/api/v1/equipos/{id}/calibracion/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
+        post: operations["equipos_calibracion_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/equipos/{id}/calibraciones/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
+        get: operations["equipos_calibraciones_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/equipos/{id}/cambiar-estado/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
+        post: operations["equipos_cambiar_estado_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/equipos/{id}/latido/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Latido del Bridge (RF-68). Se autentica igual que la ingesta de lecturas. */
+        post: operations["equipos_latido_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/equipos/{id}/mantenimiento/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
+        post: operations["equipos_mantenimiento_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/equipos/{id}/mantenimientos/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
+        get: operations["equipos_mantenimientos_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/api/v1/equipos/{id}/regenerar-token/": {
@@ -89,7 +339,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
         post: operations["equipos_regenerar_token_create"];
         delete?: never;
         options?: never;
@@ -209,6 +459,40 @@ export interface paths {
         head?: never;
         /** @description Catálogos: lectura para todos los roles, escritura solo Administrador; borrado = desactivar. */
         patch: operations["estados_orden_partial_update"];
+        trace?: never;
+    };
+    "/api/v1/eventos-muestra/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Cadena de custodia: solo lectura; los eventos se crean con las acciones de muestras. */
+        get: operations["eventos_muestra_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/eventos-muestra/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Cadena de custodia: solo lectura; los eventos se crean con las acciones de muestras. */
+        get: operations["eventos_muestra_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/api/v1/examenes-solicitados/": {
@@ -377,6 +661,70 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/lotes-control/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["lotes_control_list"];
+        put?: never;
+        post: operations["lotes_control_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/lotes-control/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["lotes_control_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["lotes_control_partial_update"];
+        trace?: never;
+    };
+    "/api/v1/lotes-reactivo/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["lotes_reactivo_list"];
+        put?: never;
+        post: operations["lotes_reactivo_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/lotes-reactivo/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["lotes_reactivo_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["lotes_reactivo_partial_update"];
+        trace?: never;
+    };
     "/api/v1/muestras/": {
         parameters: {
             query?: never;
@@ -384,10 +732,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
         get: operations["muestras_list"];
         put?: never;
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
         post: operations["muestras_create"];
         delete?: never;
         options?: never;
@@ -402,10 +750,78 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
         get: operations["muestras_retrieve"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/muestras/{id}/alicuota/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
+        post: operations["muestras_alicuota_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/muestras/{id}/custodia/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
+        get: operations["muestras_custodia_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/muestras/{id}/descartar/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
+        post: operations["muestras_descartar_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/muestras/{id}/evento/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
+        post: operations["muestras_evento_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -421,7 +837,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
         post: operations["muestras_rechazar_create"];
         delete?: never;
         options?: never;
@@ -438,7 +854,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
         post: operations["muestras_recibir_laboratorio_create"];
         delete?: never;
         options?: never;
@@ -453,7 +869,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
         get: operations["muestras_buscar_retrieve"];
         put?: never;
         post?: never;
@@ -700,7 +1116,7 @@ export interface paths {
         };
         /** @description Rangos de referencia: los define el Bacteriólogo (RF-13.2); con historial (RF-53). */
         get: operations["parametros_retrieve"];
-        /** @description Rangos de referencia: los define el Bacteriólogo (RF-13.2); con historial (RF-53). */
+        /** @description RF-53: un cambio de rango crea una versión nueva; la anterior queda cerrada e intacta. */
         put: operations["parametros_update"];
         post?: never;
         /** @description Rangos de referencia: los define el Bacteriólogo (RF-13.2); con historial (RF-53). */
@@ -860,6 +1276,154 @@ export interface paths {
         patch: operations["lab_api_v1_catalogo_cups_partial_update"];
         trace?: never;
     };
+    "/lab/api/v1/cci/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["lab_api_v1_cci_list"];
+        put?: never;
+        post: operations["lab_api_v1_cci_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/cci/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["lab_api_v1_cci_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/cci/{id}/accion-correctiva/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["lab_api_v1_cci_accion_correctiva_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/cci/estado/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Estado del CCI del día, modo vigente y propuesta de endurecimiento (RF-50.1.1). */
+        get: operations["lab_api_v1_cci_estado_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/cci/politica/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["lab_api_v1_cci_politica_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/cci/politicas/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["lab_api_v1_cci_politicas_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/criticos/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Valores críticos pendientes de acuse y registro del acuse (RF-54). */
+        get: operations["lab_api_v1_criticos_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/criticos/{id}/acusar/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Valores críticos pendientes de acuse y registro del acuse (RF-54). */
+        post: operations["lab_api_v1_criticos_acusar_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/criticos/{id}/acuse/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Valores críticos pendientes de acuse y registro del acuse (RF-54). */
+        get: operations["lab_api_v1_criticos_acuse_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/lab/api/v1/equipos/": {
         parameters: {
             query?: never;
@@ -867,10 +1431,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
         get: operations["lab_api_v1_equipos_list"];
         put?: never;
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
         post: operations["lab_api_v1_equipos_create"];
         delete?: never;
         options?: never;
@@ -885,17 +1449,119 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
         get: operations["lab_api_v1_equipos_retrieve"];
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
         put: operations["lab_api_v1_equipos_update"];
         post?: never;
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
         delete: operations["lab_api_v1_equipos_destroy"];
         options?: never;
         head?: never;
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
         patch: operations["lab_api_v1_equipos_partial_update"];
+        trace?: never;
+    };
+    "/lab/api/v1/equipos/{id}/calibracion/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
+        post: operations["lab_api_v1_equipos_calibracion_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/equipos/{id}/calibraciones/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
+        get: operations["lab_api_v1_equipos_calibraciones_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/equipos/{id}/cambiar-estado/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
+        post: operations["lab_api_v1_equipos_cambiar_estado_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/equipos/{id}/latido/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Latido del Bridge (RF-68). Se autentica igual que la ingesta de lecturas. */
+        post: operations["lab_api_v1_equipos_latido_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/equipos/{id}/mantenimiento/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
+        post: operations["lab_api_v1_equipos_mantenimiento_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/equipos/{id}/mantenimientos/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
+        get: operations["lab_api_v1_equipos_mantenimientos_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/lab/api/v1/equipos/{id}/regenerar-token/": {
@@ -907,7 +1573,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones que se añaden al ConfiguracionEquipoViewSet. */
         post: operations["lab_api_v1_equipos_regenerar_token_create"];
         delete?: never;
         options?: never;
@@ -1027,6 +1693,40 @@ export interface paths {
         head?: never;
         /** @description Catálogos: lectura para todos los roles, escritura solo Administrador; borrado = desactivar. */
         patch: operations["lab_api_v1_estados_orden_partial_update"];
+        trace?: never;
+    };
+    "/lab/api/v1/eventos-muestra/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Cadena de custodia: solo lectura; los eventos se crean con las acciones de muestras. */
+        get: operations["lab_api_v1_eventos_muestra_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/eventos-muestra/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Cadena de custodia: solo lectura; los eventos se crean con las acciones de muestras. */
+        get: operations["lab_api_v1_eventos_muestra_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
         trace?: never;
     };
     "/lab/api/v1/examenes-solicitados/": {
@@ -1195,6 +1895,70 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/lab/api/v1/lotes-control/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["lab_api_v1_lotes_control_list"];
+        put?: never;
+        post: operations["lab_api_v1_lotes_control_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/lotes-control/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["lab_api_v1_lotes_control_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["lab_api_v1_lotes_control_partial_update"];
+        trace?: never;
+    };
+    "/lab/api/v1/lotes-reactivo/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["lab_api_v1_lotes_reactivo_list"];
+        put?: never;
+        post: operations["lab_api_v1_lotes_reactivo_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/lotes-reactivo/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["lab_api_v1_lotes_reactivo_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch: operations["lab_api_v1_lotes_reactivo_partial_update"];
+        trace?: never;
+    };
     "/lab/api/v1/muestras/": {
         parameters: {
             query?: never;
@@ -1202,10 +1966,10 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
         get: operations["lab_api_v1_muestras_list"];
         put?: never;
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
         post: operations["lab_api_v1_muestras_create"];
         delete?: never;
         options?: never;
@@ -1220,10 +1984,78 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
         get: operations["lab_api_v1_muestras_retrieve"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/muestras/{id}/alicuota/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
+        post: operations["lab_api_v1_muestras_alicuota_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/muestras/{id}/custodia/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
+        get: operations["lab_api_v1_muestras_custodia_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/muestras/{id}/descartar/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
+        post: operations["lab_api_v1_muestras_descartar_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/muestras/{id}/evento/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
+        post: operations["lab_api_v1_muestras_evento_create"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1239,7 +2071,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
         post: operations["lab_api_v1_muestras_rechazar_create"];
         delete?: never;
         options?: never;
@@ -1256,7 +2088,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
         post: operations["lab_api_v1_muestras_recibir_laboratorio_create"];
         delete?: never;
         options?: never;
@@ -1271,7 +2103,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /** @description Envoltura estándar en create/retrieve/update; los errores los maneja el handler global. */
+        /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
         get: operations["lab_api_v1_muestras_buscar_retrieve"];
         put?: never;
         post?: never;
@@ -1518,7 +2350,7 @@ export interface paths {
         };
         /** @description Rangos de referencia: los define el Bacteriólogo (RF-13.2); con historial (RF-53). */
         get: operations["lab_api_v1_parametros_retrieve"];
-        /** @description Rangos de referencia: los define el Bacteriólogo (RF-13.2); con historial (RF-53). */
+        /** @description RF-53: un cambio de rango crea una versión nueva; la anterior queda cerrada e intacta. */
         put: operations["lab_api_v1_parametros_update"];
         post?: never;
         /** @description Rangos de referencia: los define el Bacteriólogo (RF-13.2); con historial (RF-53). */
@@ -2022,9 +2854,95 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        AccionCorrectivaRequest: {
+            accion_correctiva: string;
+        };
+        AcuseRegistrarRequest: {
+            comunicado_a: string;
+            medio: components["schemas"]["MedioEnum"];
+            read_back: boolean;
+            /** Format: date-time */
+            fecha_declarada?: string | null;
+            observacion?: string;
+        };
+        AcuseValorCritico: {
+            readonly id: number;
+            /** Format: uuid */
+            readonly resultado: string;
+            /** @description Nombre del médico o enfermera que recibió el valor. */
+            readonly comunicado_a: string;
+            readonly medio: components["schemas"]["MedioEnum"];
+            /** @description El receptor repitió el valor (confirmación). */
+            readonly read_back: boolean;
+            /**
+             * Format: date-time
+             * @description Hora del servidor al registrar el acuse.
+             */
+            readonly fecha_comunicacion: string;
+            /**
+             * Format: date-time
+             * @description Hora en que se hizo la llamada, si fue antes.
+             */
+            readonly fecha_declarada: string | null;
+            readonly registrado_por: number;
+            /**
+             * Nombre de usuario
+             * @description Requerido. 150 carácteres como máximo. Únicamente letras, dígitos y @/./+/-/_
+             */
+            readonly registrado_por_username: string;
+            readonly observacion: string;
+            readonly escalado: boolean;
+            /** Format: date-time */
+            readonly fecha_escalado: string | null;
+        };
+        AlicuotaRequest: {
+            tipo_muestra?: string;
+            codigo_barras?: string;
+            ubicacion?: string;
+        };
+        AprobarRequest: {
+            justificacion_cci?: string | null;
+        };
+        CalibracionEquipo: {
+            readonly id: number;
+            readonly equipo: number;
+            /** Format: date */
+            fecha: string;
+            /** Format: date */
+            vigente_hasta: string;
+            resultado?: components["schemas"]["CalibracionEquipoResultadoEnum"];
+            /** @description Técnico o empresa que calibró. */
+            realizada_por: string;
+            certificado?: string | null;
+            observacion?: string | null;
+            readonly registrada_por: number | null;
+            /** Format: date-time */
+            readonly creada: string;
+        };
+        CalibracionEquipoRequest: {
+            /** Format: date */
+            fecha: string;
+            /** Format: date */
+            vigente_hasta: string;
+            resultado?: components["schemas"]["CalibracionEquipoResultadoEnum"];
+            /** @description Técnico o empresa que calibró. */
+            realizada_por: string;
+            certificado?: string | null;
+            observacion?: string | null;
+        };
+        /**
+         * @description * `conforme` - Conforme
+         *     * `no_conforme` - No conforme
+         * @enum {string}
+         */
+        CalibracionEquipoResultadoEnum: "conforme" | "no_conforme";
         CambioContrasenaRequest: {
             password_actual: string;
             password_nueva: string;
+        };
+        CambioEstadoEquipoRequest: {
+            estado: components["schemas"]["EstadoEquipoEnum"];
+            motivo?: string;
         };
         CatalogoCups: {
             readonly id: number;
@@ -2082,6 +3000,11 @@ export interface components {
             activo?: boolean;
             descripcion?: string | null;
             endpoint_destino?: string;
+            readonly estado: components["schemas"]["EstadoEquipoEnum"];
+            /** Format: date */
+            readonly calibracion_vigente_hasta: string | null;
+            /** Format: date-time */
+            readonly ultimo_latido: string | null;
         };
         /** @description El token nunca se devuelve: solo lo entrega `regenerar-token` (RF-13.3). */
         ConfiguracionEquipoRequest: {
@@ -2095,6 +3018,51 @@ export interface components {
             activo?: boolean;
             descripcion?: string | null;
             endpoint_destino?: string;
+        };
+        CorridaCCI: {
+            readonly id: number;
+            readonly lote_control: number;
+            readonly lote_descripcion: string;
+            readonly nombre_parametro: string;
+            /**
+             * Format: int64
+             * @description 1 = normal, 2 = patológico, 3 = alto
+             */
+            readonly nivel: number;
+            readonly equipo: number;
+            /** Format: decimal */
+            readonly valor: string;
+            /** Format: decimal */
+            readonly z_score: string;
+            readonly resultado: components["schemas"]["CorridaCCIResultadoEnum"];
+            readonly reglas_violadas: unknown;
+            /** Format: date-time */
+            readonly fecha: string;
+            readonly registrada_por: number | null;
+            /**
+             * Nombre de usuario
+             * @description Requerido. 150 carácteres como máximo. Únicamente letras, dígitos y @/./+/-/_
+             */
+            readonly registrada_por_username: string;
+            /** Format: uuid */
+            readonly lectura: string | null;
+            /** @description Documentada por el bacteriólogo; libera un rechazo. */
+            readonly accion_correctiva: string | null;
+            readonly accion_correctiva_por: number | null;
+            /** Format: date-time */
+            readonly fecha_accion_correctiva: string | null;
+        };
+        /**
+         * @description * `aceptada` - Aceptada
+         *     * `advertencia` - Advertencia
+         *     * `rechazada` - Rechazada
+         * @enum {string}
+         */
+        CorridaCCIResultadoEnum: "aceptada" | "advertencia" | "rechazada";
+        CorridaRegistrarRequest: {
+            lote_control: number;
+            /** Format: decimal */
+            valor: string;
         };
         Departamento: {
             readonly id: number;
@@ -2127,6 +3095,22 @@ export interface components {
             /** Format: date-time */
             readonly creado_en: string;
         };
+        EstadoCCI: {
+            equipo: number;
+            nombre_parametro: string;
+            estado: string;
+            modo: string;
+            propuesta: {
+                [key: string]: unknown;
+            };
+        };
+        /**
+         * @description * `operativo` - Operativo
+         *     * `mantenimiento` - En mantenimiento
+         *     * `fuera_servicio` - Fuera de servicio
+         * @enum {string}
+         */
+        EstadoEquipoEnum: "operativo" | "mantenimiento" | "fuera_servicio";
         EstadoExamen: {
             readonly id: number;
             nombre: string;
@@ -2156,6 +3140,66 @@ export interface components {
             nombre: string;
             descripcion?: string | null;
         };
+        EventoAnotarRequest: {
+            tipo: components["schemas"]["EventoAnotarTipoEnum"];
+            ubicacion?: string;
+            observacion?: string;
+            /** Format: decimal */
+            temperatura?: string | null;
+        };
+        /**
+         * @description * `transporte` - transporte
+         *     * `almacenamiento` - almacenamiento
+         *     * `analisis` - analisis
+         *     * `nota` - nota
+         * @enum {string}
+         */
+        EventoAnotarTipoEnum: "transporte" | "almacenamiento" | "analisis" | "nota";
+        EventoMuestra: {
+            /** Format: uuid */
+            readonly id: string;
+            /** Format: uuid */
+            readonly muestra: string;
+            readonly muestra_codigo: string;
+            readonly tipo: components["schemas"]["EventoMuestraTipoEnum"];
+            /**
+             * Format: date-time
+             * @description Hora del servidor (RN-27).
+             */
+            readonly fecha: string;
+            /** Format: date-time */
+            readonly fecha_declarada_dispositivo: string | null;
+            readonly usuario: number | null;
+            /**
+             * Nombre de usuario
+             * @description Requerido. 150 carácteres como máximo. Únicamente letras, dígitos y @/./+/-/_
+             */
+            readonly usuario_username: string;
+            readonly rol: string;
+            readonly ubicacion: string;
+            /** Format: decimal */
+            readonly temperatura: string | null;
+            readonly observacion: string;
+            /**
+             * Format: uuid
+             * @description Alícuota creada o muestra madre, según el evento.
+             */
+            readonly muestra_relacionada: string | null;
+            readonly muestra_relacionada_codigo: string;
+        };
+        /**
+         * @description * `toma` - Toma
+         *     * `transporte` - Transporte
+         *     * `recepcion` - Recepción en laboratorio
+         *     * `alicuota` - Alícuota
+         *     * `almacenamiento` - Almacenamiento
+         *     * `analisis` - Análisis
+         *     * `rechazo` - Rechazo
+         *     * `descarte` - Descarte
+         *     * `nota` - Nota
+         * @enum {string}
+         */
+        EventoMuestraTipoEnum: "toma" | "transporte" | "recepcion" | "alicuota" | "almacenamiento" | "analisis" | "rechazo" | "descarte" | "nota";
         /** @description Agregar un examen a una orden abierta. */
         ExamenAgregarRequest: {
             /** Format: uuid */
@@ -2191,6 +3235,8 @@ export interface components {
             readonly validado_por_registro: string | null;
             /** Format: date-time */
             readonly fecha_validacion: string | null;
+            readonly estado_cci_validacion: string;
+            readonly justificacion_cci: string | null;
             readonly motivo_rechazo: string | null;
             /** Format: date-time */
             readonly fecha_rechazo: string | null;
@@ -2277,6 +3323,128 @@ export interface components {
         LogoutRequest: {
             refresh?: string;
         };
+        LoteControl: {
+            readonly id: number;
+            equipo: number;
+            readonly equipo_codigo: string;
+            nombre_parametro: string;
+            /**
+             * Format: int64
+             * @description 1 = normal, 2 = patológico, 3 = alto
+             */
+            nivel?: number;
+            lote: string;
+            /** Format: date */
+            fecha_vencimiento: string;
+            /** Format: decimal */
+            media_objetivo: string;
+            /** Format: decimal */
+            desviacion_objetivo: string;
+            unidades?: string | null;
+            activo?: boolean;
+            readonly registrado_por: number | null;
+            /** Format: date-time */
+            readonly creado: string;
+        };
+        LoteControlRequest: {
+            equipo: number;
+            nombre_parametro: string;
+            /**
+             * Format: int64
+             * @description 1 = normal, 2 = patológico, 3 = alto
+             */
+            nivel?: number;
+            lote: string;
+            /** Format: date */
+            fecha_vencimiento: string;
+            /** Format: decimal */
+            media_objetivo: string;
+            /** Format: decimal */
+            desviacion_objetivo: string;
+            unidades?: string | null;
+            activo?: boolean;
+        };
+        LoteReactivo: {
+            readonly id: number;
+            equipo?: number | null;
+            readonly equipo_codigo: string;
+            /** @description Vacío = aplica a todos los analitos del equipo. */
+            nombre_parametro?: string;
+            nombre: string;
+            lote: string;
+            /** Format: date */
+            fecha_vencimiento: string;
+            /** Format: date */
+            fecha_apertura?: string | null;
+            activo?: boolean;
+            readonly vencido: boolean;
+            readonly registrado_por: number | null;
+            /** Format: date-time */
+            readonly creado: string;
+        };
+        LoteReactivoRequest: {
+            equipo?: number | null;
+            /** @description Vacío = aplica a todos los analitos del equipo. */
+            nombre_parametro?: string;
+            nombre: string;
+            lote: string;
+            /** Format: date */
+            fecha_vencimiento: string;
+            /** Format: date */
+            fecha_apertura?: string | null;
+            activo?: boolean;
+        };
+        MantenimientoEquipo: {
+            readonly id: number;
+            readonly equipo: number;
+            tipo: components["schemas"]["MantenimientoEquipoTipoEnum"];
+            /** Format: date */
+            fecha: string;
+            descripcion: string;
+            realizado_por: string;
+            /**
+             * Format: date
+             * @description Fecha del próximo mantenimiento preventivo.
+             */
+            proximo?: string | null;
+            readonly registrado_por: number | null;
+            /** Format: date-time */
+            readonly creado: string;
+        };
+        MantenimientoEquipoRequest: {
+            tipo: components["schemas"]["MantenimientoEquipoTipoEnum"];
+            /** Format: date */
+            fecha: string;
+            descripcion: string;
+            realizado_por: string;
+            /**
+             * Format: date
+             * @description Fecha del próximo mantenimiento preventivo.
+             */
+            proximo?: string | null;
+            nuevo_estado?: components["schemas"]["EstadoEquipoEnum"];
+        };
+        /**
+         * @description * `preventivo` - Preventivo
+         *     * `correctivo` - Correctivo
+         * @enum {string}
+         */
+        MantenimientoEquipoTipoEnum: "preventivo" | "correctivo";
+        /**
+         * @description * `telefono` - Teléfono
+         *     * `presencial` - Presencial
+         *     * `sistema` - Sistema
+         *     * `otro` - Otro
+         * @enum {string}
+         */
+        MedioEnum: "telefono" | "presencial" | "sistema" | "otro";
+        /**
+         * @description * `informativo` - Informativo
+         *     * `advertencia` - Advertencia
+         *     * `bloqueante` - Bloqueante
+         * @enum {string}
+         */
+        ModoEnum: "informativo" | "advertencia" | "bloqueante";
         MotivoRequest: {
             motivo: string;
         };
@@ -2288,6 +3456,10 @@ export interface components {
             /** Format: date-time */
             fecha_recoleccion?: string;
             condicion_muestra?: components["schemas"]["CondicionMuestraEnum"];
+            /** Format: date-time */
+            fecha_declarada_dispositivo?: string | null;
+            ubicacion?: string;
+            observacion?: string;
             /** @description Ids de exámenes a vincular; vacío = todos los pendientes o en Repetir. */
             examenes?: string[];
         };
@@ -2319,6 +3491,17 @@ export interface components {
             /** Format: date-time */
             readonly fecha_rechazo: string | null;
             readonly rechazada_por: number | null;
+            /**
+             * Format: uuid
+             * @description Muestra de la que se obtuvo esta alícuota.
+             */
+            readonly muestra_madre: string | null;
+            readonly ubicacion_actual: string;
+            /**
+             * Format: date-time
+             * @description Hora de toma declarada por el dispositivo (operación offline, RN-27).
+             */
+            readonly fecha_declarada_dispositivo: string | null;
             readonly examenes: string[];
             readonly version: number;
         };
@@ -2455,6 +3638,21 @@ export interface components {
             regimen_salud?: components["schemas"]["RegimenSaludEnum"];
             consentimiento_habeas_data?: boolean;
         };
+        PaginatedCalibracionEquipoList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null;
+            results: components["schemas"]["CalibracionEquipo"][];
+        };
         PaginatedCatalogoCupsList: {
             /** @example 123 */
             count: number;
@@ -2484,6 +3682,21 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["ConfiguracionEquipo"][];
+        };
+        PaginatedCorridaCCIList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null;
+            results: components["schemas"]["CorridaCCI"][];
         };
         PaginatedDepartamentoList: {
             /** @example 123 */
@@ -2560,6 +3773,21 @@ export interface components {
             previous?: string | null;
             results: components["schemas"]["EstadoOrden"][];
         };
+        PaginatedEventoMuestraList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null;
+            results: components["schemas"]["EventoMuestra"][];
+        };
         PaginatedExamenSolicitadoList: {
             /** @example 123 */
             count: number;
@@ -2604,6 +3832,51 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["LecturaEquipoSerial"][];
+        };
+        PaginatedLoteControlList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null;
+            results: components["schemas"]["LoteControl"][];
+        };
+        PaginatedLoteReactivoList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null;
+            results: components["schemas"]["LoteReactivo"][];
+        };
+        PaginatedMantenimientoEquipoList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null;
+            results: components["schemas"]["MantenimientoEquipo"][];
         };
         PaginatedMuestraFisicaList: {
             /** @example 123 */
@@ -2709,6 +3982,21 @@ export interface components {
              */
             previous?: string | null;
             results: components["schemas"]["Permiso"][];
+        };
+        PaginatedPoliticaCCIList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null;
+            results: components["schemas"]["PoliticaCCI"][];
         };
         PaginatedResultadoAnalitoList: {
             /** @example 123 */
@@ -2860,7 +4148,16 @@ export interface components {
             edad_minima_anios?: number | null;
             /** Format: int64 */
             edad_maxima_anios?: number | null;
+            /** @description Método analítico (aparece en el informe, RF-63). */
+            metodo?: string | null;
+            codigo_loinc?: string | null;
+            unidad_ucum?: string | null;
             activo?: boolean;
+            /** Format: date */
+            readonly vigente_desde: string;
+            /** Format: date */
+            readonly vigente_hasta: string | null;
+            readonly version_anterior: number | null;
             readonly version: number;
         };
         ParametroExamenRequest: {
@@ -2890,6 +4187,10 @@ export interface components {
             edad_minima_anios?: number | null;
             /** Format: int64 */
             edad_maxima_anios?: number | null;
+            /** @description Método analítico (aparece en el informe, RF-63). */
+            metodo?: string | null;
+            codigo_loinc?: string | null;
+            unidad_ucum?: string | null;
             activo?: boolean;
         };
         PatchedCatalogoCupsRequest: {
@@ -2927,6 +4228,36 @@ export interface components {
         PatchedEstadoOrdenRequest: {
             nombre?: string;
             descripcion?: string | null;
+        };
+        PatchedLoteControlRequest: {
+            equipo?: number;
+            nombre_parametro?: string;
+            /**
+             * Format: int64
+             * @description 1 = normal, 2 = patológico, 3 = alto
+             */
+            nivel?: number;
+            lote?: string;
+            /** Format: date */
+            fecha_vencimiento?: string;
+            /** Format: decimal */
+            media_objetivo?: string;
+            /** Format: decimal */
+            desviacion_objetivo?: string;
+            unidades?: string | null;
+            activo?: boolean;
+        };
+        PatchedLoteReactivoRequest: {
+            equipo?: number | null;
+            /** @description Vacío = aplica a todos los analitos del equipo. */
+            nombre_parametro?: string;
+            nombre?: string;
+            lote?: string;
+            /** Format: date */
+            fecha_vencimiento?: string;
+            /** Format: date */
+            fecha_apertura?: string | null;
+            activo?: boolean;
         };
         PatchedMunicipioRequest: {
             codigo?: string;
@@ -2988,6 +4319,10 @@ export interface components {
             edad_minima_anios?: number | null;
             /** Format: int64 */
             edad_maxima_anios?: number | null;
+            /** @description Método analítico (aparece en el informe, RF-63). */
+            metodo?: string | null;
+            codigo_loinc?: string | null;
+            unidad_ucum?: string | null;
             activo?: boolean;
         };
         /** @description Lo que un usuario ve y puede cambiar de sí mismo. Nunca roles ni banderas. */
@@ -3128,6 +4463,21 @@ export interface components {
             permiso: string;
             tipo_usuario: number;
         };
+        PoliticaCCI: {
+            readonly id: number;
+            equipo: number;
+            readonly equipo_codigo: string;
+            nombre_parametro: string;
+            modo?: components["schemas"]["ModoEnum"];
+            readonly actualizada_por: number | null;
+            /** Format: date-time */
+            readonly actualizada: string;
+        };
+        PoliticaDefinirRequest: {
+            equipo: number;
+            nombre_parametro: string;
+            modo: components["schemas"]["ModoEnum"];
+        };
         /**
          * @description * `HL7` - HL7 v2.x
          *     * `ASTM` - ASTM E1381/E1394
@@ -3177,6 +4527,12 @@ export interface components {
             readonly rango_max_aplicado: string | null;
             readonly rango_texto_aplicado: string | null;
             readonly parametro_version: number | null;
+            readonly metodo_aplicado: string | null;
+            readonly equipo: number | null;
+            readonly lote_reactivo: number | null;
+            readonly lote_control: number | null;
+            readonly critico_escalado: boolean;
+            readonly tiene_acuse: boolean;
             readonly comentario_bacteriologo: string | null;
             readonly registrado_por: number | null;
             /** Format: date-time */
@@ -3189,6 +4545,7 @@ export interface components {
             parametro: number;
             valor_resultado: string;
             comentario_bacteriologo?: string | null;
+            equipo?: number | null;
         };
         Sexo: {
             readonly id: number;
@@ -3543,6 +4900,285 @@ export interface operations {
             };
         };
     };
+    cci_list: {
+        parameters: {
+            query?: {
+                fecha__gte?: string;
+                fecha__lte?: string;
+                /** @description Número de resultados a devolver por página. */
+                limit?: number;
+                lote_control?: number;
+                lote_control__equipo?: number;
+                lote_control__nombre_parametro?: string;
+                /** @description El índice inicial a partir del cual devolver los resultados. */
+                offset?: number;
+                /** @description Qué campo usar para ordenar los resultados. */
+                ordering?: string;
+                /**
+                 * @description * `aceptada` - Aceptada
+                 *     * `advertencia` - Advertencia
+                 *     * `rechazada` - Rechazada
+                 */
+                resultado?: "aceptada" | "advertencia" | "rechazada";
+                /** @description Un término de búsqueda. */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedCorridaCCIList"];
+                };
+            };
+        };
+    };
+    cci_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CorridaRegistrarRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["CorridaRegistrarRequest"];
+                "multipart/form-data": components["schemas"]["CorridaRegistrarRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CorridaCCI"];
+                };
+            };
+        };
+    };
+    cci_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este corrida cci. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CorridaCCI"];
+                };
+            };
+        };
+    };
+    cci_accion_correctiva_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este corrida cci. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AccionCorrectivaRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AccionCorrectivaRequest"];
+                "multipart/form-data": components["schemas"]["AccionCorrectivaRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CorridaCCI"];
+                };
+            };
+        };
+    };
+    cci_estado_retrieve: {
+        parameters: {
+            query: {
+                equipo: number;
+                nombre_parametro: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EstadoCCI"];
+                };
+            };
+        };
+    };
+    cci_politica_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PoliticaDefinirRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PoliticaDefinirRequest"];
+                "multipart/form-data": components["schemas"]["PoliticaDefinirRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PoliticaCCI"];
+                };
+            };
+        };
+    };
+    cci_politicas_list: {
+        parameters: {
+            query?: {
+                fecha__gte?: string;
+                fecha__lte?: string;
+                /** @description Número de resultados a devolver por página. */
+                limit?: number;
+                lote_control?: number;
+                lote_control__equipo?: number;
+                lote_control__nombre_parametro?: string;
+                /** @description El índice inicial a partir del cual devolver los resultados. */
+                offset?: number;
+                /** @description Qué campo usar para ordenar los resultados. */
+                ordering?: string;
+                /**
+                 * @description * `aceptada` - Aceptada
+                 *     * `advertencia` - Advertencia
+                 *     * `rechazada` - Rechazada
+                 */
+                resultado?: "aceptada" | "advertencia" | "rechazada";
+                /** @description Un término de búsqueda. */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedPoliticaCCIList"];
+                };
+            };
+        };
+    };
+    criticos_list: {
+        parameters: {
+            query?: {
+                examen_solicitado__orden?: string;
+                /** @description Número de resultados a devolver por página. */
+                limit?: number;
+                /** @description El índice inicial a partir del cual devolver los resultados. */
+                offset?: number;
+                /** @description Qué campo usar para ordenar los resultados. */
+                ordering?: string;
+                /** @description Un término de búsqueda. */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedResultadoAnalitoList"];
+                };
+            };
+        };
+    };
+    criticos_acusar_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un Cadena UUID que identifique este resultado analito. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AcuseRegistrarRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AcuseRegistrarRequest"];
+                "multipart/form-data": components["schemas"]["AcuseRegistrarRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AcuseValorCritico"];
+                };
+            };
+        };
+    };
+    criticos_acuse_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un Cadena UUID que identifique este resultado analito. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AcuseValorCritico"];
+                };
+            };
+        };
+    };
     equipos_list: {
         parameters: {
             query?: {
@@ -3691,6 +5327,178 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ConfiguracionEquipo"];
+                };
+            };
+        };
+    };
+    equipos_calibracion_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este Configuración de Equipo. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CalibracionEquipoRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["CalibracionEquipoRequest"];
+                "multipart/form-data": components["schemas"]["CalibracionEquipoRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CalibracionEquipo"];
+                };
+            };
+        };
+    };
+    equipos_calibraciones_list: {
+        parameters: {
+            query?: {
+                /** @description Número de resultados a devolver por página. */
+                limit?: number;
+                /** @description El índice inicial a partir del cual devolver los resultados. */
+                offset?: number;
+                /** @description Qué campo usar para ordenar los resultados. */
+                ordering?: string;
+                /** @description Un término de búsqueda. */
+                search?: string;
+            };
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este Configuración de Equipo. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedCalibracionEquipoList"];
+                };
+            };
+        };
+    };
+    equipos_cambiar_estado_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este Configuración de Equipo. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CambioEstadoEquipoRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["CambioEstadoEquipoRequest"];
+                "multipart/form-data": components["schemas"]["CambioEstadoEquipoRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    equipos_latido_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este Configuración de Equipo. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    equipos_mantenimiento_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este Configuración de Equipo. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MantenimientoEquipoRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["MantenimientoEquipoRequest"];
+                "multipart/form-data": components["schemas"]["MantenimientoEquipoRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MantenimientoEquipo"];
+                };
+            };
+        };
+    };
+    equipos_mantenimientos_list: {
+        parameters: {
+            query?: {
+                /** @description Número de resultados a devolver por página. */
+                limit?: number;
+                /** @description El índice inicial a partir del cual devolver los resultados. */
+                offset?: number;
+                /** @description Qué campo usar para ordenar los resultados. */
+                ordering?: string;
+                /** @description Un término de búsqueda. */
+                search?: string;
+            };
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este Configuración de Equipo. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedMantenimientoEquipoList"];
                 };
             };
         };
@@ -4175,6 +5983,69 @@ export interface operations {
             };
         };
     };
+    eventos_muestra_list: {
+        parameters: {
+            query?: {
+                /** @description Número de resultados a devolver por página. */
+                limit?: number;
+                muestra?: string;
+                /** @description El índice inicial a partir del cual devolver los resultados. */
+                offset?: number;
+                /** @description Qué campo usar para ordenar los resultados. */
+                ordering?: string;
+                /** @description Un término de búsqueda. */
+                search?: string;
+                /**
+                 * @description * `toma` - Toma
+                 *     * `transporte` - Transporte
+                 *     * `recepcion` - Recepción en laboratorio
+                 *     * `alicuota` - Alícuota
+                 *     * `almacenamiento` - Almacenamiento
+                 *     * `analisis` - Análisis
+                 *     * `rechazo` - Rechazo
+                 *     * `descarte` - Descarte
+                 *     * `nota` - Nota
+                 */
+                tipo?: "alicuota" | "almacenamiento" | "analisis" | "descarte" | "nota" | "recepcion" | "rechazo" | "toma" | "transporte";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedEventoMuestraList"];
+                };
+            };
+        };
+    };
+    eventos_muestra_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un Cadena UUID que identifique este evento muestra. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EventoMuestra"];
+                };
+            };
+        };
+    };
     examenes_solicitados_list: {
         parameters: {
             query?: {
@@ -4294,9 +6165,25 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["AprobarRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AprobarRequest"];
+                "multipart/form-data": components["schemas"]["AprobarRequest"];
+            };
+        };
         responses: {
             200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            409: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -4499,6 +6386,219 @@ export interface operations {
             };
         };
     };
+    lotes_control_list: {
+        parameters: {
+            query?: {
+                activo?: boolean;
+                equipo?: number;
+                /** @description Número de resultados a devolver por página. */
+                limit?: number;
+                nivel?: number;
+                nombre_parametro?: string;
+                /** @description El índice inicial a partir del cual devolver los resultados. */
+                offset?: number;
+                /** @description Qué campo usar para ordenar los resultados. */
+                ordering?: string;
+                /** @description Un término de búsqueda. */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedLoteControlList"];
+                };
+            };
+        };
+    };
+    lotes_control_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoteControlRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["LoteControlRequest"];
+                "multipart/form-data": components["schemas"]["LoteControlRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoteControl"];
+                };
+            };
+        };
+    };
+    lotes_control_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este lote control. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoteControl"];
+                };
+            };
+        };
+    };
+    lotes_control_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este lote control. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedLoteControlRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedLoteControlRequest"];
+                "multipart/form-data": components["schemas"]["PatchedLoteControlRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoteControl"];
+                };
+            };
+        };
+    };
+    lotes_reactivo_list: {
+        parameters: {
+            query?: {
+                activo?: boolean;
+                equipo?: number;
+                /** @description Número de resultados a devolver por página. */
+                limit?: number;
+                nombre_parametro?: string;
+                /** @description El índice inicial a partir del cual devolver los resultados. */
+                offset?: number;
+                /** @description Qué campo usar para ordenar los resultados. */
+                ordering?: string;
+                /** @description Un término de búsqueda. */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedLoteReactivoList"];
+                };
+            };
+        };
+    };
+    lotes_reactivo_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoteReactivoRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["LoteReactivoRequest"];
+                "multipart/form-data": components["schemas"]["LoteReactivoRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoteReactivo"];
+                };
+            };
+        };
+    };
+    lotes_reactivo_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este lote reactivo. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoteReactivo"];
+                };
+            };
+        };
+    };
+    lotes_reactivo_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este lote reactivo. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedLoteReactivoRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedLoteReactivoRequest"];
+                "multipart/form-data": components["schemas"]["PatchedLoteReactivoRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoteReactivo"];
+                };
+            };
+        };
+    };
     muestras_list: {
         parameters: {
             query?: {
@@ -4582,6 +6682,135 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["MuestraFisica"];
+                };
+            };
+        };
+    };
+    muestras_alicuota_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un Cadena UUID que identifique este muestra fisica. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["AlicuotaRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AlicuotaRequest"];
+                "multipart/form-data": components["schemas"]["AlicuotaRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MuestraFisica"];
+                };
+            };
+        };
+    };
+    muestras_custodia_list: {
+        parameters: {
+            query?: {
+                /**
+                 * @description * `Normal` - Normal
+                 *     * `Hemolizada` - Hemolizada
+                 *     * `Lipemica` - Lipémica
+                 *     * `Icterica` - Ictérica
+                 *     * `Insuficiente` - Volumen insuficiente
+                 *     * `Coagulada` - Coagulada
+                 *     * `Contaminada` - Contaminada
+                 */
+                condicion_muestra?: "Coagulada" | "Contaminada" | "Hemolizada" | "Icterica" | "Insuficiente" | "Lipemica" | "Normal";
+                estado_muestra__nombre?: string;
+                /** @description Número de resultados a devolver por página. */
+                limit?: number;
+                /** @description El índice inicial a partir del cual devolver los resultados. */
+                offset?: number;
+                orden?: string;
+                /** @description Qué campo usar para ordenar los resultados. */
+                ordering?: string;
+                /** @description Un término de búsqueda. */
+                search?: string;
+            };
+            header?: never;
+            path: {
+                /** @description Un Cadena UUID que identifique este muestra fisica. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedEventoMuestraList"];
+                };
+            };
+        };
+    };
+    muestras_descartar_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un Cadena UUID que identifique este muestra fisica. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AccionCorrectivaRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AccionCorrectivaRequest"];
+                "multipart/form-data": components["schemas"]["AccionCorrectivaRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    muestras_evento_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un Cadena UUID que identifique este muestra fisica. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EventoAnotarRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["EventoAnotarRequest"];
+                "multipart/form-data": components["schemas"]["EventoAnotarRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EventoMuestra"];
                 };
             };
         };
@@ -5831,6 +8060,285 @@ export interface operations {
             };
         };
     };
+    lab_api_v1_cci_list: {
+        parameters: {
+            query?: {
+                fecha__gte?: string;
+                fecha__lte?: string;
+                /** @description Número de resultados a devolver por página. */
+                limit?: number;
+                lote_control?: number;
+                lote_control__equipo?: number;
+                lote_control__nombre_parametro?: string;
+                /** @description El índice inicial a partir del cual devolver los resultados. */
+                offset?: number;
+                /** @description Qué campo usar para ordenar los resultados. */
+                ordering?: string;
+                /**
+                 * @description * `aceptada` - Aceptada
+                 *     * `advertencia` - Advertencia
+                 *     * `rechazada` - Rechazada
+                 */
+                resultado?: "aceptada" | "advertencia" | "rechazada";
+                /** @description Un término de búsqueda. */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedCorridaCCIList"];
+                };
+            };
+        };
+    };
+    lab_api_v1_cci_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CorridaRegistrarRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["CorridaRegistrarRequest"];
+                "multipart/form-data": components["schemas"]["CorridaRegistrarRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CorridaCCI"];
+                };
+            };
+        };
+    };
+    lab_api_v1_cci_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este corrida cci. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CorridaCCI"];
+                };
+            };
+        };
+    };
+    lab_api_v1_cci_accion_correctiva_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este corrida cci. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AccionCorrectivaRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AccionCorrectivaRequest"];
+                "multipart/form-data": components["schemas"]["AccionCorrectivaRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CorridaCCI"];
+                };
+            };
+        };
+    };
+    lab_api_v1_cci_estado_retrieve: {
+        parameters: {
+            query: {
+                equipo: number;
+                nombre_parametro: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EstadoCCI"];
+                };
+            };
+        };
+    };
+    lab_api_v1_cci_politica_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PoliticaDefinirRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PoliticaDefinirRequest"];
+                "multipart/form-data": components["schemas"]["PoliticaDefinirRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PoliticaCCI"];
+                };
+            };
+        };
+    };
+    lab_api_v1_cci_politicas_list: {
+        parameters: {
+            query?: {
+                fecha__gte?: string;
+                fecha__lte?: string;
+                /** @description Número de resultados a devolver por página. */
+                limit?: number;
+                lote_control?: number;
+                lote_control__equipo?: number;
+                lote_control__nombre_parametro?: string;
+                /** @description El índice inicial a partir del cual devolver los resultados. */
+                offset?: number;
+                /** @description Qué campo usar para ordenar los resultados. */
+                ordering?: string;
+                /**
+                 * @description * `aceptada` - Aceptada
+                 *     * `advertencia` - Advertencia
+                 *     * `rechazada` - Rechazada
+                 */
+                resultado?: "aceptada" | "advertencia" | "rechazada";
+                /** @description Un término de búsqueda. */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedPoliticaCCIList"];
+                };
+            };
+        };
+    };
+    lab_api_v1_criticos_list: {
+        parameters: {
+            query?: {
+                examen_solicitado__orden?: string;
+                /** @description Número de resultados a devolver por página. */
+                limit?: number;
+                /** @description El índice inicial a partir del cual devolver los resultados. */
+                offset?: number;
+                /** @description Qué campo usar para ordenar los resultados. */
+                ordering?: string;
+                /** @description Un término de búsqueda. */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedResultadoAnalitoList"];
+                };
+            };
+        };
+    };
+    lab_api_v1_criticos_acusar_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un Cadena UUID que identifique este resultado analito. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AcuseRegistrarRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AcuseRegistrarRequest"];
+                "multipart/form-data": components["schemas"]["AcuseRegistrarRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AcuseValorCritico"];
+                };
+            };
+        };
+    };
+    lab_api_v1_criticos_acuse_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un Cadena UUID que identifique este resultado analito. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AcuseValorCritico"];
+                };
+            };
+        };
+    };
     lab_api_v1_equipos_list: {
         parameters: {
             query?: {
@@ -5979,6 +8487,178 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ConfiguracionEquipo"];
+                };
+            };
+        };
+    };
+    lab_api_v1_equipos_calibracion_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este Configuración de Equipo. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CalibracionEquipoRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["CalibracionEquipoRequest"];
+                "multipart/form-data": components["schemas"]["CalibracionEquipoRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CalibracionEquipo"];
+                };
+            };
+        };
+    };
+    lab_api_v1_equipos_calibraciones_list: {
+        parameters: {
+            query?: {
+                /** @description Número de resultados a devolver por página. */
+                limit?: number;
+                /** @description El índice inicial a partir del cual devolver los resultados. */
+                offset?: number;
+                /** @description Qué campo usar para ordenar los resultados. */
+                ordering?: string;
+                /** @description Un término de búsqueda. */
+                search?: string;
+            };
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este Configuración de Equipo. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedCalibracionEquipoList"];
+                };
+            };
+        };
+    };
+    lab_api_v1_equipos_cambiar_estado_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este Configuración de Equipo. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CambioEstadoEquipoRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["CambioEstadoEquipoRequest"];
+                "multipart/form-data": components["schemas"]["CambioEstadoEquipoRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    lab_api_v1_equipos_latido_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este Configuración de Equipo. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    lab_api_v1_equipos_mantenimiento_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este Configuración de Equipo. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MantenimientoEquipoRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["MantenimientoEquipoRequest"];
+                "multipart/form-data": components["schemas"]["MantenimientoEquipoRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MantenimientoEquipo"];
+                };
+            };
+        };
+    };
+    lab_api_v1_equipos_mantenimientos_list: {
+        parameters: {
+            query?: {
+                /** @description Número de resultados a devolver por página. */
+                limit?: number;
+                /** @description El índice inicial a partir del cual devolver los resultados. */
+                offset?: number;
+                /** @description Qué campo usar para ordenar los resultados. */
+                ordering?: string;
+                /** @description Un término de búsqueda. */
+                search?: string;
+            };
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este Configuración de Equipo. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedMantenimientoEquipoList"];
                 };
             };
         };
@@ -6463,6 +9143,69 @@ export interface operations {
             };
         };
     };
+    lab_api_v1_eventos_muestra_list: {
+        parameters: {
+            query?: {
+                /** @description Número de resultados a devolver por página. */
+                limit?: number;
+                muestra?: string;
+                /** @description El índice inicial a partir del cual devolver los resultados. */
+                offset?: number;
+                /** @description Qué campo usar para ordenar los resultados. */
+                ordering?: string;
+                /** @description Un término de búsqueda. */
+                search?: string;
+                /**
+                 * @description * `toma` - Toma
+                 *     * `transporte` - Transporte
+                 *     * `recepcion` - Recepción en laboratorio
+                 *     * `alicuota` - Alícuota
+                 *     * `almacenamiento` - Almacenamiento
+                 *     * `analisis` - Análisis
+                 *     * `rechazo` - Rechazo
+                 *     * `descarte` - Descarte
+                 *     * `nota` - Nota
+                 */
+                tipo?: "alicuota" | "almacenamiento" | "analisis" | "descarte" | "nota" | "recepcion" | "rechazo" | "toma" | "transporte";
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedEventoMuestraList"];
+                };
+            };
+        };
+    };
+    lab_api_v1_eventos_muestra_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un Cadena UUID que identifique este evento muestra. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EventoMuestra"];
+                };
+            };
+        };
+    };
     lab_api_v1_examenes_solicitados_list: {
         parameters: {
             query?: {
@@ -6582,9 +9325,25 @@ export interface operations {
             };
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["AprobarRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AprobarRequest"];
+                "multipart/form-data": components["schemas"]["AprobarRequest"];
+            };
+        };
         responses: {
             200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+            409: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -6787,6 +9546,219 @@ export interface operations {
             };
         };
     };
+    lab_api_v1_lotes_control_list: {
+        parameters: {
+            query?: {
+                activo?: boolean;
+                equipo?: number;
+                /** @description Número de resultados a devolver por página. */
+                limit?: number;
+                nivel?: number;
+                nombre_parametro?: string;
+                /** @description El índice inicial a partir del cual devolver los resultados. */
+                offset?: number;
+                /** @description Qué campo usar para ordenar los resultados. */
+                ordering?: string;
+                /** @description Un término de búsqueda. */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedLoteControlList"];
+                };
+            };
+        };
+    };
+    lab_api_v1_lotes_control_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoteControlRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["LoteControlRequest"];
+                "multipart/form-data": components["schemas"]["LoteControlRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoteControl"];
+                };
+            };
+        };
+    };
+    lab_api_v1_lotes_control_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este lote control. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoteControl"];
+                };
+            };
+        };
+    };
+    lab_api_v1_lotes_control_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este lote control. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedLoteControlRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedLoteControlRequest"];
+                "multipart/form-data": components["schemas"]["PatchedLoteControlRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoteControl"];
+                };
+            };
+        };
+    };
+    lab_api_v1_lotes_reactivo_list: {
+        parameters: {
+            query?: {
+                activo?: boolean;
+                equipo?: number;
+                /** @description Número de resultados a devolver por página. */
+                limit?: number;
+                nombre_parametro?: string;
+                /** @description El índice inicial a partir del cual devolver los resultados. */
+                offset?: number;
+                /** @description Qué campo usar para ordenar los resultados. */
+                ordering?: string;
+                /** @description Un término de búsqueda. */
+                search?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedLoteReactivoList"];
+                };
+            };
+        };
+    };
+    lab_api_v1_lotes_reactivo_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoteReactivoRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["LoteReactivoRequest"];
+                "multipart/form-data": components["schemas"]["LoteReactivoRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoteReactivo"];
+                };
+            };
+        };
+    };
+    lab_api_v1_lotes_reactivo_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este lote reactivo. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoteReactivo"];
+                };
+            };
+        };
+    };
+    lab_api_v1_lotes_reactivo_partial_update: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este lote reactivo. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["PatchedLoteReactivoRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["PatchedLoteReactivoRequest"];
+                "multipart/form-data": components["schemas"]["PatchedLoteReactivoRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["LoteReactivo"];
+                };
+            };
+        };
+    };
     lab_api_v1_muestras_list: {
         parameters: {
             query?: {
@@ -6870,6 +9842,135 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["MuestraFisica"];
+                };
+            };
+        };
+    };
+    lab_api_v1_muestras_alicuota_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un Cadena UUID que identifique este muestra fisica. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: {
+            content: {
+                "application/json": components["schemas"]["AlicuotaRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AlicuotaRequest"];
+                "multipart/form-data": components["schemas"]["AlicuotaRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MuestraFisica"];
+                };
+            };
+        };
+    };
+    lab_api_v1_muestras_custodia_list: {
+        parameters: {
+            query?: {
+                /**
+                 * @description * `Normal` - Normal
+                 *     * `Hemolizada` - Hemolizada
+                 *     * `Lipemica` - Lipémica
+                 *     * `Icterica` - Ictérica
+                 *     * `Insuficiente` - Volumen insuficiente
+                 *     * `Coagulada` - Coagulada
+                 *     * `Contaminada` - Contaminada
+                 */
+                condicion_muestra?: "Coagulada" | "Contaminada" | "Hemolizada" | "Icterica" | "Insuficiente" | "Lipemica" | "Normal";
+                estado_muestra__nombre?: string;
+                /** @description Número de resultados a devolver por página. */
+                limit?: number;
+                /** @description El índice inicial a partir del cual devolver los resultados. */
+                offset?: number;
+                orden?: string;
+                /** @description Qué campo usar para ordenar los resultados. */
+                ordering?: string;
+                /** @description Un término de búsqueda. */
+                search?: string;
+            };
+            header?: never;
+            path: {
+                /** @description Un Cadena UUID que identifique este muestra fisica. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedEventoMuestraList"];
+                };
+            };
+        };
+    };
+    lab_api_v1_muestras_descartar_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un Cadena UUID que identifique este muestra fisica. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AccionCorrectivaRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["AccionCorrectivaRequest"];
+                "multipart/form-data": components["schemas"]["AccionCorrectivaRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": {
+                        [key: string]: unknown;
+                    };
+                };
+            };
+        };
+    };
+    lab_api_v1_muestras_evento_create: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un Cadena UUID que identifique este muestra fisica. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EventoAnotarRequest"];
+                "application/x-www-form-urlencoded": components["schemas"]["EventoAnotarRequest"];
+                "multipart/form-data": components["schemas"]["EventoAnotarRequest"];
+            };
+        };
+        responses: {
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EventoMuestra"];
                 };
             };
         };
