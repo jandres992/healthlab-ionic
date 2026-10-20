@@ -28,6 +28,10 @@ const routes: Array<RouteRecordRaw> = [
   { path: '/examenes/:id', name: 'examen', component: () => import('@/views/resultados/DetalleExamenPage.vue'), meta: { accion: 'examenes.ver' } },
   { path: '/lecturas', name: 'lecturas', component: () => import('@/views/resultados/LecturasPage.vue'), meta: { accion: 'lecturas.ver' } },
   { path: '/criticos', name: 'criticos', component: () => import('@/views/resultados/CriticosPage.vue'), meta: { accion: 'criticos.ver' } },
+  // Fase 6: calidad, auditoría y administración (escritorio)
+  { path: '/calidad', name: 'calidad', component: () => import('@/views/calidad/CalidadPage.vue'), meta: { accion: ['calidad.ver', 'equipos.ver'] } },
+  { path: '/auditoria', name: 'auditoria', component: () => import('@/views/auditoria/AuditoriaPage.vue'), meta: { accion: ['auditoria.ver', 'ordenes.export_rips'] } },
+  { path: '/admin', name: 'admin', component: () => import('@/views/admin/AdminPage.vue'), meta: { accion: ['usuarios.ver', 'catalogos.gestionar'] } },
   {
     path: '/tabs/',
     component: () => import('@/views/TabsPage.vue'),

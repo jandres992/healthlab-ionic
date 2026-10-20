@@ -44,7 +44,8 @@ src/
 │   ├── generated/      schema.yaml + schema.d.ts (generados, no editar)
 │   ├── http.ts         cliente Axios con interceptores
 │   ├── tipos.ts        alias de los tipos generados + RespuestaLogin
-│   └── endpoints/      auth, catalogos, pacientes, ordenes, muestras, resultados, notificaciones
+│   └── endpoints/      auth, catalogos, pacientes, ordenes, muestras, resultados, notificaciones,
+│                       calidad, admin, auditoria
 ├── stores/auth.ts      sesión, roles y acciones (Pinia); tokens en almacenamiento seguro
 ├── router/             rutas con carga diferida y guards por acción
 ├── composables/        usePermisos, useMensajes, useListaPaginada, useEscaner
@@ -61,4 +62,4 @@ src/
 | 3 | Cliente generado, http, sesión segura, login, perfil, guards, pestañas, listados | ✔ |
 | 4 | Crear paciente, crear orden con varios CUPS, detalle de orden (admitir, anular, informe), registrar muestra con escáner y checklist, detalle de muestra con cadena de custodia (recibir, rechazar, alícuota, descarte, eventos), cola offline para toma y admisión con conflictos | ✔ |
 | 5 | Bandeja de validación, detalle de examen con resultados y banderas, ingreso manual, estado del CCI y política al validar (justificación o bloqueo), rechazar/anular, lecturas de analizadores y procesamiento, críticos con acuse (read-back) y escalado visible, finalizar orden con detalle del 409, informes emitidos con hash | ✔ |
-| 6 | Calidad, auditoría, administración web | pendiente |
+| 6 | Menú lateral de escritorio (split-pane) por acciones; módulo de calidad (CCI con Levey-Jennings y política por analito, lotes de reactivo, equipos con calibración, mantenimiento, estado y token); auditoría (bitácora filtrable) y exportación RIPS; administración de cuentas, roles y catálogos (CUPS, tipos de documento) | ✔ |

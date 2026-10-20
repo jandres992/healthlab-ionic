@@ -7858,6 +7858,102 @@ paths:
       responses:
         '204':
           description: No response body
+  /usr/auditoria/:
+    get:
+      operationId: auditoria_list
+      description: 'Bitácora de solo lectura (RNF-25): Auditor y Administrador.'
+      parameters:
+      - in: query
+        name: accion
+        schema:
+          type: string
+      - in: query
+        name: accion__startswith
+        schema:
+          type: string
+      - in: query
+        name: entidad
+        schema:
+          type: string
+      - in: query
+        name: entidad_id
+        schema:
+          type: string
+      - in: query
+        name: exito
+        schema:
+          type: boolean
+      - in: query
+        name: fecha__gte
+        schema:
+          type: string
+          format: date-time
+      - in: query
+        name: fecha__lte
+        schema:
+          type: string
+          format: date-time
+      - name: limit
+        required: false
+        in: query
+        description: Número de resultados a devolver por página.
+        schema:
+          type: integer
+      - name: offset
+        required: false
+        in: query
+        description: El índice inicial a partir del cual devolver los resultados.
+        schema:
+          type: integer
+      - name: ordering
+        required: false
+        in: query
+        description: Qué campo usar para ordenar los resultados.
+        schema:
+          type: string
+      - name: search
+        required: false
+        in: query
+        description: Un término de búsqueda.
+        schema:
+          type: string
+      - in: query
+        name: usuario
+        schema:
+          type: integer
+      tags:
+      - auditoria
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedAuditoriaList'
+          description: ''
+  /usr/auditoria/{id}/:
+    get:
+      operationId: auditoria_retrieve
+      description: 'Bitácora de solo lectura (RNF-25): Auditor y Administrador.'
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: Un valor de entero único que identifique este Registro de auditoría.
+        required: true
+      tags:
+      - auditoria
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Auditoria'
+          description: ''
   /usr/departamentos/:
     get:
       operationId: departamentos_list
@@ -9461,6 +9557,59 @@ components:
         justificacion_cci:
           type: string
           nullable: true
+    Auditoria:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        fecha:
+          type: string
+          format: date-time
+          readOnly: true
+        usuario:
+          type: integer
+          readOnly: true
+          nullable: true
+        username:
+          type: string
+          readOnly: true
+        roles:
+          readOnly: true
+        accion:
+          type: string
+          readOnly: true
+        entidad:
+          type: string
+          readOnly: true
+        entidad_id:
+          type: string
+          readOnly: true
+        detalle:
+          readOnly: true
+        exito:
+          type: boolean
+          readOnly: true
+        ip:
+          type: string
+          readOnly: true
+          nullable: true
+        device_id:
+          type: string
+          readOnly: true
+      required:
+      - accion
+      - detalle
+      - device_id
+      - entidad
+      - entidad_id
+      - exito
+      - fecha
+      - id
+      - ip
+      - roles
+      - username
+      - usuario
     CalibracionEquipo:
       type: object
       properties:
@@ -11352,6 +11501,29 @@ components:
       - primer_nombre
       - sexo_biologico
       - tipo_documento
+    PaginatedAuditoriaList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=400&limit=100
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?offset=200&limit=100
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Auditoria'
     PaginatedCalibracionEquipoList:
       type: object
       required:

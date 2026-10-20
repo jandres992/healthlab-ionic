@@ -2472,6 +2472,40 @@ export interface paths {
         patch: operations["lab_api_v1_tipos_documento_partial_update"];
         trace?: never;
     };
+    "/usr/auditoria/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Bitácora de solo lectura (RNF-25): Auditor y Administrador. */
+        get: operations["auditoria_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/usr/auditoria/{id}/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Bitácora de solo lectura (RNF-25): Auditor y Administrador. */
+        get: operations["auditoria_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/usr/departamentos/": {
         parameters: {
             query?: never;
@@ -2902,6 +2936,21 @@ export interface components {
         };
         AprobarRequest: {
             justificacion_cci?: string | null;
+        };
+        Auditoria: {
+            readonly id: number;
+            /** Format: date-time */
+            readonly fecha: string;
+            readonly usuario: number | null;
+            readonly username: string;
+            readonly roles: unknown;
+            readonly accion: string;
+            readonly entidad: string;
+            readonly entidad_id: string;
+            readonly detalle: unknown;
+            readonly exito: boolean;
+            readonly ip: string | null;
+            readonly device_id: string;
         };
         CalibracionEquipo: {
             readonly id: number;
@@ -3637,6 +3686,21 @@ export interface components {
             departamento_residencia?: number | null;
             regimen_salud?: components["schemas"]["RegimenSaludEnum"];
             consentimiento_habeas_data?: boolean;
+        };
+        PaginatedAuditoriaList: {
+            /** @example 123 */
+            count: number;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?offset=400&limit=100
+             */
+            next?: string | null;
+            /**
+             * Format: uri
+             * @example http://api.example.org/accounts/?offset=200&limit=100
+             */
+            previous?: string | null;
+            results: components["schemas"]["Auditoria"][];
         };
         PaginatedCalibracionEquipoList: {
             /** @example 123 */
@@ -11063,6 +11127,64 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["TipoDocumentoPaciente"];
+                };
+            };
+        };
+    };
+    auditoria_list: {
+        parameters: {
+            query?: {
+                accion?: string;
+                accion__startswith?: string;
+                entidad?: string;
+                entidad_id?: string;
+                exito?: boolean;
+                fecha__gte?: string;
+                fecha__lte?: string;
+                /** @description Número de resultados a devolver por página. */
+                limit?: number;
+                /** @description El índice inicial a partir del cual devolver los resultados. */
+                offset?: number;
+                /** @description Qué campo usar para ordenar los resultados. */
+                ordering?: string;
+                /** @description Un término de búsqueda. */
+                search?: string;
+                usuario?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PaginatedAuditoriaList"];
+                };
+            };
+        };
+    };
+    auditoria_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un valor de entero único que identifique este Registro de auditoría. */
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Auditoria"];
                 };
             };
         };
