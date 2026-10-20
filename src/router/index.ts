@@ -24,6 +24,10 @@ const routes: Array<RouteRecordRaw> = [
   { path: '/ordenes/:id', name: 'orden', component: () => import('@/views/ordenes/DetalleOrdenPage.vue'), meta: { accion: 'ordenes.ver' } },
   { path: '/muestras/nueva', name: 'muestra-nueva', component: () => import('@/views/muestras/RegistrarMuestraPage.vue'), meta: { accion: 'muestras.registrar' } },
   { path: '/muestras/:id', name: 'muestra', component: () => import('@/views/muestras/DetalleMuestraPage.vue'), meta: { accion: 'muestras.ver' } },
+  // Fase 5: validación, lecturas y críticos
+  { path: '/examenes/:id', name: 'examen', component: () => import('@/views/resultados/DetalleExamenPage.vue'), meta: { accion: 'examenes.ver' } },
+  { path: '/lecturas', name: 'lecturas', component: () => import('@/views/resultados/LecturasPage.vue'), meta: { accion: 'lecturas.ver' } },
+  { path: '/criticos', name: 'criticos', component: () => import('@/views/resultados/CriticosPage.vue'), meta: { accion: 'criticos.ver' } },
   {
     path: '/tabs/',
     component: () => import('@/views/TabsPage.vue'),

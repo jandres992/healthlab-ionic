@@ -37,8 +37,14 @@ export async function listarExamenes(f: { orden?: string; estado_examen__nombre?
   return lista<Examen>(data);
 }
 
-export async function aprobarExamen(id: string): Promise<{ orden_finalizada: boolean }> {
-  const { data } = await http.post(`/api/v1/examenes-solicitados/${id}/aprobar/`);
+export async function obtenerExamen(id: string): Promise<Examen> {
+  const { data } = await http.get(`/api/v1/examenes-solicitados/${id}/`);
+  return datos<Examen>(data);
+}
+
+/** Validación (firma) del bacteriólogo. `justificacion_cci` solo cuando la política está en Advertencia (RF-50.1). */
+export async function aprobarExamen(id: string, justificacion_cci?: string): Promise<{ orden_finalizada: boolean }> {
+  const { data } = await http.post(`/api/v1/examenes-solicitados/${id}/aprobar/`, justificacion_cci ? { justificacion_cci } : {});
   return data;
 }
 

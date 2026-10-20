@@ -14,6 +14,7 @@ import { computed, onMounted, ref } from 'vue';
 import { listarNotificaciones } from '@/api/endpoints/notificaciones';
 import { listarOrdenes } from '@/api/endpoints/ordenes';
 import { listarMuestras } from '@/api/endpoints/muestras';
+import { listarCriticos } from '@/api/endpoints/resultados';
 import { ETIQUETAS_ROL } from '@/api/tipos';
 import ColaOfflineBanner from '@/components/ColaOfflineBanner.vue';
 import { usePermisos } from '@/composables/usePermisos';
@@ -25,6 +26,7 @@ const { puede } = usePermisos();
 const noLeidas = ref(0);
 const ordenesAbiertas = ref<number | null>(null);
 const muestrasPendientes = ref<number | null>(null);
+const criticosPendientes = ref<number | null>(null);
 
 const tarjetas = computed(() => [
   { titulo: 'Pacientes', pista: puede('pacientes.crear') ? 'Registrar y consultar pacientes' : 'Consultar pacientes', icono: peopleOutline, ruta: '/tabs/pacientes', ok: puede('pacientes.ver') },
@@ -39,6 +41,7 @@ async function cargar() {
   ];
   if (puede('ordenes.ver')) tareas.push(listarOrdenes({ limit: 1, estado_general__nombre: 'En Proceso' }).then((p) => { ordenesAbiertas.value = p.count; }).catch(() => undefined));
   if (puede('muestras.ver')) tareas.push(listarMuestras({ limit: 1, estado_muestra__nombre: 'Recolectada' }).then((p) => { muestrasPendientes.value = p.count; }).catch(() => undefined));
+  if (puede('criticos.ver')) tareas.push(listarCriticos(true).then((l) => { criticosPendientes.value = l.length; }).catch(() => undefined));
   await Promise.all(tareas);
 }
 
@@ -72,6 +75,9 @@ onMounted(cargar);
       <h2 class="saludo">Hola, {{ auth.nombre }}</h2>
       <p class="rol">{{ auth.roles.map((r) => ETIQUETAS_ROL[r]).join(' · ') }}</p>
 
+      <ion-card v-if="criticosPendientes" color="danger" button router-link="/criticos">
+        <ion-card-content><strong>{{ criticosPendientes }}</strong> valor(es) crítico(s) sin acuse — comunicar y registrar ahora</ion-card-content>
+      </ion-card>
       <div class="metricas" v-if="ordenesAbiertas !== null || muestrasPendientes !== null">
         <ion-card v-if="ordenesAbiertas !== null" class="metrica">
           <ion-card-content><strong>{{ ordenesAbiertas }}</strong><span>órdenes en proceso</span></ion-card-content>

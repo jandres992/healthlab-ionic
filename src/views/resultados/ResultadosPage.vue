@@ -1,9 +1,10 @@
 <script setup lang="ts">
 /** Bandeja de exámenes (fase 3: listado; la validación y el ingreso llegan en la fase 5). */
 import {
-  IonContent, IonHeader, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonLabel, IonList, IonPage,
-  IonSegment, IonSegmentButton, IonTitle, IonToolbar,
+  IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonLabel,
+  IonList, IonPage, IonSegment, IonSegmentButton, IonTitle, IonToolbar,
 } from '@ionic/vue';
+import { alertCircleOutline, hardwareChipOutline } from 'ionicons/icons';
 import { onMounted, ref } from 'vue';
 import { listarExamenes } from '@/api/endpoints/ordenes';
 import type { Examen } from '@/api/tipos';
@@ -28,7 +29,13 @@ onMounted(recargar);
 <template>
   <ion-page>
     <ion-header>
-      <ion-toolbar color="primary"><ion-title>Resultados</ion-title></ion-toolbar>
+      <ion-toolbar color="primary">
+        <ion-title>Resultados</ion-title>
+        <ion-buttons slot="end">
+          <ion-button v-if="puede('lecturas.ver')" router-link="/lecturas" aria-label="Lecturas de analizadores"><ion-icon slot="icon-only" :icon="hardwareChipOutline" /></ion-button>
+          <ion-button v-if="puede('criticos.ver')" router-link="/criticos" aria-label="Valores críticos"><ion-icon slot="icon-only" :icon="alertCircleOutline" /></ion-button>
+        </ion-buttons>
+      </ion-toolbar>
       <ion-toolbar>
         <ion-segment v-model="estado" scrollable @ionChange="recargar">
           <ion-segment-button value="">Todos</ion-segment-button>
@@ -42,7 +49,7 @@ onMounted(recargar);
       <EstadoLista :cargando="lista.cargando.value" :error="lista.error.value" :vacio="!lista.items.value.length"
                    texto-vacio="No hay exámenes en este estado." @reintentar="recargar" />
       <ion-list v-if="lista.items.value.length">
-        <ion-item v-for="e in lista.items.value" :key="e.id" button :detail="true">
+        <ion-item v-for="e in lista.items.value" :key="e.id" button :detail="true" :router-link="`/examenes/${e.id}`">
           <ion-label>
             <h2>{{ e.cups_descripcion }} <EstadoBadge :estado="e.estado_examen" /></h2>
             <p>Orden {{ e.orden_numero }} · {{ e.paciente_nombre }} · {{ e.paciente_documento }}</p>

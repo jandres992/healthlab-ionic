@@ -8,9 +8,10 @@ import { Capacitor } from '@capacitor/core';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { esApiError } from '@/api/http';
-import { admitirOrden, anularExamen, descargarReporte, obtenerOrden } from '@/api/endpoints/ordenes';
+import { listarInformes } from '@/api/endpoints/calidad';
+import { admitirOrden, anularExamen, descargarReporte, finalizarOrden, obtenerOrden } from '@/api/endpoints/ordenes';
 import { listarMuestras } from '@/api/endpoints/muestras';
-import type { Muestra, Orden } from '@/api/tipos';
+import type { Informe, Muestra, Orden } from '@/api/tipos';
 import EstadoBadge from '@/components/EstadoBadge.vue';
 import EstadoLista from '@/components/EstadoLista.vue';
 import Permitido from '@/components/Permitido.vue';
@@ -22,6 +23,7 @@ const route = useRoute();
 const id = String(route.params.id);
 const orden = ref<Orden | null>(null);
 const muestras = ref<Muestra[]>([]);
+const informes = ref<Informe[]>([]);
 const cargando = ref(true);
 const error = ref<unknown>(null);
 const { exito, error: mostrarError, confirmar, pedirTexto } = useMensajes();
@@ -33,7 +35,30 @@ async function cargar() {
   try {
     orden.value = await obtenerOrden(id);
     muestras.value = (await listarMuestras({ orden: id, limit: 50 })).results;
+    if (puede('informes.ver')) informes.value = (await listarInformes(id)).results;
   } catch (e) { error.value = e; } finally { cargando.value = false; }
+}
+
+/** Cierre manual (RF-38): el backend responde 409 con los pendientes o los críticos sin acuse. */
+async function finalizar() {
+  if (!(await confirmar('Finalizar orden', 'Se generará el informe final con hash. ¿Continuar?', 'Finalizar'))) return;
+  try {
+    await finalizarOrden(id);
+    await exito('Orden finalizada y reporte generado.');
+    await cargar();
+  } catch (e) {
+    if (esApiError(e) && e.status === 409) {
+      const pendientes = (e.extra?.pendientes as Array<{ examen: string; estado: string }> | undefined) ?? [];
+      const criticos = (e.extra?.criticos as Array<{ parametro: string; valor: string }> | undefined) ?? [];
+      const detalle = [
+        ...pendientes.map((p) => `• ${p.examen}: ${p.estado}`),
+        ...criticos.map((c) => `• Crítico sin acuse: ${c.parametro} ${c.valor}`),
+      ].join('\n');
+      await mostrarError({ ...e, mensaje: `${e.mensaje}\n${detalle}` });
+      return;
+    }
+    await mostrarError(e);
+  }
 }
 
 async function admitir() {
@@ -113,6 +138,9 @@ onMounted(cargar);
             <ion-button v-if="orden.estado_general !== 'Finalizada' && orden.estado_general !== 'Anulada'" size="small" fill="outline"
                         :router-link="`/muestras/nueva?orden=${orden.id}`">Registrar muestra</ion-button>
           </Permitido>
+          <Permitido accion="ordenes.finalizar">
+            <ion-button v-if="orden.estado_general !== 'Finalizada' && orden.estado_general !== 'Anulada'" size="small" color="success" @click="finalizar">Finalizar</ion-button>
+          </Permitido>
           <Permitido accion="ordenes.reporte_pdf">
             <ion-button size="small" fill="outline" @click="verInforme">
               {{ orden.estado_general === 'Finalizada' ? 'Informe final' : orden.estado_general === 'Resultados Parciales' ? 'Informe parcial' : 'Vista preliminar' }}
@@ -122,7 +150,7 @@ onMounted(cargar);
 
         <ion-list>
           <ion-list-header><ion-label>Exámenes</ion-label></ion-list-header>
-          <ion-item v-for="e in orden.examenes" :key="e.id">
+          <ion-item v-for="e in orden.examenes" :key="e.id" :button="puede('examenes.ver')" :router-link="puede('examenes.ver') ? `/examenes/${e.id}` : undefined">
             <ion-label class="ion-text-wrap">
               <h3>{{ e.cups_descripcion }} <EstadoBadge :estado="e.estado_examen" /></h3>
               <p>CUPS {{ e.cups_codigo }}<span v-if="e.codigo_barras"> · Muestra {{ e.codigo_barras }}</span></p>
@@ -143,6 +171,17 @@ onMounted(cargar);
             </ion-label>
           </ion-item>
           <ion-item v-if="!muestras.length" lines="none"><ion-label color="medium">Sin muestras registradas.</ion-label></ion-item>
+        </ion-list>
+
+        <ion-list v-if="informes.length">
+          <ion-list-header><ion-label>Informes emitidos</ion-label></ion-list-header>
+          <ion-item v-for="i in informes" :key="i.id">
+            <ion-label class="ion-text-wrap">
+              <h3>{{ i.tipo }} <ion-note v-if="i.vigente" color="success">vigente</ion-note></h3>
+              <p>{{ fecha(i.fecha_generacion) }} · {{ i.generado_por_username ?? '—' }}</p>
+              <p><ion-note><code>{{ (i.hash_documento ?? '').slice(0, 16) }}…</code></ion-note></p>
+            </ion-label>
+          </ion-item>
         </ion-list>
       </template>
     </ion-content>
