@@ -15,6 +15,7 @@ import { listarNotificaciones } from '@/api/endpoints/notificaciones';
 import { listarOrdenes } from '@/api/endpoints/ordenes';
 import { listarMuestras } from '@/api/endpoints/muestras';
 import { ETIQUETAS_ROL } from '@/api/tipos';
+import ColaOfflineBanner from '@/components/ColaOfflineBanner.vue';
 import { usePermisos } from '@/composables/usePermisos';
 import { useAuthStore } from '@/stores/auth';
 
@@ -67,6 +68,7 @@ onMounted(cargar);
     <ion-content class="ion-padding">
       <ion-refresher slot="fixed" @ionRefresh="refrescar"><ion-refresher-content /></ion-refresher>
 
+      <ColaOfflineBanner />
       <h2 class="saludo">Hola, {{ auth.nombre }}</h2>
       <p class="rol">{{ auth.roles.map((r) => ETIQUETAS_ROL[r]).join(' · ') }}</p>
 

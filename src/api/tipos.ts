@@ -21,6 +21,10 @@ export type TipoDocumento = Esquemas['TipoDocumentoPaciente'];
 export type SexoBiologico = Esquemas['SexoBiologico'];
 export type Parametro = Esquemas['ParametroExamen'];
 export type Informe = Esquemas['InformeResultados'];
+export type Departamento = Esquemas['Departamento'];
+export type Municipio = Esquemas['Municipio'];
+export type EventoMuestra = Esquemas['EventoMuestra'];
+export type PacienteCrear = Esquemas['PacienteRequest'];
 
 /** Respuesta de POST /usr/login/ (campos añadidos por TokenPersonalizadoSerializer). */
 export interface RespuestaLogin {

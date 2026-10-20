@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import {
-  IonContent, IonHeader, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonLabel, IonList, IonNote,
-  IonPage, IonSearchbar, IonTitle, IonToolbar,
+  IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonLabel,
+  IonList, IonNote, IonPage, IonSearchbar, IonTitle, IonToolbar,
 } from '@ionic/vue';
+import { addOutline } from 'ionicons/icons';
+import Permitido from '@/components/Permitido.vue';
 import { onMounted } from 'vue';
 import { listarPacientes, type FiltroPacientes } from '@/api/endpoints/pacientes';
 import type { Paciente } from '@/api/tipos';
@@ -36,7 +38,7 @@ onMounted(() => lista.cargar());
       <EstadoLista :cargando="lista.cargando.value" :error="lista.error.value" :vacio="!lista.items.value.length"
                    texto-vacio="No hay pacientes." @reintentar="lista.cargar()" />
       <ion-list v-if="lista.items.value.length">
-        <ion-item v-for="p in lista.items.value" :key="p.id" button :detail="true">
+        <ion-item v-for="p in lista.items.value" :key="p.id" button :detail="true" :router-link="`/pacientes/${p.id}`">
           <ion-label>
             <h2>{{ p.nombre_completo }}</h2>
             <p>{{ p.tipo_documento }} {{ p.numero_documento }} · {{ p.sexo_biologico }} · {{ p.fecha_nacimiento }}</p>
@@ -47,6 +49,11 @@ onMounted(() => lista.cargar());
       <ion-infinite-scroll :disabled="!lista.hayMas.value" @ionInfinite="masItems">
         <ion-infinite-scroll-content loading-text="Cargando…" />
       </ion-infinite-scroll>
+      <Permitido accion="pacientes.crear">
+        <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+          <ion-fab-button router-link="/pacientes/nuevo" aria-label="Nuevo paciente"><ion-icon :icon="addOutline" /></ion-fab-button>
+        </ion-fab>
+      </Permitido>
     </ion-content>
   </ion-page>
 </template>

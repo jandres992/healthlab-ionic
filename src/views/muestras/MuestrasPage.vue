@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import {
-  IonContent, IonHeader, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonLabel, IonList, IonPage,
-  IonSearchbar, IonTitle, IonToolbar,
+  IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonInfiniteScroll, IonInfiniteScrollContent,
+  IonItem, IonLabel, IonList, IonPage, IonSearchbar, IonTitle, IonToolbar,
 } from '@ionic/vue';
+import { addOutline, barcodeOutline } from 'ionicons/icons';
 import { onMounted } from 'vue';
+import { useRouter } from 'vue-router';
+import { buscarPorCodigo } from '@/api/endpoints/muestras';
+import Permitido from '@/components/Permitido.vue';
+import { useEscaner } from '@/composables/useEscaner';
+import { useMensajes } from '@/composables/useMensajes';
+import ColaOfflineBanner from '@/components/ColaOfflineBanner.vue';
 import { listarMuestras, type FiltroMuestras } from '@/api/endpoints/muestras';
 import type { Muestra } from '@/api/tipos';
 import EstadoBadge from '@/components/EstadoBadge.vue';
@@ -11,6 +18,15 @@ import EstadoLista from '@/components/EstadoLista.vue';
 import { useListaPaginada } from '@/composables/useListaPaginada';
 
 const lista = useListaPaginada<Muestra, FiltroMuestras>(listarMuestras, {});
+const router = useRouter();
+const escaner = useEscaner();
+const { error } = useMensajes();
+
+async function escanearYAbrir() {
+  const codigo = await escaner.escanear();
+  if (!codigo) return;
+  try { const m = await buscarPorCodigo(codigo); await router.push(`/muestras/${m.id}`); } catch (e) { await error(e, 'Muestra no encontrada.'); }
+}
 let temporizador: ReturnType<typeof setTimeout> | undefined;
 
 function buscar(ev: CustomEvent) {
@@ -30,14 +46,20 @@ onMounted(() => lista.cargar());
 <template>
   <ion-page>
     <ion-header>
-      <ion-toolbar color="primary"><ion-title>Muestras</ion-title></ion-toolbar>
+      <ion-toolbar color="primary">
+        <ion-title>Muestras</ion-title>
+        <ion-buttons slot="end" v-if="escaner.disponible">
+          <ion-button aria-label="Escanear" @click="escanearYAbrir"><ion-icon slot="icon-only" :icon="barcodeOutline" /></ion-button>
+        </ion-buttons>
+      </ion-toolbar>
       <ion-toolbar><ion-searchbar placeholder="Código de barras u orden" :debounce="0" @ionInput="buscar" /></ion-toolbar>
     </ion-header>
     <ion-content>
+      <ColaOfflineBanner />
       <EstadoLista :cargando="lista.cargando.value" :error="lista.error.value" :vacio="!lista.items.value.length"
                    texto-vacio="No hay muestras." @reintentar="lista.cargar()" />
       <ion-list v-if="lista.items.value.length">
-        <ion-item v-for="m in lista.items.value" :key="m.id" button :detail="true">
+        <ion-item v-for="m in lista.items.value" :key="m.id" button :detail="true" :router-link="`/muestras/${m.id}`">
           <ion-label>
             <h2>{{ m.codigo_barras }} <EstadoBadge :estado="m.estado_muestra" /></h2>
             <p>{{ m.tipo_muestra }} · Orden {{ m.orden_numero }} · {{ m.paciente_nombre }}</p>
@@ -48,6 +70,11 @@ onMounted(() => lista.cargar());
       <ion-infinite-scroll :disabled="!lista.hayMas.value" @ionInfinite="masItems">
         <ion-infinite-scroll-content loading-text="Cargando…" />
       </ion-infinite-scroll>
+      <Permitido accion="muestras.registrar">
+        <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+          <ion-fab-button router-link="/muestras/nueva" aria-label="Registrar muestra"><ion-icon :icon="addOutline" /></ion-fab-button>
+        </ion-fab>
+      </Permitido>
     </ion-content>
   </ion-page>
 </template>

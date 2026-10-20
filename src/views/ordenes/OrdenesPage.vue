@@ -1,8 +1,10 @@
 <script setup lang="ts">
 import {
-  IonContent, IonHeader, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonLabel, IonList, IonPage,
-  IonSearchbar, IonSegment, IonSegmentButton, IonTitle, IonToolbar,
+  IonContent, IonFab, IonFabButton, IonHeader, IonIcon, IonInfiniteScroll, IonInfiniteScrollContent, IonItem, IonLabel,
+  IonList, IonPage, IonSearchbar, IonSegment, IonSegmentButton, IonTitle, IonToolbar,
 } from '@ionic/vue';
+import { addOutline } from 'ionicons/icons';
+import Permitido from '@/components/Permitido.vue';
 import { onMounted, ref } from 'vue';
 import { listarOrdenes, type FiltroOrdenes } from '@/api/endpoints/ordenes';
 import type { Orden } from '@/api/tipos';
@@ -51,7 +53,7 @@ onMounted(recargar);
       <EstadoLista :cargando="lista.cargando.value" :error="lista.error.value" :vacio="!lista.items.value.length"
                    texto-vacio="No hay órdenes." @reintentar="recargar" />
       <ion-list v-if="lista.items.value.length">
-        <ion-item v-for="o in lista.items.value" :key="o.id" button :detail="true">
+        <ion-item v-for="o in lista.items.value" :key="o.id" button :detail="true" :router-link="`/ordenes/${o.id}`">
           <ion-label>
             <h2>{{ o.numero_orden }} <EstadoBadge :estado="o.estado_general" /></h2>
             <p>{{ o.paciente_nombre }} · {{ o.paciente_documento }}</p>
@@ -62,6 +64,11 @@ onMounted(recargar);
       <ion-infinite-scroll :disabled="!lista.hayMas.value" @ionInfinite="masItems">
         <ion-infinite-scroll-content loading-text="Cargando…" />
       </ion-infinite-scroll>
+      <Permitido accion="ordenes.crear">
+        <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+          <ion-fab-button router-link="/ordenes/nueva" aria-label="Nueva orden"><ion-icon :icon="addOutline" /></ion-fab-button>
+        </ion-fab>
+      </Permitido>
     </ion-content>
   </ion-page>
 </template>

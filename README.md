@@ -47,9 +47,9 @@ src/
 │   └── endpoints/      auth, catalogos, pacientes, ordenes, muestras, resultados, notificaciones
 ├── stores/auth.ts      sesión, roles y acciones (Pinia); tokens en almacenamiento seguro
 ├── router/             rutas con carga diferida y guards por acción
-├── composables/        usePermisos, useMensajes, useListaPaginada
-├── components/         Permitido, EstadoLista, EstadoBadge
-├── services/           almacenamientoSeguro (Keychain/Keystore o Preferences)
+├── composables/        usePermisos, useMensajes, useListaPaginada, useEscaner
+├── components/         Permitido, EstadoLista, EstadoBadge, SelectorBusqueda, CampoCodigoBarras, ColaOfflineBanner
+├── services/           almacenamientoSeguro (Keychain/Keystore o Preferences), colaOffline (RN-26)
 └── views/              auth, inicio, pacientes, ordenes, muestras, resultados, notificaciones
 ```
 
@@ -58,6 +58,6 @@ src/
 | Fase | Contenido | Estado |
 |---|---|---|
 | 3 | Cliente generado, http, sesión segura, login, perfil, guards, pestañas, listados | ✔ |
-| 4 | Crear paciente, crear orden, registrar muestra con escáner, offline (toma y admisión) | pendiente |
+| 4 | Crear paciente, crear orden con varios CUPS, detalle de orden (admitir, anular, informe), registrar muestra con escáner y checklist, detalle de muestra con cadena de custodia (recibir, rechazar, alícuota, descarte, eventos), cola offline para toma y admisión con conflictos | ✔ |
 | 5 | Bandeja de validación, resultados, críticos, informes | pendiente |
 | 6 | Calidad, auditoría, administración web | pendiente |
