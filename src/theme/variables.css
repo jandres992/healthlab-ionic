@@ -1,11 +1,36 @@
-/* Paleta HealthLab (misma identidad que la app Expo: azul #135ae0) */
+/*
+ * Sistema de diseño HealthLab: misma identidad visual que la app Expo
+ * (HealthLabMobile/src/constants/colors.ts y components/ThemedUI.tsx).
+ */
 :root {
-  --ion-color-primary: #135ae0;
-  --ion-color-primary-rgb: 19, 90, 224;
+  /* Tokens de Expo */
+  --hl-primary: #00488d;
+  --hl-primary-2: #005fb8;
+  --hl-primary-fixed: #e1f5fe;
+  --hl-accent: #00b4e1;
+  --hl-accent-2: #0090b4;
+  --hl-surface: #f0f7ff;
+  --hl-surface-lowest: #ffffff;
+  --hl-surface-low: #f7f9fc;
+  --hl-surface-container: #e4ebf6;
+  --hl-surface-high: #dbe6ff;
+  --hl-on-surface: #002d58;
+  --hl-on-surface-variant: #607793;
+  --hl-error-container: #ffeaea;
+  --hl-on-error-container: #b03030;
+  --hl-radius-sm: 10px;
+  --hl-radius-md: 16px;
+  --hl-radius-xl: 32px;
+  --hl-sombra: 0 10px 20px rgba(0, 72, 141, 0.08);
+  --hl-degradado: linear-gradient(135deg, var(--hl-primary), var(--hl-primary-2));
+  --hl-degradado-accent: linear-gradient(135deg, var(--hl-accent), var(--hl-accent-2));
+
+  --ion-color-primary: #00488d;
+  --ion-color-primary-rgb: 0, 72, 141;
   --ion-color-primary-contrast: #ffffff;
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #114fc5;
-  --ion-color-primary-tint: #2b6be3;
+  --ion-color-primary-shade: #003f7c;
+  --ion-color-primary-tint: #1a5a98;
 
   --ion-color-secondary: #005fb8;
   --ion-color-secondary-rgb: 0, 95, 184;
@@ -14,12 +39,19 @@
   --ion-color-secondary-shade: #0054a2;
   --ion-color-secondary-tint: #1a6fbf;
 
-  --ion-color-success: #1b7f3b;
-  --ion-color-success-rgb: 27, 127, 59;
+  --ion-color-tertiary: #00b4e1;
+  --ion-color-tertiary-rgb: 0, 180, 225;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #009ec6;
+  --ion-color-tertiary-tint: #1abce4;
+
+  --ion-color-success: #19784d;
+  --ion-color-success-rgb: 25, 120, 77;
   --ion-color-success-contrast: #ffffff;
   --ion-color-success-contrast-rgb: 255, 255, 255;
-  --ion-color-success-shade: #187034;
-  --ion-color-success-tint: #328c4f;
+  --ion-color-success-shade: #166a44;
+  --ion-color-success-tint: #30865f;
 
   --ion-color-warning: #c77700;
   --ion-color-warning-rgb: 199, 119, 0;
@@ -28,29 +60,164 @@
   --ion-color-warning-shade: #af6900;
   --ion-color-warning-tint: #cd851a;
 
-  --ion-color-danger: #b3261e;
-  --ion-color-danger-rgb: 179, 38, 30;
+  --ion-color-danger: #d64545;
+  --ion-color-danger-rgb: 214, 69, 69;
   --ion-color-danger-contrast: #ffffff;
   --ion-color-danger-contrast-rgb: 255, 255, 255;
-  --ion-color-danger-shade: #9e211a;
-  --ion-color-danger-tint: #bb3c35;
+  --ion-color-danger-shade: #bc3d3d;
+  --ion-color-danger-tint: #da5858;
 
-  --ion-color-medium: #7f8ba2;
-  --ion-color-medium-rgb: 127, 139, 162;
+  --ion-color-medium: #607793;
+  --ion-color-medium-rgb: 96, 119, 147;
   --ion-color-medium-contrast: #ffffff;
   --ion-color-medium-contrast-rgb: 255, 255, 255;
-  --ion-color-medium-shade: #707a8f;
-  --ion-color-medium-tint: #8c97ab;
+  --ion-color-medium-shade: #546981;
+  --ion-color-medium-tint: #70859e;
 
-  --ion-color-light: #eef3ff;
-  --ion-color-light-rgb: 238, 243, 255;
-  --ion-color-light-contrast: #000000;
-  --ion-color-light-contrast-rgb: 0, 0, 0;
-  --ion-color-light-shade: #d1d6e0;
-  --ion-color-light-tint: #f0f4ff;
+  --ion-color-light: #e4ebf6;
+  --ion-color-light-rgb: 228, 235, 246;
+  --ion-color-light-contrast: #002d58;
+  --ion-color-light-contrast-rgb: 0, 45, 88;
+  --ion-color-light-shade: #c9cfd8;
+  --ion-color-light-tint: #e7edf7;
 
-  /* Estados clínicos (se usan en badges) */
-  --hl-critico: #b3261e;
+  --ion-background-color: var(--hl-surface);
+  --ion-background-color-rgb: 240, 247, 255;
+  --ion-text-color: var(--hl-on-surface);
+  --ion-text-color-rgb: 0, 45, 88;
+  --ion-item-background: var(--hl-surface-lowest);
+  --ion-card-background: var(--hl-surface-lowest);
+  --ion-toolbar-background: var(--hl-primary);
+  --ion-toolbar-color: #ffffff;
+  --ion-tab-bar-background: var(--hl-surface-lowest);
+  --ion-tab-bar-color: var(--hl-on-surface-variant);
+  --ion-tab-bar-color-selected: var(--hl-primary);
+  --ion-font-family: 'Inter', 'Roboto', 'Segoe UI', system-ui, sans-serif;
+
+  /* Estados clínicos (badges) */
+  --hl-critico: #d64545;
   --hl-anormal: #c77700;
-  --hl-normal: #1b7f3b;
+  --hl-normal: #19784d;
 }
+
+/* Modo oscuro: paleta DarkColors de Expo */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --hl-primary: #82b1ff;
+    --hl-primary-2: #3d7be0;
+    --hl-primary-fixed: #003366;
+    --hl-accent: #00e5ff;
+    --hl-surface: #0f172a;
+    --hl-surface-lowest: #0b1120;
+    --hl-surface-low: #151f38;
+    --hl-surface-container: #1e293b;
+    --hl-surface-high: #334155;
+    --hl-on-surface: #e2e8f0;
+    --hl-on-surface-variant: #94a3b8;
+    --hl-error-container: #7f1d1d;
+    --hl-on-error-container: #fca5a5;
+    --hl-degradado: linear-gradient(135deg, #00488d, #005fb8);
+    --ion-background-color: var(--hl-surface);
+    --ion-background-color-rgb: 15, 23, 42;
+    --ion-text-color: var(--hl-on-surface);
+    --ion-text-color-rgb: 226, 232, 240;
+    --ion-item-background: var(--hl-surface-low);
+    --ion-card-background: var(--hl-surface-low);
+    --ion-toolbar-background: #00488d;
+    --ion-tab-bar-background: var(--hl-surface-lowest);
+    --ion-tab-bar-color-selected: var(--hl-primary);
+  }
+}
+
+/* ---- Componentes globales al estilo ThemedUI ---- */
+
+/* Barras superiores con el degradado azul de Expo */
+ion-toolbar[color='primary'] {
+  --background: var(--hl-degradado);
+}
+ion-header ion-toolbar ion-title { font-weight: 700; letter-spacing: 0.2px; }
+ion-header.header-md { box-shadow: none; }
+
+/* Tarjetas: radio 16 y sombra azul suave */
+ion-card {
+  border-radius: var(--hl-radius-md);
+  box-shadow: var(--hl-sombra);
+  margin-inline: 16px;
+}
+ion-card-title { font-weight: 700; color: var(--hl-on-surface); font-size: 18px; }
+ion-card-subtitle { color: var(--hl-on-surface-variant); text-transform: none; letter-spacing: 0; font-weight: 400; }
+
+/* Botones: degradado, radio 16, texto en negrita */
+ion-button {
+  --border-radius: var(--hl-radius-md);
+  --box-shadow: none;
+  font-weight: 700;
+  text-transform: none;
+  letter-spacing: 0;
+  min-height: 48px;
+}
+ion-button[size='small'] { min-height: 32px; }
+ion-button:not([fill]):not([color]),
+ion-button[fill='solid']:not([color]),
+ion-button[color='primary']:not([fill]) {
+  --background: var(--hl-degradado);
+  --background-activated: var(--hl-primary);
+  --background-hover: var(--hl-primary-2);
+}
+ion-button[fill='outline'] { --border-width: 2px; }
+
+/* Campos: fondo claro, borde suave y radio 10 */
+ion-list.hl-form, .hl-form ion-list { background: transparent; }
+ion-input.hl-campo, ion-select.hl-campo, ion-textarea.hl-campo {
+  --background: var(--hl-surface-low);
+  --border-radius: var(--hl-radius-sm);
+  --border-color: var(--hl-surface-container);
+  --border-width: 1.5px;
+  --highlight-color-focused: var(--hl-primary);
+}
+
+/* Listas e items */
+ion-list { background: transparent; }
+ion-list-header ion-label {
+  text-transform: uppercase; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; color: var(--hl-on-surface-variant);
+}
+ion-searchbar { --border-radius: var(--hl-radius-sm); --box-shadow: none; --background: var(--hl-surface-lowest); }
+
+/* Barra de pestañas tipo Expo: blanca, elevada y con esquinas redondeadas */
+ion-tab-bar {
+  border-top: none;
+  box-shadow: 0 -6px 20px rgba(0, 72, 141, 0.08);
+  border-radius: 20px 20px 0 0;
+  height: 64px;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+ion-tab-button { font-weight: 600; }
+ion-tab-button.tab-selected ion-icon {
+  background: var(--hl-primary-fixed);
+  border-radius: 12px;
+  padding: 2px 12px;
+}
+
+ion-chip { font-weight: 600; }
+ion-badge { border-radius: 8px; }
+
+/* Campo con etiqueta apilada al estilo ThemedInput */
+ion-input.hl-campo { --background: transparent; --padding-start: 0; --padding-end: 0; --highlight-height: 0; min-height: 0; }
+ion-input.hl-campo .input-wrapper { flex-direction: column; align-items: stretch; border: none; }
+ion-input.hl-campo .label-text-wrapper { transform: none !important; max-width: 100% !important; margin-bottom: 10px; }
+ion-input.hl-campo .label-text {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--hl-on-surface-variant);
+}
+ion-input.hl-campo .native-wrapper {
+  background: var(--hl-surface-low); border: 1.5px solid var(--hl-surface-container);
+  border-radius: var(--hl-radius-sm); padding: 4px 14px; min-height: 48px;
+}
+ion-input.hl-campo.has-focus .native-wrapper { border-color: var(--hl-primary); }
+
+/* Filas navegables de las listas como tarjetas (estilo Expo) */
+ion-content ion-list > ion-item.ion-activatable {
+  --border-width: 0; --inner-border-width: 0; --border-radius: var(--hl-radius-md);
+  --background: var(--hl-surface-lowest);
+  margin: 10px 16px; border-radius: var(--hl-radius-md); box-shadow: var(--hl-sombra);
+}
+ion-menu ion-list > ion-item.ion-activatable { margin: 2px 8px; box-shadow: none; }
