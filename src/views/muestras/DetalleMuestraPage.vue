@@ -1,19 +1,24 @@
 <script setup lang="ts">
-/** Detalle de muestra: recepción y rechazo (bacteriólogo), cadena de custodia y eventos. */
+/** Detalle de muestra: etiqueta, recepción y rechazo (bacteriólogo), cadena de custodia y eventos. */
 import {
-  IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonList, IonListHeader,
-  IonNote, IonPage, IonSelect, IonSelectOption, IonTitle, IonToolbar, alertController,
+  IonBackButton, IonButton, IonButtons, IonCard, IonCardContent, IonContent, IonHeader, IonIcon, IonItem, IonLabel,
+  IonList, IonListHeader, IonNote, IonPage, IonSelect, IonSelectOption, IonTitle, IonToolbar, actionSheetController,
+  alertController,
 } from '@ionic/vue';
-import { onMounted, ref } from 'vue';
+import { printOutline } from 'ionicons/icons';
+import { computed, onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import {
-  anotarEvento, crearAlicuota, custodia, descartarMuestra, obtenerMuestra, rechazarMuestra, recibirMuestra,
+  anotarEvento, crearAlicuota, custodia, descargarEtiqueta, descartarMuestra, obtenerMuestra, rechazarMuestra,
+  recibirMuestra, type FormatoEtiqueta,
 } from '@/api/endpoints/muestras';
 import type { EventoMuestra, Muestra } from '@/api/tipos';
 import EstadoBadge from '@/components/EstadoBadge.vue';
 import EstadoLista from '@/components/EstadoLista.vue';
 import Permitido from '@/components/Permitido.vue';
 import { useMensajes } from '@/composables/useMensajes';
+import { usePermisos } from '@/composables/usePermisos';
+import { imprimirPdf } from '@/services/pdf';
 
 const route = useRoute();
 const id = String(route.params.id);
@@ -22,6 +27,41 @@ const eventos = ref<EventoMuestra[]>([]);
 const cargando = ref(true);
 const error = ref<unknown>(null);
 const { exito, error: mostrarError, confirmar, pedirTexto } = useMensajes();
+const { puede } = usePermisos();
+
+/** Recién registrada desde la toma: se invita a imprimir la etiqueta (RF-60.2). */
+const recienRegistrada = ref(route.query.nueva === '1');
+const yaImpresa = computed(() => eventos.value.some((e) => e.tipo === 'etiqueta'));
+const imprimiendo = ref(false);
+
+/** Pregunta el formato y abre el diálogo de impresión. La impresión queda en la cadena de custodia. */
+async function imprimirEtiqueta() {
+  if (!muestra.value) return;
+  const hoja = await actionSheetController.create({
+    header: yaImpresa.value ? 'Reimprimir etiqueta' : 'Imprimir etiqueta',
+    subHeader: 'Elija el tipo de impresora',
+    buttons: [
+      { text: 'Impresora de etiquetas (50 × 25 mm)', data: { formato: 'individual', copias: 1 } },
+      { text: 'Impresora común: hoja carta con 3 etiquetas', data: { formato: 'hoja', copias: 3 } },
+      { text: 'Impresora común: hoja carta con 6 etiquetas', data: { formato: 'hoja', copias: 6 } },
+      { text: 'Cancelar', role: 'cancel' },
+    ],
+  });
+  await hoja.present();
+  const { data, role } = await hoja.onDidDismiss<{ formato: FormatoEtiqueta; copias: number }>();
+  if (role === 'cancel' || !data) return;
+  imprimiendo.value = true;
+  try {
+    const blob = await descargarEtiqueta(id, data.formato, data.copias);
+    await imprimirPdf(blob, `etiqueta_${muestra.value.codigo_barras}.pdf`);
+    recienRegistrada.value = false;
+    eventos.value = await custodia(id);
+  } catch (e) {
+    await mostrarError(e, 'No se pudo generar la etiqueta.');
+  } finally {
+    imprimiendo.value = false;
+  }
+}
 
 const CONDICIONES = ['Hemolizada', 'Lipemica', 'Icterica', 'Insuficiente', 'Coagulada', 'Contaminada'];
 const condicionRechazo = ref('Hemolizada');
@@ -109,6 +149,23 @@ onMounted(cargar);
           </ion-item>
         </ion-list>
 
+        <ion-card v-if="recienRegistrada && puede('muestras.etiqueta') && !yaImpresa" color="light" class="aviso-etiqueta">
+          <ion-card-content>
+            <p><strong>Muestra registrada.</strong> Imprima la etiqueta y péguela en el tubo antes de enviarlo al laboratorio.</p>
+            <ion-button size="small" :disabled="imprimiendo" @click="imprimirEtiqueta">
+              <ion-icon slot="start" :icon="printOutline" />Imprimir etiqueta
+            </ion-button>
+          </ion-card-content>
+        </ion-card>
+
+        <Permitido accion="muestras.etiqueta">
+          <div class="acciones ion-padding-horizontal" v-if="muestra.estado_muestra !== 'Descartada'">
+            <ion-button size="small" fill="outline" :disabled="imprimiendo" @click="imprimirEtiqueta">
+              <ion-icon slot="start" :icon="printOutline" />{{ yaImpresa ? 'Reimprimir etiqueta' : 'Imprimir etiqueta' }}
+            </ion-button>
+          </div>
+        </Permitido>
+
         <Permitido accion="muestras.recibir">
           <div class="acciones ion-padding-horizontal" v-if="muestra.estado_muestra === 'Recolectada'">
             <ion-button size="small" @click="recibir">Recibir en laboratorio</ion-button>
@@ -154,4 +211,5 @@ onMounted(cargar);
 <style scoped>
 .acciones { display: flex; flex-wrap: wrap; gap: 4px; align-items: center; margin-bottom: 4px; }
 .condicion { --padding-start: 0; flex: 1; min-width: 160px; }
+.aviso-etiqueta p { margin: 0 0 8px; }
 </style>

@@ -5,11 +5,12 @@
  */
 import {
   IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote,
-  IonTitle, IonToolbar,
+  IonToolbar,
 } from '@ionic/vue';
 import {
   clipboardOutline, documentTextOutline, flaskOutline, hardwareChipOutline, homeOutline, notificationsOutline,
-  peopleOutline, personCircleOutline, ribbonOutline, settingsOutline, shieldCheckmarkOutline, warningOutline,
+  peopleOutline, personCircleOutline, ribbonOutline, settingsOutline, shieldCheckmarkOutline, statsChartOutline,
+  warningOutline,
 } from 'ionicons/icons';
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
@@ -33,6 +34,7 @@ const secciones = computed(() => [
   ] },
   { titulo: 'Calidad y gestión', items: [
     { ruta: '/calidad', icono: ribbonOutline, texto: 'Control de calidad', ok: puede('calidad.ver') || puede('equipos.ver') },
+    { ruta: '/indicadores', icono: statsChartOutline, texto: 'Indicadores', ok: puede('indicadores.ver') },
     { ruta: '/auditoria', icono: shieldCheckmarkOutline, texto: 'Auditoría y RIPS', ok: puede('auditoria.ver') || puede('ordenes.export_rips') },
     { ruta: '/admin', icono: settingsOutline, texto: 'Administración', ok: puede('usuarios.ver') || puede('catalogos.gestionar') },
   ] },
@@ -47,7 +49,10 @@ const secciones = computed(() => [
   <ion-menu content-id="principal" type="overlay" :disabled="!auth.autenticado">
     <ion-header>
       <ion-toolbar color="primary">
-        <ion-title>HealthLab</ion-title>
+        <div class="marca">
+          <img src="/img/logo.png" alt="" width="40" height="40" />
+          <span>HealthLab</span>
+        </div>
       </ion-toolbar>
     </ion-header>
     <ion-content>
@@ -74,5 +79,10 @@ const secciones = computed(() => [
 </template>
 
 <style scoped>
-.activo { --background: var(--ion-color-light); font-weight: 600; }
+.marca { display: flex; align-items: center; gap: 12px; padding: 8px 16px; font-size: 20px; font-weight: 800; color: #fff; }
+.marca img { border-radius: 50%; background: #fff; }
+ion-menu ion-content { --background: var(--hl-surface-lowest); }
+ion-item { --border-radius: 12px; margin: 2px 8px; }
+.activo { --background: var(--hl-primary-fixed); --color: var(--hl-primary); font-weight: 700; }
+.activo ion-icon { color: var(--hl-primary); }
 </style>

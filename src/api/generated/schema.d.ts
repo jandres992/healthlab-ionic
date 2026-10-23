@@ -581,6 +581,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/v1/indicadores/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Indicadores agregados de operación para el dashboard (RF-74.1). Sin datos de pacientes. */
+        get: operations["indicadores_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/v1/informes/": {
         parameters: {
             query?: never;
@@ -605,6 +622,23 @@ export interface paths {
             cookie?: never;
         };
         get: operations["informes_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/informes/{id}/pdf/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description PDF guardado del informe, para imprimirlo sin generar uno nuevo (RF-37.6). */
+        get: operations["informes_pdf_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -805,6 +839,23 @@ export interface paths {
         put?: never;
         /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
         post: operations["muestras_descartar_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/muestras/{id}/etiqueta-pdf/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Etiqueta con código de barras Code 128 (RF-60.1). Cada impresión queda en la custodia (RF-60.2). */
+        get: operations["muestras_etiqueta_pdf_retrieve"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -1815,6 +1866,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/lab/api/v1/indicadores/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Indicadores agregados de operación para el dashboard (RF-74.1). Sin datos de pacientes. */
+        get: operations["lab_api_v1_indicadores_list"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/lab/api/v1/informes/": {
         parameters: {
             query?: never;
@@ -1839,6 +1907,23 @@ export interface paths {
             cookie?: never;
         };
         get: operations["lab_api_v1_informes_retrieve"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/informes/{id}/pdf/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description PDF guardado del informe, para imprimirlo sin generar uno nuevo (RF-37.6). */
+        get: operations["lab_api_v1_informes_pdf_retrieve"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2039,6 +2124,23 @@ export interface paths {
         put?: never;
         /** @description Acciones de custodia que se añaden al MuestraFisicaViewSet. */
         post: operations["lab_api_v1_muestras_descartar_create"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/lab/api/v1/muestras/{id}/etiqueta-pdf/": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Etiqueta con código de barras Code 128 (RF-60.1). Cada impresión queda en la custodia (RF-60.2). */
+        get: operations["lab_api_v1_muestras_etiqueta_pdf_retrieve"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -3068,6 +3170,20 @@ export interface components {
             descripcion?: string | null;
             endpoint_destino?: string;
         };
+        ConteoCups: {
+            codigo: string;
+            descripcion: string;
+            total: number;
+        };
+        ConteoDia: {
+            /** Format: date */
+            fecha: string;
+            total: number;
+        };
+        ConteoEstado: {
+            estado: string;
+            total: number;
+        };
         CorridaCCI: {
             readonly id: number;
             readonly lote_control: number;
@@ -3238,6 +3354,7 @@ export interface components {
         };
         /**
          * @description * `toma` - Toma
+         *     * `etiqueta` - Impresión de etiqueta
          *     * `transporte` - Transporte
          *     * `recepcion` - Recepción en laboratorio
          *     * `alicuota` - Alícuota
@@ -3248,7 +3365,7 @@ export interface components {
          *     * `nota` - Nota
          * @enum {string}
          */
-        EventoMuestraTipoEnum: "toma" | "transporte" | "recepcion" | "alicuota" | "almacenamiento" | "analisis" | "rechazo" | "descarte" | "nota";
+        EventoMuestraTipoEnum: "toma" | "etiqueta" | "transporte" | "recepcion" | "alicuota" | "almacenamiento" | "analisis" | "rechazo" | "descarte" | "nota";
         /** @description Agregar un examen a una orden abierta. */
         ExamenAgregarRequest: {
             /** Format: uuid */
@@ -3308,6 +3425,16 @@ export interface components {
          * @enum {string}
          */
         FinalidadConsultaEnum: "Atencion Parto" | "Atencion Recien Nacido" | "Atencion Planificacion Familiar" | "Deteccion Alteraciones Crecimiento" | "Deteccion Alteraciones Joven" | "Deteccion Alteraciones Embarazo" | "Deteccion Alteraciones Adulto" | "Deteccion Alteraciones Agudeza Visual" | "Deteccion Enfermedad Profesional" | "No Aplica";
+        Indicadores: {
+            periodo: components["schemas"]["PeriodoIndicadores"];
+            totales: components["schemas"]["TotalesIndicadores"];
+            ordenes_por_estado: components["schemas"]["ConteoEstado"][];
+            ordenes_por_dia: components["schemas"]["ConteoDia"][];
+            cups_mas_solicitados: components["schemas"]["ConteoCups"][];
+            tiempo_orden_validacion: components["schemas"]["TiempoOrdenValidacion"];
+            muestras: components["schemas"]["MuestrasIndicadores"];
+            resultados: components["schemas"]["ResultadosIndicadores"];
+        };
         InformeResultados: {
             /** Format: uuid */
             readonly id: string;
@@ -3494,6 +3621,10 @@ export interface components {
          * @enum {string}
          */
         ModoEnum: "informativo" | "advertencia" | "bloqueante";
+        MotivoRechazo: {
+            motivo: string;
+            total: number;
+        };
         MotivoRequest: {
             motivo: string;
         };
@@ -3553,6 +3684,13 @@ export interface components {
             readonly fecha_declarada_dispositivo: string | null;
             readonly examenes: string[];
             readonly version: number;
+        };
+        MuestrasIndicadores: {
+            total: number;
+            rechazadas: number;
+            /** Format: double */
+            porcentaje_rechazo: number;
+            motivos: components["schemas"]["MotivoRechazo"][];
         };
         Municipio: {
             readonly id: number;
@@ -4517,6 +4655,13 @@ export interface components {
              */
             readonly last_login: string | null;
         };
+        PeriodoIndicadores: {
+            /** Format: date */
+            fecha_inicio: string;
+            /** Format: date */
+            fecha_fin: string;
+            dias: number;
+        };
         Permiso: {
             readonly id: number;
             permiso: string;
@@ -4611,6 +4756,15 @@ export interface components {
             comentario_bacteriologo?: string | null;
             equipo?: number | null;
         };
+        ResultadosIndicadores: {
+            total: number;
+            anormales: number;
+            criticos: number;
+            /** Format: double */
+            porcentaje_anormales: number;
+            /** Format: double */
+            porcentaje_criticos: number;
+        };
         Sexo: {
             readonly id: number;
             sexo: string;
@@ -4628,6 +4782,23 @@ export interface components {
         SexoRequest: {
             sexo: string;
             descripcion: string;
+        };
+        TiempoExamen: {
+            codigo: string;
+            descripcion: string;
+            total: number;
+            /** Format: double */
+            mediana_horas: number | null;
+            /** Format: double */
+            p90_horas: number | null;
+        };
+        TiempoOrdenValidacion: {
+            examenes_validados: number;
+            /** Format: double */
+            mediana_horas: number | null;
+            /** Format: double */
+            p90_horas: number | null;
+            por_examen: components["schemas"]["TiempoExamen"][];
         };
         /**
          * @description * `SERIAL` - Puerto Serial RS-232/USB
@@ -4683,6 +4854,12 @@ export interface components {
         };
         TokenRefreshRequest: {
             refresh: string;
+        };
+        TotalesIndicadores: {
+            ordenes: number;
+            examenes: number;
+            muestras: number;
+            resultados: number;
         };
         /** @description Vista del Administrador: crea y edita cuentas; nunca devuelve la contraseña. */
         Usuario: {
@@ -6061,6 +6238,7 @@ export interface operations {
                 search?: string;
                 /**
                  * @description * `toma` - Toma
+                 *     * `etiqueta` - Impresión de etiqueta
                  *     * `transporte` - Transporte
                  *     * `recepcion` - Recepción en laboratorio
                  *     * `alicuota` - Alícuota
@@ -6070,7 +6248,7 @@ export interface operations {
                  *     * `descarte` - Descarte
                  *     * `nota` - Nota
                  */
-                tipo?: "alicuota" | "almacenamiento" | "analisis" | "descarte" | "nota" | "recepcion" | "rechazo" | "toma" | "transporte";
+                tipo?: "alicuota" | "almacenamiento" | "analisis" | "descarte" | "etiqueta" | "nota" | "recepcion" | "rechazo" | "toma" | "transporte";
             };
             header?: never;
             path?: never;
@@ -6289,6 +6467,30 @@ export interface operations {
             };
         };
     };
+    indicadores_list: {
+        parameters: {
+            query?: {
+                /** @description Por defecto, hoy */
+                fecha_fin?: string;
+                /** @description Por defecto, 30 días antes de fecha_fin */
+                fecha_inicio?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Indicadores"][];
+                };
+            };
+        };
+    };
     informes_list: {
         parameters: {
             query?: {
@@ -6344,6 +6546,28 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["InformeResultados"];
+                };
+            };
+        };
+    };
+    informes_pdf_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un Cadena UUID que identifique este Informe de Resultados. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/pdf": string;
                 };
             };
         };
@@ -6847,6 +7071,33 @@ export interface operations {
                     "application/json": {
                         [key: string]: unknown;
                     };
+                };
+            };
+        };
+    };
+    muestras_etiqueta_pdf_retrieve: {
+        parameters: {
+            query?: {
+                /** @description 1 a 30 */
+                copias?: number;
+                /** @description individual = 50 × 25 mm (impresora de etiquetas); hoja = carta 3 × 10 (impresora común) */
+                formato?: "hoja" | "individual";
+            };
+            header?: never;
+            path: {
+                /** @description Un Cadena UUID que identifique este muestra fisica. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/pdf": string;
                 };
             };
         };
@@ -9221,6 +9472,7 @@ export interface operations {
                 search?: string;
                 /**
                  * @description * `toma` - Toma
+                 *     * `etiqueta` - Impresión de etiqueta
                  *     * `transporte` - Transporte
                  *     * `recepcion` - Recepción en laboratorio
                  *     * `alicuota` - Alícuota
@@ -9230,7 +9482,7 @@ export interface operations {
                  *     * `descarte` - Descarte
                  *     * `nota` - Nota
                  */
-                tipo?: "alicuota" | "almacenamiento" | "analisis" | "descarte" | "nota" | "recepcion" | "rechazo" | "toma" | "transporte";
+                tipo?: "alicuota" | "almacenamiento" | "analisis" | "descarte" | "etiqueta" | "nota" | "recepcion" | "rechazo" | "toma" | "transporte";
             };
             header?: never;
             path?: never;
@@ -9449,6 +9701,30 @@ export interface operations {
             };
         };
     };
+    lab_api_v1_indicadores_list: {
+        parameters: {
+            query?: {
+                /** @description Por defecto, hoy */
+                fecha_fin?: string;
+                /** @description Por defecto, 30 días antes de fecha_fin */
+                fecha_inicio?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Indicadores"][];
+                };
+            };
+        };
+    };
     lab_api_v1_informes_list: {
         parameters: {
             query?: {
@@ -9504,6 +9780,28 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["InformeResultados"];
+                };
+            };
+        };
+    };
+    lab_api_v1_informes_pdf_retrieve: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description Un Cadena UUID que identifique este Informe de Resultados. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/pdf": string;
                 };
             };
         };
@@ -10007,6 +10305,33 @@ export interface operations {
                     "application/json": {
                         [key: string]: unknown;
                     };
+                };
+            };
+        };
+    };
+    lab_api_v1_muestras_etiqueta_pdf_retrieve: {
+        parameters: {
+            query?: {
+                /** @description 1 a 30 */
+                copias?: number;
+                /** @description individual = 50 × 25 mm (impresora de etiquetas); hoja = carta 3 × 10 (impresora común) */
+                formato?: "hoja" | "individual";
+            };
+            header?: never;
+            path: {
+                /** @description Un Cadena UUID que identifique este muestra fisica. */
+                id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/pdf": string;
                 };
             };
         };

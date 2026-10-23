@@ -32,6 +32,12 @@ export async function descargarReporte(id: string): Promise<Blob> {
   return data as Blob;
 }
 
+/** PDF guardado de un informe ya emitido: imprimirlo no genera un informe nuevo (RF-37.6). */
+export async function descargarInformeGuardado(informeId: string): Promise<Blob> {
+  const { data } = await http.get(`/api/v1/informes/${informeId}/pdf/`, { responseType: 'blob' });
+  return data as Blob;
+}
+
 export async function listarExamenes(f: { orden?: string; estado_examen__nombre?: string; limit?: number; offset?: number } = {}): Promise<Paginado<Examen>> {
   const { data } = await http.get('/api/v1/examenes-solicitados/', { params: { limit: 20, ...f } });
   return lista<Examen>(data);

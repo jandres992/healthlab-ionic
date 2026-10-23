@@ -1,15 +1,17 @@
 <script setup lang="ts">
 /** Detalle de orden: exámenes, muestras, admisión (offline), anulación, informe y toma de muestra. */
 import {
-  IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonList, IonListHeader,
+  IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonListHeader,
   IonNote, IonPage, IonTitle, IonToolbar,
 } from '@ionic/vue';
-import { Capacitor } from '@capacitor/core';
+import { printOutline } from 'ionicons/icons';
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { esApiError } from '@/api/http';
 import { listarInformes } from '@/api/endpoints/calidad';
-import { admitirOrden, anularExamen, descargarReporte, finalizarOrden, obtenerOrden } from '@/api/endpoints/ordenes';
+import {
+  admitirOrden, anularExamen, descargarInformeGuardado, descargarReporte, finalizarOrden, obtenerOrden,
+} from '@/api/endpoints/ordenes';
 import { listarMuestras } from '@/api/endpoints/muestras';
 import type { Informe, Muestra, Orden } from '@/api/tipos';
 import EstadoBadge from '@/components/EstadoBadge.vue';
@@ -17,6 +19,7 @@ import EstadoLista from '@/components/EstadoLista.vue';
 import Permitido from '@/components/Permitido.vue';
 import { useMensajes } from '@/composables/useMensajes';
 import { usePermisos } from '@/composables/usePermisos';
+import { abrirPdf, imprimirPdf } from '@/services/pdf';
 import { useColaOfflineStore } from '@/stores/colaOffline';
 
 const route = useRoute();
@@ -87,20 +90,24 @@ async function anular(examenId: string, nombre: string) {
 async function verInforme() {
   if (!orden.value) return;
   try {
-    const blob = await descargarReporte(id);
-    const nombre = `informe_${orden.value.numero_orden}.pdf`;
-    if (Capacitor.isNativePlatform()) {
-      const { Filesystem, Directory } = await import('@capacitor/filesystem');
-      const { Share } = await import('@capacitor/share');
-      const base64 = await new Promise<string>((res) => { const r = new FileReader(); r.onload = () => res(String(r.result).split(',')[1]); r.readAsDataURL(blob); });
-      const f = await Filesystem.writeFile({ path: nombre, data: base64, directory: Directory.Cache });
-      await Share.share({ title: nombre, url: f.uri });
-    } else {
-      const url = URL.createObjectURL(blob);
-      window.open(url, '_blank');
-      setTimeout(() => URL.revokeObjectURL(url), 60000);
-    }
+    await abrirPdf(await descargarReporte(id), `informe_${orden.value.numero_orden}.pdf`);
+    if (puede('informes.ver')) informes.value = (await listarInformes(id)).results;
   } catch (e) { await mostrarError(e, 'No se pudo obtener el informe.'); }
+}
+
+/**
+ * Imprimir informe (RF-37.6): se imprime el PDF ya guardado del informe vigente,
+ * así imprimir no genera un informe nuevo. Si aún no hay informe guardado, se usa
+ * el que corresponda al estado de la orden (preliminar o parcial).
+ */
+async function imprimirInforme() {
+  if (!orden.value) return;
+  try {
+    const vigente = informes.value.find((i) => i.vigente);
+    const blob = vigente ? await descargarInformeGuardado(vigente.id) : await descargarReporte(id);
+    await imprimirPdf(blob, `informe_${orden.value.numero_orden}.pdf`);
+    if (!vigente && puede('informes.ver')) informes.value = (await listarInformes(id)).results;
+  } catch (e) { await mostrarError(e, 'No se pudo imprimir el informe.'); }
 }
 
 function fecha(iso?: string | null) { return iso ? new Date(iso).toLocaleString('es-CO', { dateStyle: 'short', timeStyle: 'short' }) : '—'; }
@@ -144,6 +151,9 @@ onMounted(cargar);
           <Permitido accion="ordenes.reporte_pdf">
             <ion-button size="small" fill="outline" @click="verInforme">
               {{ orden.estado_general === 'Finalizada' ? 'Informe final' : orden.estado_general === 'Resultados Parciales' ? 'Informe parcial' : 'Vista preliminar' }}
+            </ion-button>
+            <ion-button size="small" fill="outline" @click="imprimirInforme">
+              <ion-icon slot="start" :icon="printOutline" />Imprimir informe
             </ion-button>
           </Permitido>
         </div>

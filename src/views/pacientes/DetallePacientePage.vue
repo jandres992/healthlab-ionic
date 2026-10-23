@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import {
   IonBackButton, IonButton, IonButtons, IonContent, IonHeader, IonItem, IonLabel, IonList, IonListHeader,
-  IonPage, IonTitle, IonToolbar,
+  IonPage, IonTitle, IonToolbar, onIonViewWillEnter,
 } from '@ionic/vue';
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { listarOrdenes } from '@/api/endpoints/ordenes';
 import { obtenerPaciente } from '@/api/endpoints/pacientes';
@@ -26,7 +26,8 @@ async function cargar() {
     ordenes.value = (await listarOrdenes({ paciente: id, limit: 20 })).results;
   } catch (e) { error.value = e; } finally { cargando.value = false; }
 }
-onMounted(cargar);
+// Se recarga cada vez que se entra, por ejemplo al volver de editar los datos.
+onIonViewWillEnter(cargar);
 </script>
 
 <template>
@@ -49,6 +50,9 @@ onMounted(cargar);
           <ion-item><ion-label>Habeas Data</ion-label><ion-label slot="end">{{ paciente.consentimiento_habeas_data ? 'Aceptado' : 'Sin registrar' }}</ion-label></ion-item>
         </ion-list>
 
+        <Permitido accion="pacientes.editar">
+          <ion-button expand="block" fill="outline" class="ion-margin" :router-link="`/pacientes/${paciente.id}/editar`">Editar datos</ion-button>
+        </Permitido>
         <Permitido accion="ordenes.crear">
           <ion-button expand="block" class="ion-margin" :router-link="`/ordenes/nueva?paciente=${paciente.id}`">Nueva orden</ion-button>
         </Permitido>

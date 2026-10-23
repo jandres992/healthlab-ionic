@@ -19,6 +19,7 @@ const routes: Array<RouteRecordRaw> = [
   { path: '/notificaciones', name: 'notificaciones', component: () => import('@/views/notificaciones/NotificacionesPage.vue'), meta: { accion: 'notificaciones.propias' } },
   // Fase 4: flujos de pacientes, órdenes y muestras (fuera de las pestañas para tener barra con "atrás")
   { path: '/pacientes/nuevo', name: 'paciente-nuevo', component: () => import('@/views/pacientes/CrearPacientePage.vue'), meta: { accion: 'pacientes.crear' } },
+  { path: '/pacientes/:id/editar', name: 'paciente-editar', component: () => import('@/views/pacientes/CrearPacientePage.vue'), meta: { accion: 'pacientes.editar' } },
   { path: '/pacientes/:id', name: 'paciente', component: () => import('@/views/pacientes/DetallePacientePage.vue'), meta: { accion: 'pacientes.ver' } },
   { path: '/ordenes/nueva', name: 'orden-nueva', component: () => import('@/views/ordenes/CrearOrdenPage.vue'), meta: { accion: 'ordenes.crear' } },
   { path: '/ordenes/:id', name: 'orden', component: () => import('@/views/ordenes/DetalleOrdenPage.vue'), meta: { accion: 'ordenes.ver' } },
@@ -31,6 +32,8 @@ const routes: Array<RouteRecordRaw> = [
   // Fase 6: calidad, auditoría y administración (escritorio)
   { path: '/calidad', name: 'calidad', component: () => import('@/views/calidad/CalidadPage.vue'), meta: { accion: ['calidad.ver', 'equipos.ver'] } },
   { path: '/auditoria', name: 'auditoria', component: () => import('@/views/auditoria/AuditoriaPage.vue'), meta: { accion: ['auditoria.ver', 'ordenes.export_rips'] } },
+  // Cierre de la Fase 1: dashboard de indicadores de operación (RF-74)
+  { path: '/indicadores', name: 'indicadores', component: () => import('@/views/indicadores/IndicadoresPage.vue'), meta: { accion: 'indicadores.ver' } },
   { path: '/admin', name: 'admin', component: () => import('@/views/admin/AdminPage.vue'), meta: { accion: ['usuarios.ver', 'catalogos.gestionar'] } },
   {
     path: '/tabs/',

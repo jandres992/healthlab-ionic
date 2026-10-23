@@ -1562,6 +1562,7 @@ paths:
           - almacenamiento
           - analisis
           - descarte
+          - etiqueta
           - nota
           - recepcion
           - rechazo
@@ -1569,6 +1570,7 @@ paths:
           - transporte
         description: |-
           * `toma` - Toma
+          * `etiqueta` - Impresión de etiqueta
           * `transporte` - Transporte
           * `recepcion` - Recepción en laboratorio
           * `alicuota` - Alícuota
@@ -1839,6 +1841,37 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+  /api/v1/indicadores/:
+    get:
+      operationId: indicadores_list
+      description: Indicadores agregados de operación para el dashboard (RF-74.1).
+        Sin datos de pacientes.
+      parameters:
+      - in: query
+        name: fecha_fin
+        schema:
+          type: string
+          format: date
+        description: Por defecto, hoy
+      - in: query
+        name: fecha_inicio
+        schema:
+          type: string
+          format: date
+        description: Por defecto, 30 días antes de fecha_fin
+      tags:
+      - indicadores
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Indicadores'
+          description: ''
   /api/v1/informes/:
     get:
       operationId: informes_list
@@ -1922,6 +1955,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InformeResultados'
+          description: ''
+  /api/v1/informes/{id}/pdf/:
+    get:
+      operationId: informes_pdf_retrieve
+      description: PDF guardado del informe, para imprimirlo sin generar uno nuevo
+        (RF-37.6).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: Un Cadena UUID que identifique este Informe de Resultados.
+        required: true
+      tags:
+      - informes
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
           description: ''
   /api/v1/lecturas-serial/:
     get:
@@ -2567,6 +2625,45 @@ paths:
               schema:
                 type: object
                 additionalProperties: {}
+          description: ''
+  /api/v1/muestras/{id}/etiqueta-pdf/:
+    get:
+      operationId: muestras_etiqueta_pdf_retrieve
+      description: Etiqueta con código de barras Code 128 (RF-60.1). Cada impresión
+        queda en la custodia (RF-60.2).
+      parameters:
+      - in: query
+        name: copias
+        schema:
+          type: integer
+        description: 1 a 30
+      - in: query
+        name: formato
+        schema:
+          type: string
+          enum:
+          - hoja
+          - individual
+        description: individual = 50 × 25 mm (impresora de etiquetas); hoja = carta
+          3 × 10 (impresora común)
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: Un Cadena UUID que identifique este muestra fisica.
+        required: true
+      tags:
+      - muestras
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
           description: ''
   /api/v1/muestras/{id}/evento/:
     post:
@@ -5488,6 +5585,7 @@ paths:
           - almacenamiento
           - analisis
           - descarte
+          - etiqueta
           - nota
           - recepcion
           - rechazo
@@ -5495,6 +5593,7 @@ paths:
           - transporte
         description: |-
           * `toma` - Toma
+          * `etiqueta` - Impresión de etiqueta
           * `transporte` - Transporte
           * `recepcion` - Recepción en laboratorio
           * `alicuota` - Alícuota
@@ -5765,6 +5864,37 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
+  /lab/api/v1/indicadores/:
+    get:
+      operationId: lab_api_v1_indicadores_list
+      description: Indicadores agregados de operación para el dashboard (RF-74.1).
+        Sin datos de pacientes.
+      parameters:
+      - in: query
+        name: fecha_fin
+        schema:
+          type: string
+          format: date
+        description: Por defecto, hoy
+      - in: query
+        name: fecha_inicio
+        schema:
+          type: string
+          format: date
+        description: Por defecto, 30 días antes de fecha_fin
+      tags:
+      - lab
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Indicadores'
+          description: ''
   /lab/api/v1/informes/:
     get:
       operationId: lab_api_v1_informes_list
@@ -5848,6 +5978,31 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InformeResultados'
+          description: ''
+  /lab/api/v1/informes/{id}/pdf/:
+    get:
+      operationId: lab_api_v1_informes_pdf_retrieve
+      description: PDF guardado del informe, para imprimirlo sin generar uno nuevo
+        (RF-37.6).
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: Un Cadena UUID que identifique este Informe de Resultados.
+        required: true
+      tags:
+      - lab
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
           description: ''
   /lab/api/v1/lecturas-serial/:
     get:
@@ -6493,6 +6648,45 @@ paths:
               schema:
                 type: object
                 additionalProperties: {}
+          description: ''
+  /lab/api/v1/muestras/{id}/etiqueta-pdf/:
+    get:
+      operationId: lab_api_v1_muestras_etiqueta_pdf_retrieve
+      description: Etiqueta con código de barras Code 128 (RF-60.1). Cada impresión
+        queda en la custodia (RF-60.2).
+      parameters:
+      - in: query
+        name: copias
+        schema:
+          type: integer
+        description: 1 a 30
+      - in: query
+        name: formato
+        schema:
+          type: string
+          enum:
+          - hoja
+          - individual
+        description: individual = 50 × 25 mm (impresora de etiquetas); hoja = carta
+          3 × 10 (impresora común)
+      - in: path
+        name: id
+        schema:
+          type: string
+          format: uuid
+        description: Un Cadena UUID que identifique este muestra fisica.
+        required: true
+      tags:
+      - lab
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/pdf:
+              schema:
+                type: string
+                format: binary
           description: ''
   /lab/api/v1/muestras/{id}/evento/:
     post:
@@ -9895,6 +10089,40 @@ components:
       - codigo_equipo
       - nombre
       - puerto
+    ConteoCups:
+      type: object
+      properties:
+        codigo:
+          type: string
+        descripcion:
+          type: string
+        total:
+          type: integer
+      required:
+      - codigo
+      - descripcion
+      - total
+    ConteoDia:
+      type: object
+      properties:
+        fecha:
+          type: string
+          format: date
+        total:
+          type: integer
+      required:
+      - fecha
+      - total
+    ConteoEstado:
+      type: object
+      properties:
+        estado:
+          type: string
+        total:
+          type: integer
+      required:
+      - estado
+      - total
     CorridaCCI:
       type: object
       properties:
@@ -10318,6 +10546,7 @@ components:
     EventoMuestraTipoEnum:
       enum:
       - toma
+      - etiqueta
       - transporte
       - recepcion
       - alicuota
@@ -10329,6 +10558,7 @@ components:
       type: string
       description: |-
         * `toma` - Toma
+        * `etiqueta` - Impresión de etiqueta
         * `transporte` - Transporte
         * `recepcion` - Recepción en laboratorio
         * `alicuota` - Alícuota
@@ -10495,6 +10725,40 @@ components:
         * `Deteccion Alteraciones Agudeza Visual` - Agudeza Visual
         * `Deteccion Enfermedad Profesional` - Enf. Profesional
         * `No Aplica` - No Aplica
+    Indicadores:
+      type: object
+      properties:
+        periodo:
+          $ref: '#/components/schemas/PeriodoIndicadores'
+        totales:
+          $ref: '#/components/schemas/TotalesIndicadores'
+        ordenes_por_estado:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConteoEstado'
+        ordenes_por_dia:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConteoDia'
+        cups_mas_solicitados:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConteoCups'
+        tiempo_orden_validacion:
+          $ref: '#/components/schemas/TiempoOrdenValidacion'
+        muestras:
+          $ref: '#/components/schemas/MuestrasIndicadores'
+        resultados:
+          $ref: '#/components/schemas/ResultadosIndicadores'
+      required:
+      - cups_mas_solicitados
+      - muestras
+      - ordenes_por_dia
+      - ordenes_por_estado
+      - periodo
+      - resultados
+      - tiempo_orden_validacion
+      - totales
     InformeResultados:
       type: object
       properties:
@@ -10935,6 +11199,16 @@ components:
         * `informativo` - Informativo
         * `advertencia` - Advertencia
         * `bloqueante` - Bloqueante
+    MotivoRechazo:
+      type: object
+      properties:
+        motivo:
+          type: string
+        total:
+          type: integer
+      required:
+      - motivo
+      - total
     MotivoRequest:
       type: object
       properties:
@@ -11098,6 +11372,25 @@ components:
       - usuario_recolecta
       - usuario_recolecta_username
       - version
+    MuestrasIndicadores:
+      type: object
+      properties:
+        total:
+          type: integer
+        rechazadas:
+          type: integer
+        porcentaje_rechazo:
+          type: number
+          format: double
+        motivos:
+          type: array
+          items:
+            $ref: '#/components/schemas/MotivoRechazo'
+      required:
+      - motivos
+      - porcentaje_rechazo
+      - rechazadas
+      - total
     Municipio:
       type: object
       properties:
@@ -13053,6 +13346,21 @@ components:
       - sexo
       - tipo_id
       - username
+    PeriodoIndicadores:
+      type: object
+      properties:
+        fecha_inicio:
+          type: string
+          format: date
+        fecha_fin:
+          type: string
+          format: date
+        dias:
+          type: integer
+      required:
+      - dias
+      - fecha_fin
+      - fecha_inicio
     Permiso:
       type: object
       properties:
@@ -13332,6 +13640,27 @@ components:
       - examen_solicitado
       - parametro
       - valor_resultado
+    ResultadosIndicadores:
+      type: object
+      properties:
+        total:
+          type: integer
+        anormales:
+          type: integer
+        criticos:
+          type: integer
+        porcentaje_anormales:
+          type: number
+          format: double
+        porcentaje_criticos:
+          type: number
+          format: double
+      required:
+      - anormales
+      - criticos
+      - porcentaje_anormales
+      - porcentaje_criticos
+      - total
     Sexo:
       type: object
       properties:
@@ -13392,6 +13721,51 @@ components:
       required:
       - descripcion
       - sexo
+    TiempoExamen:
+      type: object
+      properties:
+        codigo:
+          type: string
+        descripcion:
+          type: string
+        total:
+          type: integer
+        mediana_horas:
+          type: number
+          format: double
+          nullable: true
+        p90_horas:
+          type: number
+          format: double
+          nullable: true
+      required:
+      - codigo
+      - descripcion
+      - mediana_horas
+      - p90_horas
+      - total
+    TiempoOrdenValidacion:
+      type: object
+      properties:
+        examenes_validados:
+          type: integer
+        mediana_horas:
+          type: number
+          format: double
+          nullable: true
+        p90_horas:
+          type: number
+          format: double
+          nullable: true
+        por_examen:
+          type: array
+          items:
+            $ref: '#/components/schemas/TiempoExamen'
+      required:
+      - examenes_validados
+      - mediana_horas
+      - p90_horas
+      - por_examen
     TipoConexionEnum:
       enum:
       - SERIAL
@@ -13538,6 +13912,22 @@ components:
           minLength: 1
       required:
       - refresh
+    TotalesIndicadores:
+      type: object
+      properties:
+        ordenes:
+          type: integer
+        examenes:
+          type: integer
+        muestras:
+          type: integer
+        resultados:
+          type: integer
+      required:
+      - examenes
+      - muestras
+      - ordenes
+      - resultados
     Usuario:
       type: object
       description: 'Vista del Administrador: crea y edita cuentas; nunca devuelve

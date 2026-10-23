@@ -56,7 +56,8 @@ async function guardar() {
   try {
     const m = await registrarMuestra(cuerpo);
     await exito(`Muestra ${m.codigo_barras} registrada.`);
-    await router.replace(`/muestras/${m.id}`);
+    // El detalle invita a imprimir la etiqueta del tubo (RF-60.2).
+    await router.replace(`/muestras/${m.id}?nueva=1`);
   } catch (e) {
     if (esApiError(e) && e.sinConexion) {
       await cola.encolar('muestra.registrar', cuerpo as Record<string, unknown>,

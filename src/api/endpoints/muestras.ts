@@ -29,6 +29,14 @@ export async function recibirMuestra(id: string): Promise<{ examenes_actualizado
   return data;
 }
 
+export type FormatoEtiqueta = 'individual' | 'hoja';
+
+/** Etiqueta con código de barras (RF-60.1). Cada descarga queda en la custodia como impresión o reimpresión. */
+export async function descargarEtiqueta(id: string, formato: FormatoEtiqueta = 'individual', copias = 1): Promise<Blob> {
+  const { data } = await http.get(`/api/v1/muestras/${id}/etiqueta-pdf/`, { params: { formato, copias }, responseType: 'blob' });
+  return data as Blob;
+}
+
 export async function rechazarMuestra(id: string, motivo_rechazo: string, condicion_muestra?: string): Promise<void> {
   await http.post(`/api/v1/muestras/${id}/rechazar/`, { motivo_rechazo, condicion_muestra });
 }

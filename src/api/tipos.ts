@@ -25,6 +25,7 @@ export type Departamento = Esquemas['Departamento'];
 export type Municipio = Esquemas['Municipio'];
 export type EventoMuestra = Esquemas['EventoMuestra'];
 export type PacienteCrear = Esquemas['PacienteRequest'];
+export type Indicadores = Esquemas['Indicadores'];
 
 /** Respuesta de POST /usr/login/ (campos añadidos por TokenPersonalizadoSerializer). */
 export interface RespuestaLogin {
