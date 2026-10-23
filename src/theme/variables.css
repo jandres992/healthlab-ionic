@@ -136,6 +136,13 @@ ion-toolbar[color='primary'] {
   --background: var(--hl-degradado);
 }
 ion-header ion-toolbar ion-title { font-weight: 700; letter-spacing: 0.2px; }
+/* Segmentos sobre la barra azul: texto claro y el elegido en blanco */
+ion-toolbar ion-segment-button {
+  --color: rgba(255, 255, 255, 0.72);
+  --color-checked: #ffffff;
+  --indicator-color: #ffffff;
+}
+ion-toolbar ion-segment-button.ios { --indicator-color: rgba(255, 255, 255, 0.22); }
 ion-header.header-md { box-shadow: none; }
 
 /* Tarjetas: radio 16 y sombra azul suave */
