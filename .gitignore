@@ -30,3 +30,10 @@ npm-debug.log*
 /platforms
 /plugins
 /www
+
+# Entornos, binarios y compilaciones de Android
+.env
+.env.*
+!.env.example
+*.apk
+*.aab

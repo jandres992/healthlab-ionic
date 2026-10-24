@@ -63,7 +63,7 @@ async function restablecer(u: Usuario) {
   if (!clave) return;
   try { await editarUsuario(u.id, { password: clave }); await exito('Contraseña restablecida; sus sesiones se cerraron.'); } catch (e) { await error(e); }
 }
-function permisosDisponibles(u: Usuario) {
+function permisosDisponibles(_u: Usuario) {
   const asignados = new Set(asignaciones.value.map((a) => a.permiso));
   return permisos.value.filter((p) => !asignados.has(p.id));
 }
