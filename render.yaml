@@ -1,0 +1,21 @@
+# Blueprint de Render para la versión web de HealthLab (Ionic + Vue, sitio estático).
+# En Render: New → Blueprint → elegir este repositorio.
+# VITE_API_URL es la dirección de la API publicada (por ejemplo https://healthlab-api.onrender.com);
+# Vite la incorpora al compilar, así que si cambia hay que volver a desplegar.
+
+services:
+  - type: web
+    name: healthlab-web
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: VITE_API_URL
+        sync: false
+    routes:
+      # La app usa rutas del historial del navegador: cualquier ruta debe cargar index.html.
+      - type: rewrite
+        source: /*
+        destination: /index.html
