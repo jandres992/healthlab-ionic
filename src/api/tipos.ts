@@ -50,7 +50,7 @@ export type Rol = 'medico' | 'tecnico_de_enfermeria' | 'bacteriologo' | 'auditor
 
 export const ETIQUETAS_ROL: Record<Rol, string> = {
   medico: 'Médico',
-  tecnico_de_enfermeria: 'Técnico de Enfermería',
+  tecnico_de_enfermeria: 'Auxiliar de Enfermería',
   bacteriologo: 'Bacteriólogo',
   auditor: 'Auditor',
   administrador: 'Administrador',

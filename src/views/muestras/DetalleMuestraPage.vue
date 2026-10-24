@@ -12,7 +12,7 @@ import {
   anotarEvento, crearAlicuota, custodia, descargarEtiqueta, descartarMuestra, obtenerMuestra, rechazarMuestra,
   recibirMuestra, type FormatoEtiqueta,
 } from '@/api/endpoints/muestras';
-import type { EventoMuestra, Muestra } from '@/api/tipos';
+import { ETIQUETAS_ROL, type EventoMuestra, type Muestra, type Rol } from '@/api/tipos';
 import EstadoBadge from '@/components/EstadoBadge.vue';
 import EstadoLista from '@/components/EstadoLista.vue';
 import Permitido from '@/components/Permitido.vue';
@@ -197,7 +197,7 @@ onMounted(cargar);
           <ion-item v-for="e in eventos" :key="e.id">
             <ion-label class="ion-text-wrap">
               <h3>{{ e.tipo }} <ion-note>{{ fecha(e.fecha) }}</ion-note></h3>
-              <p>{{ e.usuario_username ?? 'sistema' }}<span v-if="e.rol"> ({{ e.rol }})</span><span v-if="e.ubicacion"> · {{ e.ubicacion }}</span><span v-if="e.temperatura"> · {{ e.temperatura }} °C</span></p>
+              <p>{{ e.usuario_username ?? 'sistema' }}<span v-if="e.rol"> ({{ ETIQUETAS_ROL[e.rol as Rol] ?? e.rol }})</span><span v-if="e.ubicacion"> · {{ e.ubicacion }}</span><span v-if="e.temperatura"> · {{ e.temperatura }} °C</span></p>
               <p v-if="e.observacion">{{ e.observacion }}</p>
               <p v-if="e.fecha_declarada_dispositivo"><ion-note>Declarada: {{ fecha(e.fecha_declarada_dispositivo) }}</ion-note></p>
             </ion-label>
