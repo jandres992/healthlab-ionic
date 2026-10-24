@@ -17,6 +17,7 @@ import CampoCodigoBarras from '@/components/CampoCodigoBarras.vue';
 import SelectorBusqueda from '@/components/SelectorBusqueda.vue';
 import { useMensajes } from '@/composables/useMensajes';
 import { useColaOfflineStore } from '@/stores/colaOffline';
+import { filtrarOrdenes, guardarOrdenesDelDia, leerOrdenesDelDia } from '@/services/ordenesSinConexion';
 
 const route = useRoute();
 const router = useRouter();
@@ -32,6 +33,7 @@ const ubicacion = ref('');
 const identidadConfirmada = ref(false);
 const checklist = ref({ ayuno: false, tubo: false, volumen: false, integridad: false });
 const guardando = ref(false);
+const ordenesGuardadas = ref(false);   // sin red: la lista viene de las órdenes guardadas del día (D-02)
 
 const TIPOS = ['Sangre Total', 'Suero', 'Plasma', 'Orina', 'Heces', 'Hisopado', 'Otro'];
 const CONDICIONES = ['Normal', 'Hemolizada', 'Lipemica', 'Icterica', 'Insuficiente', 'Coagulada', 'Contaminada'];
@@ -41,7 +43,12 @@ const puntaje = computed(() => Math.round((Object.values(checklist.value).filter
 const riesgo = computed(() => (puntaje.value < 50 ? 'Alto' : puntaje.value < 100 ? 'Medio' : 'Bajo'));
 
 async function buscarOrdenes(texto: string) {
-  return (await listarOrdenes({ search: texto, limit: 20 })).results;
+  try {
+    return (await listarOrdenes({ search: texto, limit: 20 })).results;
+  } catch (e) {
+    if (esApiError(e) && e.sinConexion) return filtrarOrdenes(await leerOrdenesDelDia(), texto);
+    throw e;
+  }
 }
 
 async function guardar() {
@@ -78,7 +85,15 @@ onMounted(async () => {
     if (route.query.orden && !ordenes.value.some((o) => o.id === route.query.orden)) {
       ordenes.value.unshift(await obtenerOrden(String(route.query.orden)));
     }
-  } catch (e) { if (!(esApiError(e) && e.sinConexion)) await error(e); }
+    await guardarOrdenesDelDia(ordenes.value);
+  } catch (e) {
+    if (esApiError(e) && e.sinConexion) {
+      ordenes.value = await leerOrdenesDelDia();
+      ordenesGuardadas.value = true;
+    } else {
+      await error(e);
+    }
+  }
 });
 </script>
 
@@ -93,6 +108,13 @@ onMounted(async () => {
     <ion-content>
       <ion-list>
         <ion-list-header><ion-label>Orden</ion-label></ion-list-header>
+        <ion-item v-if="ordenesGuardadas" lines="none">
+          <ion-note color="warning">
+            {{ ordenes.length
+              ? `Sin conexión: se muestran las ${ordenes.length} órdenes abiertas guardadas hoy en este equipo.`
+              : 'Sin conexión y sin órdenes guardadas hoy: abre este formulario una vez con red para guardarlas.' }}
+          </ion-note>
+        </ion-item>
         <SelectorBusqueda v-model="ordenSel" titulo="Orden" :items="ordenes" :buscar-remoto="buscarOrdenes"
                           :etiqueta="(o) => `${o.numero_orden} · ${o.paciente_nombre}`" :detalle="(o) => `Doc. ${o.paciente_documento} · ${o.estado_general}`" />
 

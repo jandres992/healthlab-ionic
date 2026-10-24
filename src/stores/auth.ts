@@ -9,6 +9,7 @@ import * as authApi from '@/api/endpoints/auth';
 import { esApiError, registrarProveedorSesion } from '@/api/http';
 import type { PerfilPropio, Rol } from '@/api/tipos';
 import { borrarSecreto, guardarSecreto, leerSecreto } from '@/services/almacenamientoSeguro';
+import { olvidarOrdenesDelDia } from '@/services/ordenesSinConexion';
 
 const CLAVE_ACCESS = 'healthlab.access';
 const CLAVE_REFRESH = 'healthlab.refresh';
@@ -91,7 +92,7 @@ export const useAuthStore = defineStore('auth', {
     async cerrarSesion(avisarServidor = true) {
       const refresh = this.refresh;
       this.access = null; this.refresh = null; this.perfil = null; this.roles = []; this.acciones = [];
-      await Promise.all([borrarSecreto(CLAVE_ACCESS), borrarSecreto(CLAVE_REFRESH), borrarSecreto(CLAVE_PERFIL)]);
+      await Promise.all([borrarSecreto(CLAVE_ACCESS), borrarSecreto(CLAVE_REFRESH), borrarSecreto(CLAVE_PERFIL), olvidarOrdenesDelDia()]);
       if (avisarServidor && refresh) { try { await authApi.logout(refresh); } catch { /* ya cerrada */ } }
     },
 
