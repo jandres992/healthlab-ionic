@@ -37,3 +37,4 @@ npm-debug.log*
 !.env.example
 *.apk
 *.aab
+!apk/HealthLab.apk
